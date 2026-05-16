@@ -1,0 +1,61 @@
+---
+export interface Props {
+  name: string;
+  description: string;
+  price: number;
+  tag?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+const { name, description, price, tag, image, imageAlt } = Astro.props;
+
+const formatPrice = (value: number) => {
+  if (Number.isInteger(value)) return `${value}`;
+  return value.toFixed(2).replace('.', ',');
+};
+---
+
+<article
+  class="py-5 border-b border-[var(--color-line)] last:border-b-0"
+  itemprop="hasMenuItem"
+  itemscope
+  itemtype="https://schema.org/MenuItem"
+>
+  <div class="flex items-baseline gap-4">
+    <h3 class="lc font-bold text-base md:text-lg leading-tight flex-1 min-w-0">
+      <span itemprop="name">{name}</span>
+      {
+        tag && (
+          <span class="lc meta align-middle ml-2 inline-block border border-[var(--color-line)] px-1.5 py-0.5 text-[0.6875rem]">
+            {tag}
+          </span>
+        )
+      }
+    </h3>
+    <span
+      class="font-bold text-base md:text-lg tabular-nums shrink-0"
+      itemprop="offers"
+      itemscope
+      itemtype="https://schema.org/Offer"
+    >
+      <meta itemprop="priceCurrency" content="EUR" />
+      <meta itemprop="price" content={price.toFixed(2)} />
+      <span aria-hidden="false">{formatPrice(price)}</span>
+    </span>
+  </div>
+  <p class="lc prose-body text-[0.9375rem] mt-1.5 max-w-xl text-[var(--color-ink)]" itemprop="description">
+    {description}
+  </p>
+  {
+    image && (
+      <img
+        src={image}
+        alt={imageAlt ?? name}
+        class="mt-4 w-full aspect-[4/3] object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+</article>

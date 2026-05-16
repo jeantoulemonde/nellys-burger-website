@@ -1,0 +1,184 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { site } from '~/data/site';
+
+const conceptImage =
+  'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=2000&q=80';
+const detailImage =
+  'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=1600&q=80';
+const friesImage =
+  'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1600&q=80';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `le concept — ${site.name}`,
+  description:
+    "smash burger artisanal à biarritz : la méthode, les produits, l'histoire d'un projet local.",
+  url: `${site.url}/le-concept`,
+  mainEntity: {
+    '@type': 'Restaurant',
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<Layout
+  title="le concept — smash burger artisanal à biarritz"
+  description="la méthode smash burger, le choix de produits frais et locaux, l'histoire d'un restaurant indépendant à biarritz."
+  path="/le-concept"
+  type="article"
+  jsonLd={articleSchema}
+>
+  <section class="mx-auto max-w-6xl px-5 md:px-8 pt-16 md:pt-24 pb-12">
+    <p class="lc meta mb-4">le concept</p>
+    <h1 class="lc page-title max-w-3xl">
+      écraser une boule de boeuf frais sur une plancha brûlante. point.
+    </h1>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-12 gap-10 md:gap-16 pb-20 md:pb-28">
+    <div class="md:col-span-7">
+      <img
+        src={conceptImage}
+        alt="boule de boeuf en cours d'écrasement sur la plancha — méthode smash"
+        class="w-full aspect-[4/3] object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="md:col-span-5 prose-body lc space-y-5">
+      <p class="lead">
+        un smash burger, c'est l'inverse d'un gros steak épais. c'est une boule de viande fraîche,
+        écrasée violemment sur une plaque chauffée à plus de 250°c, qui développe en quelques
+        secondes une croûte caramélisée — la fameuse réaction de maillard.
+      </p>
+      <p>
+        cette croûte fine et craquante enferme tous les sucs à l'intérieur. la viande reste juteuse,
+        le goût est concentré, et l'épaisseur du steak permet de manger le burger en quatre bouchées
+        propres, sans qu'il s'effondre.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-[var(--color-ink)] text-[var(--color-bg)]">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 md:gap-16">
+      <div>
+        <p class="lc meta text-white/60 mb-3">les produits</p>
+        <h2 class="lc page-title">on sélectionne moins, on choisit mieux.</h2>
+      </div>
+      <div class="prose-body lc space-y-5 text-white/90">
+        <p>
+          notre boeuf vient d'un boucher du pays basque qui travaille avec des éleveurs de la
+          région. on reçoit la viande fraîche chaque matin, hachée du jour, jamais congelée.
+        </p>
+        <p>
+          le pain est fait par un boulanger biarrot — une brioche moelleuse, légèrement sucrée,
+          assez résistante pour ne pas se gorger de jus. on le toaste au beurre côté mie avant le
+          dressage.
+        </p>
+        <p>
+          les pickles, le coleslaw et les sauces sont préparés à l'intérieur du restaurant. on
+          travaille avec un maraîcher local pour les légumes et un producteur de limonade
+          artisanale pour les boissons.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-12 gap-10 md:gap-16 items-center">
+    <div class="md:col-span-5 order-2 md:order-1 prose-body lc space-y-5">
+      <p class="lead">
+        on a ouvert {site.name.toLowerCase()} à biarritz parce qu'on cherchait, ici, le burger qu'on
+        n'arrivait pas à trouver : direct, propre, sans posture.
+      </p>
+      <p>
+        l'idée n'est pas d'inventer le burger ultime ni d'ajouter du foie gras dessus. l'idée, c'est
+        de bien faire trois recettes simples et de servir vite. le menu est court parce que c'est
+        comme ça qu'on peut tout préparer le jour même.
+      </p>
+      <p>
+        on est ouverts du mardi au samedi, midi et soir. le service est rapide, le comptoir est
+        ouvert, et on encourage l'à-emporter pour aller manger les pieds dans le sable.
+      </p>
+    </div>
+    <div class="md:col-span-7 order-1 md:order-2">
+      <img
+        src={detailImage}
+        alt="smash burger fini : croûte caramélisée, american cheese fondu, pain brioché toasté"
+        class="w-full aspect-[4/3] object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </section>
+
+  <section class="border-t border-[var(--color-line)] bg-[var(--color-bg)]">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-12 gap-10 md:gap-16">
+      <div class="md:col-span-7">
+        <img
+          src={friesImage}
+          alt="frites coupées maison, cuisson à la graisse de boeuf, fleur de sel"
+          class="w-full aspect-[4/3] object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="md:col-span-5 prose-body lc space-y-5">
+        <p class="lc meta">les frites</p>
+        <h2 class="lc section-title mb-2">cuites à la graisse de boeuf.</h2>
+        <p>
+          pommes de terre fraîches, taillées chaque matin, cuites deux fois — d'abord à basse
+          température dans un mélange d'huile, puis saisies dans la graisse de boeuf pour la croûte
+          finale. fleur de sel, point.
+        </p>
+        <p>
+          pour les régimes végétariens, on a une friteuse dédiée à l'huile de tournesol — précisez
+          au moment de la commande.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 py-20 md:py-28 lc">
+    <p class="meta mb-4">questions fréquentes sur la méthode</p>
+    <h2 class="section-title mb-10">on vous explique.</h2>
+
+    <div class="space-y-10 prose-body">
+      <div>
+        <h3 class="font-bold text-lg mb-2">pourquoi écraser la viande ?</h3>
+        <p>
+          parce que le contact maximum avec la plaque chaude crée une croûte caramélisée intense.
+          c'est cette croûte qui fait tout le goût du smash burger. un steak épais, lui, garde sa
+          texture mais perd ce coup de feu.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg mb-2">la viande n'est-elle pas trop cuite ?</h3>
+        <p>
+          non. on écrase fin et on cuit court. quarante-cinq secondes par face suffisent. la croûte
+          se forme en surface pendant que l'intérieur reste rosé.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg mb-2">pourquoi de l'american cheese ?</h3>
+        <p>
+          parce qu'il fond uniformément sur la chaleur résiduelle de la viande, sans graisser. le
+          goût est plus doux qu'un cheddar affiné — on cherche le liant, pas la complexité.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg mb-2">est-ce un burger à l'américaine ?</h3>
+        <p>
+          la méthode vient des diners du middle west. mais on travaille avec des produits français,
+          basques quand c'est possible. le résultat est plus propre, plus précis, plus court qu'un
+          burger américain industriel.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

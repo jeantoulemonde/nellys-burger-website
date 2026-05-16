@@ -1,0 +1,37 @@
+---
+export interface Props {
+  image: string;
+  imageAlt: string;
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+}
+
+const { image, imageAlt, eyebrow, title, subtitle } = Astro.props;
+---
+
+<section class="relative w-full h-[80vh] min-h-[520px] overflow-hidden bg-black">
+  <img
+    src={image}
+    alt={imageAlt}
+    class="absolute inset-0 w-full h-full object-cover opacity-90"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative h-full mx-auto max-w-6xl px-5 md:px-8 flex flex-col justify-end pb-12 md:pb-20 text-white">
+    {eyebrow && <p class="lc meta text-white/80 mb-3 md:mb-4">{eyebrow}</p>}
+    <h1 class="lc hero-title max-w-4xl">{title}</h1>
+    {
+      subtitle && (
+        <p class="lc lead mt-4 md:mt-6 max-w-2xl text-white/85">{subtitle}</p>
+      )
+    }
+  </div>
+</section>

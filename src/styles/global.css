@@ -1,0 +1,110 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+
+  --color-bg: #fafaf7;
+  --color-ink: #0a0a0a;
+  --color-ink-muted: #5a5a57;
+  --color-line: #e8e6df;
+  --color-accent: #b23a2c;
+
+  --tracking-tighter-1: -0.03em;
+  --tracking-tighter-2: -0.02em;
+  --tracking-tighter-3: -0.015em;
+  --tracking-tighter-4: -0.01em;
+  --tracking-tighter-5: -0.005em;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tighter-2);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@utility lc {
+  text-transform: lowercase;
+}
+
+@utility hero-title {
+  font-weight: 700;
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: var(--tracking-tighter-1);
+}
+
+@utility page-title {
+  font-weight: 700;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tighter-2);
+}
+
+@utility section-title {
+  font-weight: 700;
+  font-size: clamp(1.625rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-tighter-3);
+}
+
+@utility lead {
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+@utility prose-body {
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--color-ink);
+}
+
+@utility meta {
+  font-weight: 400;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}

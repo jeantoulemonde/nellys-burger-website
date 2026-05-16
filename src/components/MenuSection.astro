@@ -1,0 +1,28 @@
+---
+import MenuItem from './MenuItem.astro';
+import type { MenuSection as MenuSectionType } from '~/data/menu';
+
+export interface Props {
+  section: MenuSectionType;
+}
+
+const { section } = Astro.props;
+---
+
+<section
+  id={section.id}
+  class="py-10 md:py-16"
+  itemprop="hasMenuSection"
+  itemscope
+  itemtype="https://schema.org/MenuSection"
+>
+  <meta itemprop="name" content={section.title} />
+  <header class="flex items-baseline justify-between mb-6 md:mb-8">
+    <h2 class="lc section-title">{section.title}</h2>
+    <span class="lc meta">{section.items.length} {section.items.length > 1 ? 'références' : 'référence'}</span>
+  </header>
+
+  <div>
+    {section.items.map((item) => <MenuItem {...item} />)}
+  </div>
+</section>

@@ -1,0 +1,197 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Hero from '~/components/Hero.astro';
+import InfoBlock from '~/components/InfoBlock.astro';
+import MenuItem from '~/components/MenuItem.astro';
+import { site } from '~/data/site';
+import { menu } from '~/data/menu';
+
+const heroImage =
+  'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=2000&q=80';
+const biarritzImage =
+  'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=1600&q=80';
+const smashImage =
+  'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=1600&q=80';
+
+const dayMap: Record<string, string> = {
+  Mo: 'Monday',
+  Tu: 'Tuesday',
+  We: 'Wednesday',
+  Th: 'Thursday',
+  Fr: 'Friday',
+  Sa: 'Saturday',
+  Su: 'Sunday',
+};
+
+const openingHoursSpecification = site.hours.map((slot) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: slot.days.map((d) => dayMap[d]),
+  opens: slot.opens,
+  closes: slot.closes,
+}));
+
+const restaurantSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': `${site.url}#restaurant`,
+  name: site.name,
+  url: site.url,
+  image: [new URL(heroImage).toString()],
+  description: site.description,
+  servesCuisine: ['Burgers', 'American', 'Smash burger'],
+  priceRange: site.priceRange,
+  telephone: site.phone,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address,
+    addressLocality: site.city,
+    postalCode: site.postalCode,
+    addressRegion: site.region,
+    addressCountry: site.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  openingHoursSpecification,
+  hasMenu: `${site.url}/menu`,
+  sameAs: [site.instagram],
+  acceptsReservations: 'False',
+};
+
+const previewItems = menu[0].items.slice(0, 3);
+---
+
+<Layout
+  title={`smash burger artisanal à biarritz — ${site.name}`}
+  description={site.description}
+  path="/"
+  type="restaurant"
+  jsonLd={restaurantSchema}
+>
+  <Hero
+    image={heroImage}
+    imageAlt="smash burger artisanal — boeuf frais, american cheese fondu, pain brioché"
+    eyebrow="smash burger · biarritz"
+    title="boeuf frais. pain brioché. american cheese."
+    subtitle="trois burgers. des frites cuites à la graisse de boeuf. rien de plus."
+  />
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24 grid gap-10 md:grid-cols-2 md:gap-16">
+    <div>
+      <p class="lc meta mb-4">la maison</p>
+      <h2 class="lc section-title mb-6">
+        un smash burger, ce n'est pas un steak haché. c'est un geste.
+      </h2>
+    </div>
+    <div class="prose-body lc space-y-4">
+      <p>
+        chez nous, une boule de boeuf frais est écrasée sur une plancha brûlante. la croûte se forme
+        en quelques secondes — caramélisation, sucs, jus. on pose une tranche d'american cheese qui
+        fond dessus, on coince le tout entre deux moitiés de pain brioché toasté au beurre.
+      </p>
+      <p>
+        on travaille avec un boucher du pays basque, un boulanger biarrot et des producteurs locaux
+        pour les pickles, le coleslaw et les sauces. carte courte, volontairement.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3">
+    <InfoBlock label="où" title={`${site.address}, ${site.city}`} href="/contact" cta="voir le plan">
+      {site.address}<br />{site.postalCode} {site.city}
+    </InfoBlock>
+    <InfoBlock label="quand" title="mardi — samedi, midi & soir" href="/contact" cta="voir tous les horaires">
+      mardi — jeudi · 12h—14h30 · 19h—22h30<br />
+      vendredi — samedi · 12h—14h30 · 19h—23h
+    </InfoBlock>
+    <InfoBlock label="comment" title="sur place · à emporter" href="/menu" cta="voir le menu">
+      service à emporter en 10 minutes<br />
+      pas de réservation — venez tôt
+    </InfoBlock>
+  </section>
+
+  <section class="bg-[var(--color-ink)] text-[var(--color-bg)] mt-20">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <p class="lc meta text-white/60 mb-3">le menu</p>
+        <h2 class="lc page-title mb-6">
+          trois burgers, des frites, c'est tout.
+        </h2>
+        <p class="lc prose-body text-white/85 max-w-md mb-8">
+          une carte courte, pensée pour aller vite et bien faire. tous nos produits sont préparés
+          le jour même, en quantités limitées.
+        </p>
+        <a
+          href="/menu"
+          class="lc inline-block text-sm font-bold border-b border-white pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+        >
+          voir le menu complet
+        </a>
+      </div>
+
+      <div class="bg-[var(--color-bg)] text-[var(--color-ink)] p-6 md:p-10">
+        {previewItems.map((item) => <MenuItem {...item} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <img
+      src={biarritzImage}
+      alt="vue de la côte basque à biarritz, près du restaurant"
+      class="w-full aspect-[4/5] object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    <div>
+      <p class="lc meta mb-4">à biarritz</p>
+      <h2 class="lc section-title mb-6">à deux pas de la grande plage.</h2>
+      <div class="prose-body lc space-y-4">
+        <p>
+          on est installés à biarritz, dans un quartier vivant entre les halles et le centre. après
+          une session de surf, une balade sur la côte des basques ou une journée en ville, on est à
+          la bonne adresse pour manger vrai sans perdre une heure.
+        </p>
+        <p>
+          le restaurant est petit, l'attente fait partie de l'ambiance. on prend les commandes à
+          emporter au comptoir et on les prépare en moins de dix minutes.
+        </p>
+      </div>
+      <a
+        href="/le-concept"
+        class="lc inline-block mt-6 text-sm font-bold border-b border-[var(--color-ink)] pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+      >
+        notre concept
+      </a>
+    </div>
+  </section>
+
+  <section class="border-t border-[var(--color-line)]">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <p class="lc meta mb-3">instagram</p>
+        <h2 class="lc section-title">les coulisses, les nouveautés, les ruptures.</h2>
+      </div>
+      <div class="flex md:justify-end">
+        <a
+          href={site.instagram}
+          rel="me noopener"
+          target="_blank"
+          class="lc inline-flex items-center gap-2 text-base font-bold border border-[var(--color-ink)] px-5 py-3 hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)] transition-colors"
+        >
+          nous suivre sur instagram {site.instagramHandle}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <img
+    src={smashImage}
+    alt="smash burger en cours de cuisson sur la plancha"
+    class="hidden"
+    aria-hidden="true"
+  />
+</Layout>

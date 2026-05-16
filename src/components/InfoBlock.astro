@@ -1,0 +1,29 @@
+---
+export interface Props {
+  label: string;
+  title: string;
+  href?: string;
+  cta?: string;
+}
+
+const { label, title, href, cta } = Astro.props;
+---
+
+<div class="border-t border-[var(--color-line)] py-6 md:py-8">
+  <p class="lc meta">{label}</p>
+  <div class="lc font-bold text-xl md:text-2xl mt-2 leading-tight">
+    <slot>
+      {title}
+    </slot>
+  </div>
+  {
+    href && cta && (
+      <a
+        href={href}
+        class="lc inline-block mt-4 text-sm font-bold border-b border-[var(--color-ink)] pb-0.5 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+      >
+        {cta}
+      </a>
+    )
+  }
+</div>

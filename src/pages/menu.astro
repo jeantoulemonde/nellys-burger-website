@@ -1,0 +1,67 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import MenuSectionComp from '~/components/MenuSection.astro';
+import { site } from '~/data/site';
+import { menu } from '~/data/menu';
+
+const menuSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Menu',
+  name: `menu — ${site.name}`,
+  inLanguage: 'fr',
+  hasMenuSection: menu.map((section) => ({
+    '@type': 'MenuSection',
+    name: section.title,
+    hasMenuItem: section.items.map((item) => ({
+      '@type': 'MenuItem',
+      name: item.name,
+      description: item.description,
+      offers: {
+        '@type': 'Offer',
+        price: item.price,
+        priceCurrency: 'EUR',
+      },
+      ...(item.tag === 'végétarien'
+        ? { suitableForDiet: 'https://schema.org/VegetarianDiet' }
+        : {}),
+    })),
+  })),
+};
+---
+
+<Layout
+  title={`le menu — smash burgers à biarritz`}
+  description="le menu complet : cheeseburger classique, cheeseburger bacon, vg+, frites graisse de boeuf, coleslaw, boissons. tous les prix."
+  path="/menu"
+  jsonLd={menuSchema}
+>
+  <section class="mx-auto max-w-3xl px-5 md:px-8 pt-16 md:pt-24 pb-8">
+    <p class="lc meta mb-4">le menu</p>
+    <h1 class="lc page-title mb-6">une carte courte, des produits frais.</h1>
+    <p class="lc lead max-w-xl">
+      trois burgers, deux sides, quelques boissons. les prix sont en euros. on accepte la carte
+      bleue et les espèces. service midi et soir, du mardi au samedi.
+    </p>
+  </section>
+
+  <div
+    class="mx-auto max-w-3xl px-5 md:px-8 pb-24"
+    itemscope
+    itemtype="https://schema.org/Menu"
+  >
+    <meta itemprop="name" content={`menu — ${site.name}`} />
+    {menu.map((section) => <MenuSectionComp section={section} />)}
+  </div>
+
+  <section class="border-t border-[var(--color-line)]">
+    <div class="mx-auto max-w-3xl px-5 md:px-8 py-12 lc">
+      <p class="meta mb-2">à savoir</p>
+      <ul class="prose-body space-y-2 text-[0.95rem]">
+        <li>· tous les pains sont fournis par un boulanger biarrot.</li>
+        <li>· la viande est livrée fraîche chaque matin par un boucher du pays basque.</li>
+        <li>· les frites sont cuites à la graisse de boeuf — précisez si vous préférez une cuisson végétale, on a une friteuse dédiée.</li>
+        <li>· allergènes : la liste détaillée est disponible au comptoir.</li>
+      </ul>
+    </div>
+  </section>
+</Layout>

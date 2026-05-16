@@ -1,0 +1,63 @@
+---
+import { site } from '~/data/site';
+---
+
+<footer class="border-t border-[var(--color-line)] mt-24">
+  <div class="mx-auto max-w-6xl px-5 md:px-8 py-12 grid gap-10 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <p class="lc font-bold text-xl">{site.name.toLowerCase()}</p>
+      <p class="lc meta mt-2">smash burgers · biarritz</p>
+    </div>
+
+    <div>
+      <h2 class="lc font-bold text-sm mb-3">adresse</h2>
+      <address class="not-italic prose-body text-[0.95rem] leading-relaxed">
+        {site.address}<br />
+        {site.postalCode} {site.city}
+      </address>
+      <p class="lc meta mt-3">
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="hover:text-[var(--color-ink)]">
+          {site.phone}
+        </a>
+      </p>
+    </div>
+
+    <div>
+      <h2 class="lc font-bold text-sm mb-3">horaires</h2>
+      <ul class="meta space-y-1">
+        {
+          site.hoursDisplay.map((row) => (
+            <li class="lc">
+              <span class="font-bold text-[var(--color-ink)]">{row.day}</span>
+              <span class="block">{row.value}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--color-line)]">
+    <div
+      class="mx-auto max-w-6xl px-5 md:px-8 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+    >
+      <p class="lc meta">© {new Date().getFullYear()} {site.name.toLowerCase()} — tous droits réservés</p>
+      <ul class="flex items-center gap-5 lc meta">
+        <li>
+          <a
+            href={site.instagram}
+            rel="me noopener"
+            target="_blank"
+            class="hover:text-[var(--color-ink)]"
+            aria-label="Instagram"
+          >
+            instagram {site.instagramHandle}
+          </a>
+        </li>
+        <li>
+          <a href="/mentions-legales" class="hover:text-[var(--color-ink)]">mentions légales</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>

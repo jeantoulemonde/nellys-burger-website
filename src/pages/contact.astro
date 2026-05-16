@@ -1,0 +1,189 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { site } from '~/data/site';
+
+const faq = [
+  {
+    q: 'où peut-on se garer ?',
+    a: "le quartier est en zone payante. les parkings publics les plus proches sont à 3 minutes à pied : parking les halles et parking sainte-eugénie. en haute saison, mieux vaut venir en vélo ou à pied.",
+  },
+  {
+    q: 'avez-vous une option végétarienne ?',
+    a: "oui — le vg+ est notre burger végétarien, avec une galette de légumes maison et le même pain brioché. il n'est pas vegan (american cheese, sauce).",
+  },
+  {
+    q: 'peut-on commander à emporter ?',
+    a: "oui. on prend les commandes directement au comptoir, la préparation prend environ 10 minutes. on ne fait pas de livraison pour préserver la qualité — un smash burger ne tient pas 30 minutes dans une boîte.",
+  },
+  {
+    q: 'peut-on réserver une table ?',
+    a: "non, on fonctionne en service continu sans réservation. il y a parfois un peu d'attente le vendredi et samedi soir — venez tôt ou comptez 15 minutes au comptoir.",
+  },
+  {
+    q: 'acceptez-vous les groupes ?',
+    a: "la salle compte environ 24 places assises. pour des groupes de plus de 6 personnes, prévenez-nous par téléphone ou instagram pour qu'on puisse anticiper.",
+  },
+  {
+    q: 'avez-vous des options sans gluten ?',
+    a: "on peut servir tous nos burgers sans pain, en assiette. les frites et le coleslaw sont naturellement sans gluten. pour les allergies sévères, prévenez l'équipe — la liste des allergènes est disponible au comptoir.",
+  },
+];
+
+const dayMap: Record<string, string> = {
+  Mo: 'Monday',
+  Tu: 'Tuesday',
+  We: 'Wednesday',
+  Th: 'Thursday',
+  Fr: 'Friday',
+  Sa: 'Saturday',
+  Su: 'Sunday',
+};
+
+const openingHoursSpecification = site.hours.map((slot) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: slot.days.map((d) => dayMap[d]),
+  opens: slot.opens,
+  closes: slot.closes,
+}));
+
+const contactSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Restaurant',
+    name: site.name,
+    url: site.url,
+    telephone: site.phone,
+    email: site.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: site.address,
+      addressLocality: site.city,
+      postalCode: site.postalCode,
+      addressRegion: site.region,
+      addressCountry: site.country,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: site.geo.latitude,
+      longitude: site.geo.longitude,
+    },
+    openingHoursSpecification,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  },
+];
+
+const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullAddress)}&z=15&output=embed`;
+---
+
+<Layout
+  title="contact, adresse et horaires — biarritz"
+  description={`adresse, horaires, téléphone et plan d'accès. ${site.name} à biarritz, ${site.address}.`}
+  path="/contact"
+  jsonLd={contactSchema}
+>
+  <section class="mx-auto max-w-6xl px-5 md:px-8 pt-16 md:pt-24 pb-12">
+    <p class="lc meta mb-4">contact</p>
+    <h1 class="lc page-title max-w-3xl">passer nous voir, nous écrire, nous suivre.</h1>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-2 gap-10 md:gap-16 pb-16 md:pb-24">
+    <div>
+      <h2 class="lc section-title mb-6">adresse</h2>
+      <address class="not-italic prose-body text-lg leading-relaxed mb-6">
+        {site.name}<br />
+        {site.address}<br />
+        {site.postalCode} {site.city}<br />
+        France
+      </address>
+
+      <h2 class="lc section-title mb-4 mt-12">contacter</h2>
+      <ul class="prose-body space-y-2">
+        <li>
+          <span class="lc meta">téléphone</span><br />
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="font-bold hover:text-[var(--color-accent)]">
+            {site.phone}
+          </a>
+        </li>
+        <li>
+          <span class="lc meta">email</span><br />
+          <a href={`mailto:${site.email}`} class="font-bold hover:text-[var(--color-accent)]">
+            {site.email}
+          </a>
+        </li>
+        <li>
+          <span class="lc meta">instagram</span><br />
+          <a
+            href={site.instagram}
+            rel="me noopener"
+            target="_blank"
+            class="lc font-bold hover:text-[var(--color-accent)]"
+          >
+            {site.instagramHandle}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="lc section-title mb-6">horaires</h2>
+      <dl class="border-t border-[var(--color-line)]">
+        {
+          site.hoursDisplay.map((row) => (
+            <div class="flex justify-between py-3 border-b border-[var(--color-line)] prose-body lc">
+              <dt class="font-bold">{row.day}</dt>
+              <dd class="text-right">{row.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="lc meta mt-4">service midi : 12h — 14h30 · service soir : à partir de 19h</p>
+    </div>
+  </section>
+
+  <section class="bg-[var(--color-ink)]">
+    <div class="w-full aspect-[16/9] md:aspect-[21/9]">
+      <iframe
+        title="plan d'accès — google maps"
+        src={mapsEmbed}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="w-full h-full border-0"
+      ></iframe>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 py-20 md:py-28 lc">
+    <p class="meta mb-3">questions fréquentes</p>
+    <h2 class="page-title mb-10">les questions qu'on nous pose le plus.</h2>
+
+    <div class="space-y-8">
+      {
+        faq.map((item) => (
+          <details class="border-b border-[var(--color-line)] pb-5 group">
+            <summary class="cursor-pointer list-none flex items-start gap-4 py-2">
+              <span class="font-bold text-lg flex-1">{item.q}</span>
+              <span
+                class="meta shrink-0 mt-1 transition-transform group-open:rotate-45"
+                aria-hidden="true"
+              >
+                +
+              </span>
+            </summary>
+            <p class="prose-body mt-2 text-[0.95rem] max-w-2xl">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

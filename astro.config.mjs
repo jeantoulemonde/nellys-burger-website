@@ -1,0 +1,24 @@
+// @ts-check
+import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
+
+const SITE_URL = 'https://example.com';
+
+export default defineConfig({
+  site: SITE_URL,
+  trailingSlash: 'never',
+  build: {
+    format: 'file',
+  },
+  integrations: [
+    sitemap({
+      changefreq: 'monthly',
+      priority: 0.8,
+    }),
+  ],
+  vite: {
+    // @ts-expect-error — tailwindcss vite plugin uses a different Plugin type than Astro's bundled vite; safe at runtime
+    plugins: [tailwindcss()],
+  },
+});
