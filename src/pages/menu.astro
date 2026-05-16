@@ -18,7 +18,7 @@ const menuSchema = {
       description: item.description,
       offers: {
         '@type': 'Offer',
-        price: item.price,
+        price: item.price.toFixed(2),
         priceCurrency: 'EUR',
       },
       ...(item.tag === 'végétarien'
@@ -30,17 +30,17 @@ const menuSchema = {
 ---
 
 <Layout
-  title={`le menu — smash burgers à biarritz`}
-  description="le menu complet : cheeseburger classique, cheeseburger bacon, vg+, frites graisse de boeuf, coleslaw, boissons. tous les prix."
+  title="menu — smash burger à emporter à biarritz"
+  description="le menu complet de nelly's burger à biarritz : cheeseburger classique 9€, bacon 10€, vg+ 9,5€, frites graisse de boeuf 4€, boissons. à emporter."
   path="/menu"
   jsonLd={menuSchema}
 >
   <section class="mx-auto max-w-3xl px-5 md:px-8 pt-16 md:pt-24 pb-8">
     <p class="lc meta mb-4">le menu</p>
-    <h1 class="lc page-title mb-6">une carte courte, des produits frais.</h1>
+    <h1 class="lc page-title mb-6">trois burgers, deux sides, quelques boissons.</h1>
     <p class="lc lead max-w-xl">
-      trois burgers, deux sides, quelques boissons. les prix sont en euros. on accepte la carte
-      bleue et les espèces. service midi et soir, du mardi au samedi.
+      la carte ne bouge pas. tous les prix sont en euros. carte bleue et espèces acceptées. à
+      emporter uniquement.
     </p>
   </section>
 
@@ -57,10 +57,12 @@ const menuSchema = {
     <div class="mx-auto max-w-3xl px-5 md:px-8 py-12 lc">
       <p class="meta mb-2">à savoir</p>
       <ul class="prose-body space-y-2 text-[0.95rem]">
-        <li>· tous les pains sont fournis par un boulanger biarrot.</li>
-        <li>· la viande est livrée fraîche chaque matin par un boucher du pays basque.</li>
-        <li>· les frites sont cuites à la graisse de boeuf — précisez si vous préférez une cuisson végétale, on a une friteuse dédiée.</li>
-        <li>· allergènes : la liste détaillée est disponible au comptoir.</li>
+        <li>· viande hachée du jour, jamais congelée.</li>
+        <li>· pain brioché toasté au beurre, fournisseur local.</li>
+        <li>· pickles, sauces et coleslaw préparés sur place.</li>
+        <li>· frites cuites à la graisse de boeuf — friteuse végétale dédiée sur demande.</li>
+        <li>· pas de réservation. pas de téléphone. pas de livraison via plateforme.</li>
+        <li>· allergènes : liste détaillée disponible au comptoir.</li>
       </ul>
     </div>
   </section>

@@ -1,37 +1,117 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image, getImage } from 'astro:assets';
+
 export interface Props {
-  image: string;
-  imageAlt: string;
+  video?: string;
+  videoBytes?: number;
+  posterImage: ImageMetadata;
+  posterAlt: string;
   eyebrow?: string;
   title: string;
   subtitle?: string;
 }
 
-const { image, imageAlt, eyebrow, title, subtitle } = Astro.props;
+const {
+  video,
+  videoBytes = 0,
+  posterImage,
+  posterAlt,
+  eyebrow,
+  title,
+  subtitle,
+} = Astro.props;
+
+const heavy = videoBytes > 2 * 1024 * 1024;
+
+const posterOptimized = await getImage({
+  src: posterImage,
+  width: 1920,
+  format: 'jpg',
+  quality: 75,
+});
 ---
 
 <section class="relative w-full h-[80vh] min-h-[520px] overflow-hidden bg-black">
-  <img
-    src={image}
-    alt={imageAlt}
-    class="absolute inset-0 w-full h-full object-cover opacity-90"
-    loading="eager"
-    fetchpriority="high"
-    decoding="async"
-  />
+  {
+    video ? (
+      <video
+        id="hero-video"
+        class="absolute inset-0 w-full h-full object-cover"
+        poster={posterOptimized.src}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+        data-src={video}
+        data-heavy={heavy ? 'true' : 'false'}
+      />
+    ) : (
+      <Image
+        src={posterImage}
+        alt={posterAlt}
+        widths={[640, 960, 1280, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+    )
+  }
+
   <div
-    class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60"
+    class="absolute inset-0 bg-black/25"
     aria-hidden="true"
   >
   </div>
 
-  <div class="relative h-full mx-auto max-w-6xl px-5 md:px-8 flex flex-col justify-end pb-12 md:pb-20 text-white">
-    {eyebrow && <p class="lc meta text-white/80 mb-3 md:mb-4">{eyebrow}</p>}
+  <div
+    class="relative h-full mx-auto max-w-6xl px-5 md:px-8 flex flex-col justify-end pb-12 md:pb-20 text-white"
+  >
+    {eyebrow && <p class="lc meta text-white/85 mb-3 md:mb-4">{eyebrow}</p>}
     <h1 class="lc hero-title max-w-4xl">{title}</h1>
-    {
-      subtitle && (
-        <p class="lc lead mt-4 md:mt-6 max-w-2xl text-white/85">{subtitle}</p>
-      )
-    }
+    {subtitle && <p class="lc lead mt-4 md:mt-6 max-w-2xl text-white/90">{subtitle}</p>}
   </div>
 </section>
+
+{
+  video && (
+    <script is:inline>
+      (function () {
+        var v = document.getElementById('hero-video');
+        if (!v) return;
+        var src = v.getAttribute('data-src');
+        var heavy = v.getAttribute('data-heavy') === 'true';
+        if (!src) return;
+
+        var isMobile = window.matchMedia('(max-width: 639px)').matches;
+        var conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+        var slow = false;
+        if (conn) {
+          if (conn.saveData) slow = true;
+          if (conn.effectiveType && ['slow-2g', '2g', '3g'].indexOf(conn.effectiveType) !== -1) {
+            slow = true;
+          }
+        }
+
+        // mobile + heavy video → keep poster, never load the video
+        if (isMobile && heavy) return;
+        if (slow) return;
+
+        var source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        v.appendChild(source);
+        v.load();
+        var p = v.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(function () {
+            /* autoplay blocked — poster stays visible */
+          });
+        }
+      })();
+    </script>
+  )
+}

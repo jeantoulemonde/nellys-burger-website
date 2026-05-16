@@ -5,21 +5,17 @@ import { site } from '~/data/site';
 <footer class="border-t border-[var(--color-line)] mt-24">
   <div class="mx-auto max-w-6xl px-5 md:px-8 py-12 grid gap-10 md:grid-cols-4">
     <div class="md:col-span-2">
-      <p class="lc font-bold text-xl">{site.name.toLowerCase()}</p>
-      <p class="lc meta mt-2">smash burgers · biarritz</p>
+      <p class="lc font-bold text-xl">{site.displayName}</p>
+      <p class="lc meta mt-2">smash burger à emporter · biarritz</p>
     </div>
 
     <div>
       <h2 class="lc font-bold text-sm mb-3">adresse</h2>
       <address class="not-italic prose-body text-[0.95rem] leading-relaxed">
-        {site.address}<br />
+        {site.street}<br />
         {site.postalCode} {site.city}
       </address>
-      <p class="lc meta mt-3">
-        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="hover:text-[var(--color-ink)]">
-          {site.phone}
-        </a>
-      </p>
+      <p class="lc meta mt-3">à emporter uniquement</p>
     </div>
 
     <div>
@@ -41,7 +37,7 @@ import { site } from '~/data/site';
     <div
       class="mx-auto max-w-6xl px-5 md:px-8 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
     >
-      <p class="lc meta">© {new Date().getFullYear()} {site.name.toLowerCase()} — tous droits réservés</p>
+      <p class="lc meta">© {new Date().getFullYear()} {site.displayName} — tous droits réservés</p>
       <ul class="flex items-center gap-5 lc meta">
         <li>
           <a
@@ -49,7 +45,7 @@ import { site } from '~/data/site';
             rel="me noopener"
             target="_blank"
             class="hover:text-[var(--color-ink)]"
-            aria-label="Instagram"
+            aria-label="Instagram Nelly's Biarritz"
           >
             instagram {site.instagramHandle}
           </a>

@@ -25,14 +25,14 @@ export const menu: MenuSection[] = [
       {
         name: 'cheeseburger bacon',
         description:
-          'boeuf, double american cheese, bacon fumé, pickles maison, oignons crus, laitue, sauce maison',
-        price: 11,
+          "boeuf, american cheese, oignons confits, poitrine fumée, laitue, sauce nelly's",
+        price: 10,
       },
       {
         name: 'vg+',
         description:
-          'galette de légumes maison, american cheese, pickles, oignons crus, laitue, sauce maison',
-        price: 10,
+          'falafel aux noisettes, aubergine fondante, american cheese, laitue, sauce au fromage blanc',
+        price: 9.5,
         tag: 'végétarien',
       },
     ],
@@ -42,14 +42,14 @@ export const menu: MenuSection[] = [
     title: 'sides',
     items: [
       {
-        name: 'frites graisse de boeuf',
+        name: 'frites à la graisse de boeuf',
         description: 'pommes de terre fraîches, cuisson à la graisse de boeuf, fleur de sel',
-        price: 4.5,
+        price: 4,
       },
       {
         name: 'coleslaw',
-        description: 'chou blanc, carotte, sauce yaourt-mayonnaise maison',
-        price: 4,
+        description: 'salade de carotte et de chou',
+        price: 3,
       },
     ],
   },
@@ -57,11 +57,12 @@ export const menu: MenuSection[] = [
     id: 'boissons',
     title: 'boissons',
     items: [
-      { name: 'coca-cola', description: '33 cl', price: 3.5 },
-      { name: 'coca-cola zero', description: '33 cl', price: 3.5 },
-      { name: 'limonade artisanale', description: 'producteur local, 25 cl', price: 4 },
-      { name: 'bière blonde pression', description: 'brasserie locale, 25 cl', price: 5 },
-      { name: 'eau plate', description: '50 cl', price: 2.5 },
+      { name: 'canettes', description: 'coca, coca zero, fanta, sprite — 33 cl', price: 2 },
+      { name: 'thé glacé maison', description: 'infusion du jour, peu sucré', price: 4 },
+      { name: 'citronnade maison', description: 'citron pressé, eau, sucre de canne', price: 4 },
+      { name: 'kombucha datxa', description: 'kombucha basque, 33 cl', price: 4.5 },
+      { name: 'bière asahi bouteille', description: '33 cl', price: 4 },
+      { name: "bière nelly's x landberry", description: 'collab avec la brasserie landberry, 44 cl', price: 6 },
     ],
   },
 ];
