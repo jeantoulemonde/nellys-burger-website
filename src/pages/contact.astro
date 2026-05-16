@@ -50,12 +50,16 @@ const openingHoursSpecification = site.hours.map((slot) => ({
   closes: slot.closes,
 }));
 
+// À remplacer à la mise en prod : remplacer site.url (https://example.com) par l'URL canonique
+const abs = (p: string) => new URL(p, site.url).toString();
+
 const contactSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
     name: site.name,
     url: site.url,
+    logo: abs('/media/logo.png'),
     address: {
       '@type': 'PostalAddress',
       streetAddress: site.street,

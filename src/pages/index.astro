@@ -40,13 +40,21 @@ const ogImage = await getImage({
   quality: 80,
 });
 
+const schemaImageMenu = await getImage({ src: menuLightbox, width: 1600, format: 'jpg', quality: 80 });
+const schemaImageKitchen = await getImage({ src: kitchenWide, width: 1600, format: 'jpg', quality: 80 });
+const schemaImageCounter = await getImage({ src: counterPlancha, width: 1600, format: 'jpg', quality: 80 });
+
+// À remplacer à la mise en prod : remplacer site.url (https://example.com) par l'URL canonique
+const abs = (p: string) => new URL(p, site.url).toString();
+
 const restaurantSchema = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
   '@id': `${site.url}#restaurant`,
   name: site.name,
   url: site.url,
-  image: [new URL(ogImage.src, site.url).toString()],
+  logo: abs('/media/logo.png'),
+  image: [abs(schemaImageMenu.src), abs(schemaImageKitchen.src), abs(schemaImageCounter.src)],
   description: site.description,
   servesCuisine: site.cuisine,
   priceRange: site.priceRange,
@@ -67,7 +75,6 @@ const restaurantSchema = {
   hasMenu: `${site.url}/menu`,
   sameAs: [site.instagram],
   acceptsReservations: 'False',
-  takeawayOnly: true,
 };
 
 const previewItems = menu[0].items;
