@@ -11,10 +11,10 @@ document de référence pour les sessions futures. lis-le avant toute modificati
 
 ## parti pris typographique (non négociable)
 
-- **une seule famille** : inter tight (google fonts), poids **400** et **700** uniquement.
+- **une seule famille** : rethink sans (google fonts, par hans thiessen), poids **400 / 500 / 700 / 800**.
 - **tout en lowercase** pour : titres (h1–h6), navigation, labels, noms de produits, ctas. via la classe utilitaire `lc` (`text-transform: lowercase`).
 - **exceptions au lowercase** : adresses, noms propres dans le corps de texte, marques externes (instagram, google maps). ne **jamais** appliquer `lc` ou `text-transform: lowercase` à un `aria-label`, un `alt` ou un texte lu par les technologies d'assistance — la transformation est purement visuelle.
-- **contraste de graisses** : bold (700) pour titres et noms d'items, regular (400) pour descriptions et corps. pas de poids intermédiaire.
+- **contraste de graisses** : extra-bold (800) pour titres et noms d'items, regular (400) pour descriptions et corps, medium (500) pour emphase secondaire, bold (700) ponctuellement.
 - **tracking** : négatif sur les gros titres (-0.02 à -0.03em), neutre sur le corps.
 - **pas d'italique décoratif**, pas de serif, pas de fioriture.
 

@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Rethink Sans', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
 
   --color-bg: #fafaf7;
   --color-ink: #0a0a0a;
@@ -39,7 +39,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.1;
     letter-spacing: var(--tracking-tighter-2);
   }
@@ -67,21 +67,21 @@
 }
 
 @utility hero-title {
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(2.75rem, 8vw, 5.5rem);
   line-height: 1;
   letter-spacing: var(--tracking-tighter-1);
 }
 
 @utility page-title {
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   line-height: 1.05;
   letter-spacing: var(--tracking-tighter-2);
 }
 
 @utility section-title {
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(1.625rem, 3vw, 2.25rem);
   line-height: 1.15;
   letter-spacing: var(--tracking-tighter-3);
