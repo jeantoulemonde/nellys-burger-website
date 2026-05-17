@@ -139,18 +139,16 @@ const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
   }
 
   .menu-h1 {
-    font-family: var(--font-serif);
-    font-weight: 400;
+    font-family: var(--font-sans);
+    font-weight: 500;
     font-size: clamp(2rem, 5vw, 3rem);
     line-height: 1.15;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     color: var(--color-ink);
     max-width: 18ch;
     text-wrap: balance;
     text-transform: lowercase;
     margin: 0;
-    /* Fraunces variable, opsz haut pour les grands tailles = caractère plus dessiné */
-    font-variation-settings: 'opsz' 96, 'SOFT' 50;
   }
 
   .menu-lead {
