@@ -1,5 +1,5 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import Hero from '~/components/Hero.astro';
 import InfoBlock from '~/components/InfoBlock.astro';
@@ -10,7 +10,6 @@ import { menu } from '~/data/menu';
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
 import counterPlancha from '~/assets/photos/counter-plancha.jpg';
-import ceilingNeons from '~/assets/photos/ceiling-neons.jpg';
 
 const heroVideo = '/media/hero.mp4';
 const heroVideoBytes = 6_399_320;
@@ -159,13 +158,14 @@ const previewItems = menu[0].items;
   </section>
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-    <Image
+    <Picture
       src={kitchenWide}
       alt="cuisine de nelly's burger à biarritz : plancha, hotte inox, néons industriels"
+      formats={['avif', 'webp']}
       widths={[480, 768, 1024]}
       sizes="(min-width: 768px) 50vw, 100vw"
       loading="lazy"
-      class="w-full aspect-[4/5] object-cover"
+      class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)]"
     />
     <div>
       <p class="lc meta mb-4">à biarritz</p>
@@ -191,21 +191,14 @@ const previewItems = menu[0].items;
   </section>
 
   <section class="relative">
-    <Image
+    <Picture
       src={counterPlancha}
       alt="comptoir inox et plancha en cuisine ouverte chez nelly's biarritz"
+      formats={['avif', 'webp']}
       widths={[768, 1280, 1600]}
       sizes="100vw"
       loading="lazy"
       class="w-full h-[40vh] md:h-[55vh] object-cover"
-    />
-    <Image
-      src={ceilingNeons}
-      alt=""
-      widths={[400]}
-      sizes="0"
-      loading="lazy"
-      class="hidden"
     />
   </section>
 

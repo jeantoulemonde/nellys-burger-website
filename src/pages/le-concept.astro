@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import { site } from '~/data/site';
 
@@ -38,13 +38,14 @@ const articleSchema = {
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-12 gap-10 md:gap-16 pb-20 md:pb-28">
     <div class="md:col-span-7">
-      <Image
+      <Picture
         src={kitchenWide}
         alt="cuisine ouverte nelly's burger biarritz : plancha en service, hotte inox, néons industriels"
+        formats={['avif', 'webp']}
         widths={[480, 768, 1024, 1400]}
         sizes="(min-width: 768px) 58vw, 100vw"
         loading="eager"
-        class="w-full aspect-[4/3] object-cover"
+        class="w-full aspect-[4/3] object-cover rounded-[var(--radius-lg)]"
       />
     </div>
     <div class="md:col-span-5 prose-body lc space-y-5">
@@ -121,13 +122,14 @@ const articleSchema = {
       </p>
     </div>
     <div class="md:col-span-7 order-1 md:order-2">
-      <Image
+      <Picture
         src={counterPlancha}
         alt="comptoir inox et plancha — service en cours chez nelly's burger biarritz"
+        formats={['avif', 'webp']}
         widths={[480, 768, 1024, 1400]}
         sizes="(min-width: 768px) 58vw, 100vw"
         loading="lazy"
-        class="w-full aspect-[4/3] object-cover"
+        class="w-full aspect-[4/3] object-cover rounded-[var(--radius-lg)]"
       />
     </div>
   </section>
@@ -135,13 +137,14 @@ const articleSchema = {
   <section class="border-t border-[var(--color-line)]">
     <div class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-12 gap-10 md:gap-16">
       <div class="md:col-span-7">
-        <Image
+        <Picture
           src={ceilingNeons}
           alt="plafond brut et néons industriels — décor minimal de nelly's burger biarritz"
+          formats={['avif', 'webp']}
           widths={[480, 768, 1024, 1400]}
           sizes="(min-width: 768px) 58vw, 100vw"
           loading="lazy"
-          class="w-full aspect-[4/3] object-cover"
+          class="w-full aspect-[4/3] object-cover rounded-[var(--radius-lg)]"
         />
       </div>
       <div class="md:col-span-5 prose-body lc space-y-5">

@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import { site } from '~/data/site';
 
@@ -170,13 +170,14 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-12 gap-10 md:gap-16">
     <div class="md:col-span-7">
-      <Image
+      <Picture
         src={woodenBlinds}
         alt="stores en bois et lumière chaude à l'entrée de nelly's burger biarritz"
+        formats={['avif', 'webp']}
         widths={[480, 768, 1024, 1400]}
         sizes="(min-width: 768px) 58vw, 100vw"
         loading="lazy"
-        class="w-full aspect-[4/3] object-cover"
+        class="w-full aspect-[4/3] object-cover rounded-[var(--radius-lg)]"
       />
     </div>
     <div class="md:col-span-5 prose-body lc space-y-4">
@@ -187,13 +188,14 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
         grande plage est à dix minutes à pied. en remontant, le jardin public lui-même est à
         trente secondes — c'est un bon endroit pour s'asseoir et manger.
       </p>
-      <Image
+      <Picture
         src={streetCigarettes}
         alt="détail de façade rue du jardin public à biarritz, vitrine voisine"
+        formats={['avif', 'webp']}
         widths={[400, 640, 800]}
         sizes="(min-width: 768px) 30vw, 100vw"
         loading="lazy"
-        class="w-2/3 aspect-[4/5] object-cover mt-2"
+        class="w-2/3 aspect-[4/5] object-cover mt-2 rounded-[var(--radius-md)]"
       />
     </div>
   </section>

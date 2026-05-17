@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro';
-import { Image, getImage } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 
 export interface Props {
   video?: string;
@@ -52,9 +52,10 @@ const posterOptimized = await getImage({
         data-heavy={heavy ? 'true' : 'false'}
       />
     ) : (
-      <Image
+      <Picture
         src={posterImage}
         alt={posterAlt}
+        formats={['avif', 'webp']}
         widths={[640, 960, 1280, 1920]}
         sizes="100vw"
         loading="eager"
