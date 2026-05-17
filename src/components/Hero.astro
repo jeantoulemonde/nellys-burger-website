@@ -10,6 +10,7 @@ export interface Props {
   posterAlt: string;
   eyebrow?: string;
   title: string;
+  tagline?: string;
   subtitle?: string;
 }
 
@@ -21,6 +22,7 @@ const {
   posterAlt,
   eyebrow,
   title,
+  tagline,
   subtitle,
 } = Astro.props;
 
@@ -80,6 +82,9 @@ const posterOptimized = await getImage({
       </p>
     )}
     <h1 class="lc hero-title max-w-4xl">{title}</h1>
+    {tagline && (
+      <p class="mt-4 md:mt-5 text-lg md:text-xl font-medium text-[var(--color-bg)]">{tagline}</p>
+    )}
     {subtitle && (
       <p class="lc lead mt-5 md:mt-7 max-w-2xl text-[var(--color-bg)]/90 font-medium">{subtitle}</p>
     )}
