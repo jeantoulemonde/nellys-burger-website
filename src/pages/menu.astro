@@ -7,7 +7,7 @@ import { menu } from '~/data/menu';
 const menuSchema = {
   '@context': 'https://schema.org',
   '@type': 'Menu',
-  name: `menu — ${site.name}`,
+  name: `menu de ${site.name}`,
   inLanguage: 'fr',
   hasMenuSection: menu.map((section) => ({
     '@type': 'MenuSection',
@@ -30,7 +30,7 @@ const menuSchema = {
 ---
 
 <Layout
-  title="menu — smash burger à emporter à biarritz"
+  title="menu, smash burger à emporter à biarritz"
   description="le menu complet de nelly's burger à biarritz : cheeseburger classique 9€, bacon 10€, vg+ 9,5€, frites graisse de boeuf 4€, boissons. à emporter."
   path="/menu"
   jsonLd={menuSchema}
@@ -49,7 +49,7 @@ const menuSchema = {
     itemscope
     itemtype="https://schema.org/Menu"
   >
-    <meta itemprop="name" content={`menu — ${site.name}`} />
+    <meta itemprop="name" content={`menu de ${site.name}`} />
     {menu.map((section) => <MenuSectionComp section={section} />)}
   </div>
 
@@ -60,7 +60,7 @@ const menuSchema = {
         <li>· viande hachée du jour, jamais congelée.</li>
         <li>· pain brioché toasté au beurre, fournisseur local.</li>
         <li>· pickles, sauces et coleslaw préparés sur place.</li>
-        <li>· frites cuites à la graisse de boeuf — friteuse végétale dédiée sur demande.</li>
+        <li>· frites cuites à la graisse de boeuf, friteuse végétale dédiée sur demande.</li>
         <li>· pas de réservation. pas de téléphone. pas de livraison via plateforme.</li>
         <li>· allergènes : liste détaillée disponible au comptoir.</li>
       </ul>

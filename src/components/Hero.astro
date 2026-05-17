@@ -143,7 +143,7 @@ const posterOptimized = await getImage({
         var p = v.play();
         if (p && typeof p.catch === 'function') {
           p.catch(function () {
-            /* autoplay bloqué — le poster reste visible */
+            /* autoplay bloqué, le poster reste visible */
           });
         }
       })();

@@ -13,7 +13,7 @@ const faq = [
   },
   {
     q: 'peut-on manger sur place ?',
-    a: "non. nelly's est un format à emporter uniquement. la salle ne comporte pas de table assise. on emballe soigneusement et vous mangez où vous voulez — la grande plage est à dix minutes à pied, le jardin public à trente secondes.",
+    a: "non. nelly's est un format à emporter uniquement. la salle ne comporte pas de table assise. on emballe soigneusement et vous mangez où vous voulez. la grande plage est à dix minutes à pied, le jardin public à trente secondes.",
   },
   {
     q: 'peut-on commander par téléphone ?',
@@ -21,15 +21,15 @@ const faq = [
   },
   {
     q: 'avez-vous une option végétarienne ?',
-    a: "oui — le vg+ : falafel aux noisettes, aubergine fondante, american cheese, laitue, sauce au fromage blanc. il n'est pas vegan (american cheese, sauce au fromage blanc).",
+    a: "oui, le vg+ : falafel aux noisettes, aubergine fondante, american cheese, laitue, sauce au fromage blanc. il n'est pas vegan (american cheese, sauce au fromage blanc).",
   },
   {
     q: 'peut-on commander via une plateforme de livraison ?',
-    a: "non, on ne fait pas de livraison via plateforme. un smash burger ne supporte pas 30 minutes dans une boîte — la croûte ramollit, le pain se gorge de jus. on préfère le servir comme il faut.",
+    a: "non, on ne fait pas de livraison via plateforme. un smash burger ne supporte pas 30 minutes dans une boîte. la croûte ramollit, le pain se gorge de jus. on préfère le servir comme il faut.",
   },
   {
     q: 'avez-vous des options sans gluten ?',
-    a: "on peut servir tous les burgers sans pain, en assiette. les frites et le coleslaw sont naturellement sans gluten. pour les allergies sévères, prévenez l'équipe — la liste des allergènes est disponible au comptoir.",
+    a: "on peut servir tous les burgers sans pain, en assiette. les frites et le coleslaw sont naturellement sans gluten. pour les allergies sévères, prévenez l'équipe. la liste des allergènes est disponible au comptoir.",
   },
 ];
 
@@ -95,7 +95,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
 ---
 
 <Layout
-  title="contact, adresse et horaires — nelly's burger biarritz"
+  title="contact, adresse et horaires de nelly's burger biarritz"
   description="adresse, horaires, accès et faq de nelly's burger à biarritz. 21 avenue du jardin public, ouvert 7j/7 de 12h à 22h, uniquement à emporter."
   path="/contact"
   jsonLd={contactSchema}
@@ -160,7 +160,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
   <section class="bg-[var(--color-ink)]">
     <div class="w-full aspect-[16/9] md:aspect-[21/9]">
       <iframe
-        title="plan d'accès — google maps nelly's burger biarritz"
+        title="plan d'accès google maps, nelly's burger biarritz"
         src={mapsEmbed}
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
@@ -187,7 +187,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
       <p>
         on est dans un quartier calme à mi-chemin entre les halles et le centre. en sortant, la
         grande plage est à dix minutes à pied. en remontant, le jardin public lui-même est à
-        trente secondes — c'est un bon endroit pour s'asseoir et manger.
+        trente secondes. c'est un bon endroit pour s'asseoir et manger.
       </p>
       <Picture
         src={streetCigarettes}

@@ -23,7 +23,7 @@ const canonical = new URL(path, Astro.site ?? site.url).toString();
 const ogImage = new URL(image, Astro.site ?? site.url).toString();
 const ogType = type === 'restaurant' ? 'website' : type;
 
-const fullTitle = title.includes(site.name) ? title : `${title} — ${site.name}`;
+const fullTitle = title.includes(site.name) ? title : `${title} · ${site.name}`;
 const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 ---
 

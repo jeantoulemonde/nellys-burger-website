@@ -2,7 +2,7 @@ export const site = {
   name: "Nelly's",
   displayName: "nelly's",
   legalName: "Nelly's Biarritz",
-  tagline: 'smash burger à emporter — biarritz',
+  tagline: 'smash burger à emporter, biarritz',
   description:
     "smash burger à emporter à biarritz, 21 avenue du jardin public. cheeseburger classique, bacon, vg+, frites graisse de boeuf. ouvert 7j/7, midi et soir.",
   url: 'https://example.com',
@@ -25,7 +25,7 @@ export const site = {
   hours: [
     { days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], opens: '12:00', closes: '22:00' },
   ],
-  hoursDisplay: [{ day: 'lundi — dimanche', value: '12h — 22h' }],
+  hoursDisplay: [{ day: 'tous les jours', value: '12h à 22h' }],
   notes: {
     orders: 'commandes au comptoir uniquement, pas de téléphone',
     delivery: 'pas de livraison via plateforme',

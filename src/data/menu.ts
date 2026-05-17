@@ -57,7 +57,7 @@ export const menu: MenuSection[] = [
     id: 'boissons',
     title: 'boissons',
     items: [
-      { name: 'canettes', description: 'coca, coca zero, fanta, sprite — 33 cl', price: 2 },
+      { name: 'canettes', description: 'coca, coca zero, fanta, sprite, 33 cl', price: 2 },
       { name: 'thé glacé maison', description: 'infusion du jour, peu sucré', price: 4 },
       { name: 'citronnade maison', description: 'citron pressé, eau, sucre de canne', price: 4 },
       { name: 'kombucha datxa', description: 'kombucha basque, 33 cl', price: 4.5 },

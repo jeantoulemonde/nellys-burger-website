@@ -127,7 +127,7 @@
     var STEP = 150;
     // ==========================
 
-    // step 1 — fade-in + scale-in du logo (double rAF pour garantir
+    // step 1, fade-in + scale-in du logo (double rAF pour garantir
     // que la transition s'applique au lieu de pop)
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
@@ -135,7 +135,7 @@
       });
     });
 
-    // step 2 — pause puis slide-up overlay + stagger du contenu
+    // step 2, pause puis slide-up overlay + stagger du contenu
     var startLeaveAt = LOGO_IN + PAUSE;
     setTimeout(function () {
       overlay.classList.add('is-leaving');
@@ -146,14 +146,14 @@
       });
     }, startLeaveAt);
 
-    // step 3 — nettoyage final, flag session
+    // step 3, nettoyage final, flag session
     setTimeout(function () {
       html.setAttribute('data-intro', 'done');
       overlay.parentNode && overlay.parentNode.removeChild(overlay);
       try {
         sessionStorage.setItem('nellys_intro_seen', '1');
       } catch (e) {
-        /* sessionStorage indispo (mode privé strict) — l'intro rejouera */
+        /* sessionStorage indispo (mode privé strict), l'intro rejouera */
       }
     }, startLeaveAt + LEAVE);
   })();
