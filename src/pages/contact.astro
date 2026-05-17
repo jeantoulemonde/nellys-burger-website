@@ -57,6 +57,7 @@ const contactSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
+    '@id': `${site.url}#restaurant`,
     name: site.name,
     url: site.url,
     logo: abs('/media/logo.png'),
@@ -95,7 +96,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
 
 <Layout
   title="contact, adresse et horaires — nelly's burger biarritz"
-  description="adresse, horaires et accès. nelly's burger à biarritz, 21 avenue du jardin public, ouvert 7j/7 de 12h à 22h, uniquement à emporter."
+  description="adresse, horaires, accès et faq de nelly's burger à biarritz. 21 avenue du jardin public, ouvert 7j/7 de 12h à 22h, uniquement à emporter."
   path="/contact"
   jsonLd={contactSchema}
 >

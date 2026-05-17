@@ -73,7 +73,7 @@ const restaurantSchema = {
   openingHoursSpecification,
   hasMenu: `${site.url}/menu`,
   sameAs: [site.instagram],
-  acceptsReservations: 'False',
+  acceptsReservations: false,
 };
 
 const previewItems = menu[0].items;
@@ -81,7 +81,7 @@ const previewItems = menu[0].items;
 
 <Layout
   title={`smash burger à emporter à biarritz — ${site.name}`}
-  description="smash burger à emporter à biarritz, 21 avenue du jardin public. cheeseburger, bacon, vg+, frites à la graisse de boeuf. 7j/7, midi et soir, commande au comptoir."
+  description="smash burger à emporter à biarritz. cheeseburger, bacon, vg+, frites graisse de boeuf. 21 avenue du jardin public, ouvert 7j/7 de 12h à 22h."
   path="/"
   image={ogImage.src}
   type="restaurant"
