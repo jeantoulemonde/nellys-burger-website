@@ -1,0 +1,313 @@
+---
+/*
+  IntroOverlay, "Neon Sign On, Gold"
+  ===================================
+  Inspiration : 02_neon_sign_on_gold.html (reference dans /Users/jeananais/
+  Downloads/files1/). Le logo s'allume comme un néon doré sur fond sombre
+  ambré : flickers successifs, stabilisation, halo pulsant, reflet ambré.
+
+  Vanilla CSS + JS, aucune lib externe.
+
+  Valeurs ajustables (CSS) :
+  - palette néon            : --neon-core/mid/warm/deep dans .intro-overlay
+  - fond                    : --bg-1, --bg-2 (très sombre + amber sous-tonale)
+  - durée flicker logo      : 1.8s (keyframes neonFlicker)
+  - apparition halo + reflet: 1.0s, delay 1.7s
+  - pulsation halo          : 3s infinite, delay 2.7s
+
+  Valeurs ajustables (JS) :
+  - PAUSE  : pause après que le logo soit stabilisé (ms)
+  - LEAVE  : durée du slide-up de l'overlay (ms)
+  - STEP   : décalage entre éléments staggered (ms)
+
+  Le pre-paint script (Layout.astro) pose data-intro="pending|done" sur
+  <html> avant le premier paint, en fonction de sessionStorage et
+  prefers-reduced-motion.
+*/
+---
+
+<div class="intro-overlay" data-intro-overlay aria-hidden="true">
+  <div class="intro-stage">
+    <div class="intro-halo"></div>
+    <picture class="intro-logo">
+      <source srcset="/media/logo.avif" type="image/avif" />
+      <img
+        src="/media/logo.png"
+        alt=""
+        width="480"
+        height="184"
+        decoding="sync"
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="intro-reflection"></div>
+  </div>
+</div>
+
+<style is:global>
+  :root {
+    --intro-ease: cubic-bezier(0.65, 0, 0.35, 1);
+    --intro-leave: 900ms;
+  }
+
+  .intro-overlay {
+    /* palette néon doré, scopée à l'overlay (n'affecte pas le reste du site) */
+    --neon-core: #fff4c2;
+    --neon-mid: #ffd967;
+    --neon-warm: #f0a830;
+    --neon-deep: #c87a18;
+    --bg-1: #050505;
+    --bg-2: #0e0a05;
+
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transform: translateY(0);
+    will-change: transform;
+    transition: transform var(--intro-leave) var(--intro-ease);
+
+    background:
+      radial-gradient(
+        ellipse at 50% 55%,
+        rgba(240, 168, 48, 0.08),
+        transparent 55%
+      ),
+      radial-gradient(ellipse at 50% 40%, var(--bg-2), var(--bg-1) 70%);
+  }
+  [data-intro='pending'] .intro-overlay {
+    display: flex;
+  }
+
+  /* texture murale très subtile, comme la ref. */
+  .intro-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 40px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 80px);
+    pointer-events: none;
+  }
+
+  .intro-stage {
+    position: relative;
+    width: min(82vw, 520px);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* logo. la chaîne de filtres convertit le PNG noir-sur-transparent
+     en script doré lumineux, comme dans la référence. */
+  .intro-logo {
+    display: block;
+    width: 68%;
+    max-width: 360px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: neonFlicker 1.8s steps(1) forwards;
+  }
+  .intro-logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @keyframes neonFlicker {
+    /* tube éteint */
+    0% {
+      opacity: 0;
+      filter: invert(1) sepia(1) saturate(0) brightness(0.2);
+    }
+    /* premier flicker rapide */
+    8% {
+      opacity: 0.9;
+      filter:
+        invert(1) sepia(1) saturate(6) hue-rotate(-12deg) brightness(1.3)
+        drop-shadow(0 0 6px var(--neon-mid));
+    }
+    10% {
+      opacity: 0;
+      filter: invert(1) sepia(1) saturate(0) brightness(0.2);
+    }
+    /* deuxième flicker */
+    18% {
+      opacity: 0.8;
+      filter:
+        invert(1) sepia(1) saturate(7) hue-rotate(-12deg) brightness(1.2)
+        drop-shadow(0 0 5px var(--neon-mid));
+    }
+    22% {
+      opacity: 0;
+    }
+    /* troisième flicker, plus fort */
+    28% {
+      opacity: 1;
+      filter:
+        invert(1) sepia(1) saturate(8) hue-rotate(-12deg) brightness(1.5)
+        drop-shadow(0 0 10px var(--neon-mid))
+        drop-shadow(0 0 20px var(--neon-warm));
+    }
+    32% {
+      opacity: 0.4;
+    }
+    /* stabilisation progressive */
+    40% {
+      opacity: 1;
+      filter:
+        invert(1) sepia(1) saturate(8) hue-rotate(-12deg) brightness(1.3)
+        drop-shadow(0 0 8px var(--neon-mid))
+        drop-shadow(0 0 18px var(--neon-warm));
+    }
+    55% {
+      opacity: 0.9;
+    }
+    /* état final, tube pleinement allumé avec halo en couches */
+    100% {
+      opacity: 1;
+      filter:
+        invert(1) sepia(1) saturate(8) hue-rotate(-12deg) brightness(1.25)
+        drop-shadow(0 0 4px var(--neon-core))
+        drop-shadow(0 0 10px var(--neon-mid))
+        drop-shadow(0 0 22px var(--neon-warm))
+        drop-shadow(0 0 50px var(--neon-deep));
+    }
+  }
+
+  /* halo ambré derrière le logo, qui pulse en continu */
+  .intro-halo {
+    position: absolute;
+    width: 96%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 217, 103, 0.45) 0%,
+      rgba(240, 168, 48, 0.25) 30%,
+      rgba(200, 122, 24, 0.12) 55%,
+      transparent 75%
+    );
+    filter: blur(25px);
+    opacity: 0;
+    animation:
+      haloIn 1s ease-out 1.7s forwards,
+      haloPulse 3s ease-in-out 2.7s infinite;
+  }
+  @keyframes haloIn {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes haloPulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
+
+  /* reflet ambré qui descend, comme la lumière au sol sur la ref. */
+  .intro-reflection {
+    position: absolute;
+    bottom: 8%;
+    width: 78%;
+    height: 18%;
+    background: radial-gradient(
+      ellipse at top,
+      rgba(255, 217, 103, 0.35) 0%,
+      rgba(240, 168, 48, 0.18) 40%,
+      transparent 75%
+    );
+    filter: blur(12px);
+    opacity: 0;
+    animation: haloIn 1.2s ease-out 1.7s forwards;
+  }
+
+  .intro-overlay.is-leaving {
+    transform: translateY(-100%);
+  }
+
+  /* stagger des éléments hero, initial state */
+  [data-intro='pending'] [data-intro-stagger] {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+  }
+  [data-intro-stagger] {
+    transition:
+      opacity 600ms var(--intro-ease),
+      transform 600ms var(--intro-ease);
+  }
+  [data-intro='pending'] [data-intro-stagger].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-overlay,
+    .intro-logo,
+    .intro-halo,
+    .intro-reflection,
+    [data-intro-stagger] {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var overlay = document.querySelector('[data-intro-overlay]');
+    if (!overlay) return;
+    var html = document.documentElement;
+
+    // pre-paint script (Layout.astro) a déjà posé data-intro="done"
+    // si sessionStorage flag ou reduce-motion, on n'anime rien
+    if (html.getAttribute('data-intro') === 'done') {
+      overlay.parentNode && overlay.parentNode.removeChild(overlay);
+      return;
+    }
+
+    var staggers = document.querySelectorAll('[data-intro-stagger]');
+
+    // === valeurs ajustables ===
+    var FLICKER = 1800; // durée du flicker neon (doit matcher l'animation CSS)
+    var PAUSE = 2300;   // pause après stabilisation du néon (total intro = 5s)
+    var LEAVE = 900;    // durée du slide-up overlay
+    var STEP = 150;     // décalage entre éléments staggered
+    // ==========================
+
+    var startLeaveAt = FLICKER + PAUSE;
+
+    // step 1, pause puis slide-up overlay + stagger du contenu
+    setTimeout(function () {
+      overlay.classList.add('is-leaving');
+      staggers.forEach(function (el, i) {
+        setTimeout(function () {
+          el.classList.add('is-revealed');
+        }, i * STEP);
+      });
+    }, startLeaveAt);
+
+    // step 2, nettoyage final, flag session
+    setTimeout(function () {
+      html.setAttribute('data-intro', 'done');
+      overlay.parentNode && overlay.parentNode.removeChild(overlay);
+      try {
+        sessionStorage.setItem('nellys_intro_seen', '1');
+      } catch (e) {
+        /* sessionStorage indispo (mode privé strict), l'intro rejouera */
+      }
+    }, startLeaveAt + LEAVE);
+  })();
+</script>

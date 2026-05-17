@@ -1,7 +1,8 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import Hero from '~/components/Hero.astro';
+import IntroOverlay from '~/components/IntroOverlay.astro';
 import InfoBlock from '~/components/InfoBlock.astro';
 import MenuItem from '~/components/MenuItem.astro';
 import { site } from '~/data/site';
@@ -10,7 +11,6 @@ import { menu } from '~/data/menu';
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
 import counterPlancha from '~/assets/photos/counter-plancha.jpg';
-import ceilingNeons from '~/assets/photos/ceiling-neons.jpg';
 
 const heroVideo = '/media/hero.mp4';
 const heroVideoBytes = 6_399_320;
@@ -40,13 +40,21 @@ const ogImage = await getImage({
   quality: 80,
 });
 
+const schemaImageMenu = await getImage({ src: menuLightbox, width: 1600, format: 'jpg', quality: 80 });
+const schemaImageKitchen = await getImage({ src: kitchenWide, width: 1600, format: 'jpg', quality: 80 });
+const schemaImageCounter = await getImage({ src: counterPlancha, width: 1600, format: 'jpg', quality: 80 });
+
+// À remplacer à la mise en prod : remplacer site.url (https://example.com) par l'URL canonique
+const abs = (p: string) => new URL(p, site.url).toString();
+
 const restaurantSchema = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
   '@id': `${site.url}#restaurant`,
   name: site.name,
   url: site.url,
-  image: [new URL(ogImage.src, site.url).toString()],
+  logo: abs('/media/logo.png'),
+  image: [abs(schemaImageMenu.src), abs(schemaImageKitchen.src), abs(schemaImageCounter.src)],
   description: site.description,
   servesCuisine: site.cuisine,
   priceRange: site.priceRange,
@@ -66,29 +74,29 @@ const restaurantSchema = {
   openingHoursSpecification,
   hasMenu: `${site.url}/menu`,
   sameAs: [site.instagram],
-  acceptsReservations: 'False',
-  takeawayOnly: true,
+  acceptsReservations: false,
 };
 
 const previewItems = menu[0].items;
 ---
 
 <Layout
-  title={`smash burger à emporter à biarritz — ${site.name}`}
-  description="smash burger à emporter à biarritz, 21 avenue du jardin public. cheeseburger, bacon, vg+, frites à la graisse de boeuf. 7j/7, midi et soir, commande au comptoir."
+  title={`${site.name}. Come and get your fingers salty.`}
+  description="Smash burgers à Biarritz. Come and get your fingers salty. 21 avenue du jardin public, 7/7, 12h-22h."
   path="/"
   image={ogImage.src}
   type="restaurant"
   jsonLd={restaurantSchema}
 >
+  <IntroOverlay />
   <Hero
     video={heroVideo}
     videoBytes={heroVideoBytes}
     posterImage={menuLightbox}
     posterAlt="panneau menu lumineux nelly's burger à biarritz"
     eyebrow="smash burger · à emporter · biarritz"
-    title="boeuf frais. pain brioché. american cheese."
-    subtitle="trois burgers, des frites à la graisse de boeuf, c'est tout. ouvert 7j/7, midi et soir."
+    title="Come and get your fingers salty."
+    subtitle="ouvert 7j/7, midi et soir."
   />
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24 grid gap-10 md:grid-cols-12 md:gap-16">
@@ -101,7 +109,7 @@ const previewItems = menu[0].items;
     <div class="md:col-span-7 prose-body lc space-y-4">
       <p>
         une boule de boeuf frais est écrasée sur la plancha à plus de 250°c. la croûte se forme en
-        quelques secondes — caramélisation, sucs, jus. une tranche d'american cheese fond dessus.
+        quelques secondes. caramélisation, sucs, jus. une tranche d'american cheese fond dessus.
         deux moitiés de pain brioché toasté au beurre. point.
       </p>
       <p>
@@ -116,7 +124,7 @@ const previewItems = menu[0].items;
     <InfoBlock label="où" title={`${site.street}, ${site.city}`} href="/contact" cta="voir le plan">
       {site.street}<br />{site.postalCode} {site.city}
     </InfoBlock>
-    <InfoBlock label="quand" title="7j/7 · 12h — 22h" href="/contact" cta="voir le détail">
+    <InfoBlock label="quand" title="7j/7 · 12h à 22h" href="/contact" cta="voir le détail">
       midi et soir, service continu<br />
       premier arrivé, premier servi
     </InfoBlock>
@@ -152,13 +160,14 @@ const previewItems = menu[0].items;
   </section>
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-    <Image
+    <Picture
       src={kitchenWide}
       alt="cuisine de nelly's burger à biarritz : plancha, hotte inox, néons industriels"
+      formats={['avif', 'webp']}
       widths={[480, 768, 1024]}
       sizes="(min-width: 768px) 50vw, 100vw"
       loading="lazy"
-      class="w-full aspect-[4/5] object-cover"
+      class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)]"
     />
     <div>
       <p class="lc meta mb-4">à biarritz</p>
@@ -184,21 +193,14 @@ const previewItems = menu[0].items;
   </section>
 
   <section class="relative">
-    <Image
+    <Picture
       src={counterPlancha}
       alt="comptoir inox et plancha en cuisine ouverte chez nelly's biarritz"
+      formats={['avif', 'webp']}
       widths={[768, 1280, 1600]}
       sizes="100vw"
       loading="lazy"
       class="w-full h-[40vh] md:h-[55vh] object-cover"
-    />
-    <Image
-      src={ceilingNeons}
-      alt=""
-      widths={[400]}
-      sizes="0"
-      loading="lazy"
-      class="hidden"
     />
   </section>
 

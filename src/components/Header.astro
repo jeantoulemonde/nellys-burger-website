@@ -12,15 +12,25 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header
-  class="sticky top-0 z-40 bg-[var(--color-bg)]/90 backdrop-blur border-b border-[var(--color-line)]"
+  class="sticky top-0 z-40 bg-[var(--color-bg)]/85 backdrop-blur border-b border-[var(--color-line)]"
 >
-  <div class="mx-auto max-w-6xl px-5 md:px-8 h-14 flex items-center justify-between">
+  <div class="mx-auto max-w-6xl px-5 md:px-8 h-16 md:h-18 flex items-center justify-between">
     <a
       href="/"
-      class="lc font-bold text-lg tracking-tight"
-      aria-label={`Aller à l'accueil — ${site.name}`}
+      class="flex items-center"
+      aria-label={`Aller à l'accueil, ${site.name}`}
     >
-      {site.name.toLowerCase()}
+      <picture>
+        <source srcset="/media/logo.avif" type="image/avif" />
+        <img
+          src="/media/logo.png"
+          alt={site.name}
+          width="480"
+          height="184"
+          class="h-7 md:h-9 w-auto"
+          decoding="async"
+        />
+      </picture>
     </a>
 
     <nav aria-label="Navigation principale">
@@ -36,10 +46,10 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
                 <a
                   href={link.href}
                   class:list={[
-                    'lc transition-colors',
+                    'lc transition-colors duration-200',
                     isActive
                       ? 'font-bold text-[var(--color-ink)]'
-                      : 'font-normal text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]',
+                      : 'font-medium text-[var(--color-ink-muted)] hover:text-[var(--color-accent)]',
                   ]}
                   aria-current={isActive ? 'page' : undefined}
                 >

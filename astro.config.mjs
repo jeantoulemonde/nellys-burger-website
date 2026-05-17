@@ -3,6 +3,9 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+// À remplacer à la mise en prod : URL canonique du domaine (ex. 'https://nellys.fr').
+// Cette valeur est propagée dans : sitemap, schema.org (logo/image absolus),
+// canonical, Open Graph, Twitter Card. Toucher ici suffit, pas besoin de chercher ailleurs.
 const SITE_URL = 'https://example.com';
 
 export default defineConfig({

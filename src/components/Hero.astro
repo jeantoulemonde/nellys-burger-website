@@ -1,28 +1,32 @@
 ---
 import type { ImageMetadata } from 'astro';
-import { Image, getImage } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 
 export interface Props {
   video?: string;
+  videoWebm?: string;
   videoBytes?: number;
   posterImage: ImageMetadata;
   posterAlt: string;
   eyebrow?: string;
   title: string;
+  tagline?: string;
   subtitle?: string;
 }
 
 const {
   video,
+  videoWebm,
   videoBytes = 0,
   posterImage,
   posterAlt,
   eyebrow,
   title,
+  tagline,
   subtitle,
 } = Astro.props;
 
-const heavy = videoBytes > 2 * 1024 * 1024;
+const heavy = videoBytes > 5 * 1024 * 1024;
 
 const posterOptimized = await getImage({
   src: posterImage,
@@ -32,7 +36,7 @@ const posterOptimized = await getImage({
 });
 ---
 
-<section class="relative w-full h-[80vh] min-h-[520px] overflow-hidden bg-black">
+<section class="relative w-full min-h-[560px] h-[78vh] md:h-[82vh] overflow-hidden bg-[var(--color-bg-deep)]">
   {
     video ? (
       <video
@@ -46,12 +50,14 @@ const posterOptimized = await getImage({
         preload="metadata"
         aria-hidden="true"
         data-src={video}
+        data-src-webm={videoWebm}
         data-heavy={heavy ? 'true' : 'false'}
       />
     ) : (
-      <Image
+      <Picture
         src={posterImage}
         alt={posterAlt}
+        formats={['avif', 'webp']}
         widths={[640, 960, 1280, 1920]}
         sizes="100vw"
         loading="eager"
@@ -62,17 +68,39 @@ const posterOptimized = await getImage({
   }
 
   <div
-    class="absolute inset-0 bg-black/25"
+    class="absolute inset-0 bg-gradient-to-b from-black/15 via-black/20 to-black/55"
     aria-hidden="true"
   >
   </div>
 
   <div
-    class="relative h-full mx-auto max-w-6xl px-5 md:px-8 flex flex-col justify-end pb-12 md:pb-20 text-white"
+    class="relative h-full mx-auto max-w-6xl px-5 md:px-8 flex flex-col justify-end pb-14 md:pb-24 text-[var(--color-bg)]"
   >
-    {eyebrow && <p class="lc meta text-white/85 mb-3 md:mb-4">{eyebrow}</p>}
-    <h1 class="lc hero-title max-w-4xl">{title}</h1>
-    {subtitle && <p class="lc lead mt-4 md:mt-6 max-w-2xl text-white/90">{subtitle}</p>}
+    {eyebrow && (
+      <p
+        class="lc font-medium text-sm md:text-[0.9375rem] text-[var(--color-bg)]/85 mb-3 md:mb-5 tracking-wide"
+        data-intro-stagger="0"
+      >
+        {eyebrow}
+      </p>
+    )}
+    <h1 class="lc hero-title max-w-4xl" data-intro-stagger="1">{title}</h1>
+    {tagline && (
+      <p
+        class="mt-4 md:mt-5 text-lg md:text-xl font-medium text-[var(--color-bg)]"
+        data-intro-stagger="2"
+      >
+        {tagline}
+      </p>
+    )}
+    {subtitle && (
+      <p
+        class="lc lead mt-5 md:mt-7 max-w-2xl text-[var(--color-bg)]/90 font-medium"
+        data-intro-stagger={tagline ? '3' : '2'}
+      >
+        {subtitle}
+      </p>
+    )}
   </div>
 </section>
 
@@ -83,23 +111,30 @@ const posterOptimized = await getImage({
         var v = document.getElementById('hero-video');
         if (!v) return;
         var src = v.getAttribute('data-src');
-        var heavy = v.getAttribute('data-heavy') === 'true';
+        var srcWebm = v.getAttribute('data-src-webm');
         if (!src) return;
 
         var isMobile = window.matchMedia('(max-width: 639px)').matches;
-        var conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+        var conn =
+          navigator.connection || navigator.webkitConnection || navigator.mozConnection;
         var slow = false;
         if (conn) {
           if (conn.saveData) slow = true;
-          if (conn.effectiveType && ['slow-2g', '2g', '3g'].indexOf(conn.effectiveType) !== -1) {
-            slow = true;
-          }
+          var et = conn.effectiveType;
+          if (et === 'slow-2g' || et === '2g') slow = true;
         }
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // mobile + heavy video → keep poster, never load the video
-        if (isMobile && heavy) return;
-        if (slow) return;
+        // poster reste seul si : mobile (<640px), connexion lente (2g/slow-2g),
+        // save-data activé, ou utilisateur préfère reduced motion
+        if (isMobile || slow || reduceMotion) return;
 
+        if (srcWebm) {
+          var sourceWebm = document.createElement('source');
+          sourceWebm.src = srcWebm;
+          sourceWebm.type = 'video/webm';
+          v.appendChild(sourceWebm);
+        }
         var source = document.createElement('source');
         source.src = src;
         source.type = 'video/mp4';
@@ -108,7 +143,7 @@ const posterOptimized = await getImage({
         var p = v.play();
         if (p && typeof p.catch === 'function') {
           p.catch(function () {
-            /* autoplay blocked — poster stays visible */
+            /* autoplay bloqué, le poster reste visible */
           });
         }
       })();

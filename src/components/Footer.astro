@@ -5,8 +5,19 @@ import { site } from '~/data/site';
 <footer class="border-t border-[var(--color-line)] mt-24">
   <div class="mx-auto max-w-6xl px-5 md:px-8 py-12 grid gap-10 md:grid-cols-4">
     <div class="md:col-span-2">
-      <p class="lc font-bold text-xl">{site.displayName}</p>
-      <p class="lc meta mt-2">smash burger à emporter · biarritz</p>
+      <picture>
+        <source srcset="/media/logo.avif" type="image/avif" />
+        <img
+          src="/media/logo.png"
+          alt={site.name}
+          width="480"
+          height="184"
+          class="h-16 md:h-20 w-auto"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <p class="lc meta mt-4">smash burger à emporter · biarritz</p>
     </div>
 
     <div>
@@ -37,7 +48,7 @@ import { site } from '~/data/site';
     <div
       class="mx-auto max-w-6xl px-5 md:px-8 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
     >
-      <p class="lc meta">© {new Date().getFullYear()} {site.displayName} — tous droits réservés</p>
+      <p class="meta">© {new Date().getFullYear()}. {site.name}. Come and get your fingers salty.</p>
       <ul class="flex items-center gap-5 lc meta">
         <li>
           <a
