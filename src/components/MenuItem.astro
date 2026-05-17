@@ -44,9 +44,16 @@ const formatPrice = (value: number) => {
       <span aria-hidden="false">{formatPrice(price)}</span>
     </span>
   </div>
-  <p class="lc prose-body text-[0.9375rem] mt-1.5 max-w-xl text-[var(--color-ink)]" itemprop="description">
-    {description}
-  </p>
+  {
+    description && (
+      <p
+        class="lc prose-body text-[0.9375rem] mt-1.5 max-w-xl text-[var(--color-ink)]"
+        itemprop="description"
+      >
+        {description}
+      </p>
+    )
+  }
   {
     image && (
       <img

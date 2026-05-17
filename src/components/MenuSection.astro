@@ -39,7 +39,7 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
   <meta itemprop="name" content={section.title} />
 
   <h2 class="menu-section-title">
-    <span aria-hidden="true">—&nbsp;</span>{section.title}
+    {section.title}
   </h2>
 
   {
@@ -73,7 +73,9 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
                 <span aria-hidden="false">{formatPrice(item.price)}</span>
               </span>
             </div>
-            <p class="menu-block-desc" itemprop="description">{item.description}</p>
+            {item.description && (
+              <p class="menu-block-desc" itemprop="description">{item.description}</p>
+            )}
           </article>
         ))}
       </div>
@@ -150,7 +152,9 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
                 <span aria-hidden="false">{formatPrice(item.price)}</span>
               </span>
             </div>
-            <p class="menu-block-desc" itemprop="description">{item.description}</p>
+            {item.description && (
+              <p class="menu-block-desc" itemprop="description">{item.description}</p>
+            )}
           </article>
         ))}
       </div>

@@ -12,20 +12,8 @@ const faq = [
     a: "le quartier du jardin public est en zone payante. les parkings publics les plus proches sont à 5 minutes à pied : parking sainte-eugénie et parking les halles. en haute saison, mieux vaut venir en vélo, à pied ou en bus (lignes desservant la grande plage).",
   },
   {
-    q: 'peut-on manger sur place ?',
-    a: "non. nelly's est un format à emporter uniquement. la salle ne comporte pas de table assise. on emballe soigneusement et vous mangez où vous voulez. la grande plage est à dix minutes à pied, le jardin public à trente secondes.",
-  },
-  {
-    q: 'peut-on commander par téléphone ?',
-    a: "non. il n'y a pas de téléphone client. toutes les commandes passent au comptoir, sur place. la préparation prend une dizaine de minutes.",
-  },
-  {
     q: 'avez-vous une option végétarienne ?',
-    a: "oui, le vg+ : falafel aux noisettes, aubergine fondante, american cheese, laitue, sauce au fromage blanc. il n'est pas vegan (american cheese, sauce au fromage blanc).",
-  },
-  {
-    q: 'peut-on commander via une plateforme de livraison ?',
-    a: "non, on ne fait pas de livraison via plateforme. un smash burger ne supporte pas 30 minutes dans une boîte. la croûte ramollit, le pain se gorge de jus. on préfère le servir comme il faut.",
+    a: "oui, le vg+ : falafel aux noisettes, aubergine, american cheese, laitue, sauce au fromage blanc. il n'est pas vegan (american cheese, sauce au fromage blanc).",
   },
   {
     q: 'avez-vous des options sans gluten ?',
@@ -96,13 +84,13 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
 
 <Layout
   title="contact, adresse et horaires de nelly's burger biarritz"
-  description="adresse, horaires, accès et faq de nelly's burger à biarritz. 21 avenue du jardin public, ouvert 7j/7 de 12h à 22h, uniquement à emporter."
+  description="nelly's burger, 21 avenue du jardin public, biarritz. ouvert 7j/7, 12h à 22h, à emporter."
   path="/contact"
   jsonLd={contactSchema}
 >
   <section class="mx-auto max-w-6xl px-5 md:px-8 pt-16 md:pt-24 pb-12">
     <p class="lc meta mb-4">contact</p>
-    <h1 class="lc page-title max-w-3xl">passer nous voir, nous suivre.</h1>
+    <h1 class="lc page-title max-w-3xl">nous trouver.</h1>
   </section>
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-2 gap-10 md:gap-16 pb-16 md:pb-24">
@@ -128,8 +116,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
             {site.instagramHandle}
           </a>
         </li>
-        <li class="lc meta pt-2">pas de téléphone client.</li>
-        <li class="lc meta">commandes uniquement au comptoir.</li>
+        <li class="lc meta pt-2">commandes au comptoir | cb ou espèces</li>
       </ul>
     </div>
 
@@ -145,15 +132,11 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
           ))
         }
       </dl>
-      <p class="lc meta mt-4">service continu, midi et soir, 7 jours sur 7.</p>
-
       <h2 class="lc section-title mb-4 mt-12">venir</h2>
-      <ul class="prose-body lc space-y-2 text-[0.95rem]">
-        <li>· à 10 min à pied de la grande plage</li>
-        <li>· à 5 min à pied des halles</li>
-        <li>· parkings sainte-eugénie et halles à proximité</li>
-        <li>· bus desservant la grande plage</li>
-      </ul>
+      <p class="lc meta">
+        10 min de la grande plage | 5 min des halles | parkings sainte-eugénie et halles |
+        bus grande plage
+      </p>
     </div>
   </section>
 
@@ -185,9 +168,8 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
       <p class="lc meta">le quartier</p>
       <h2 class="lc section-title">jardin public, biarritz.</h2>
       <p>
-        on est dans un quartier calme à mi-chemin entre les halles et le centre. en sortant, la
-        grande plage est à dix minutes à pied. en remontant, le jardin public lui-même est à
-        trente secondes. c'est un bon endroit pour s'asseoir et manger.
+        à mi-chemin entre les halles et le centre. la grande plage à dix minutes, le jardin
+        public à trente secondes.
       </p>
       <Picture
         src={streetCigarettes}
@@ -202,8 +184,7 @@ const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullA
   </section>
 
   <section class="mx-auto max-w-3xl px-5 md:px-8 py-20 md:py-28 lc">
-    <p class="meta mb-3">questions fréquentes</p>
-    <h2 class="page-title mb-10">les questions qu'on nous pose le plus.</h2>
+    <h2 class="page-title mb-10">questions fréquentes.</h2>
 
     <div class="space-y-8">
       {

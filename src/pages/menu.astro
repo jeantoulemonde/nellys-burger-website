@@ -80,7 +80,7 @@ const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
 
 <Layout
   title="menu, smash burger à emporter à biarritz"
-  description="le menu de nelly's burger à biarritz. cheeseburger 9€, bacon 10€, vg+ 9,50€, frites graisse de boeuf 4€. à emporter."
+  description="le menu de nelly's burger à biarritz. trois burgers, deux sides, six boissons. à emporter."
   path="/menu"
   jsonLd={restaurantSchema}
 >
@@ -88,10 +88,7 @@ const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
     <header class="menu-header">
       <p class="lc meta menu-eyebrow">le menu</p>
       <h1 class="menu-h1">{h1}</h1>
-      <p class="menu-lead">
-        une carte courte qui ne bouge pas. tous les prix en euros, carte bleue et espèces.
-        à emporter uniquement.
-      </p>
+      <p class="menu-lead">à emporter | cb ou espèces</p>
 
       <nav class="menu-mini-nav" aria-label="sections du menu">
         {
@@ -115,16 +112,8 @@ const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
       {menu.map((section) => <MenuSectionComp section={section} />)}
     </div>
 
-    <footer class="menu-footnotes">
-      <p class="lc meta menu-eyebrow">à savoir</p>
-      <ul class="menu-notes-list">
-        <li>viande hachée du jour, jamais congelée.</li>
-        <li>pain brioché toasté au beurre, fournisseur local.</li>
-        <li>pickles, sauces et coleslaw préparés sur place.</li>
-        <li>frites cuites à la graisse de boeuf, friteuse végétale dédiée sur demande.</li>
-        <li>pas de réservation. pas de téléphone. pas de livraison via plateforme.</li>
-        <li>allergènes : liste détaillée disponible au comptoir.</li>
-      </ul>
+    <footer class="menu-footnotes-compact">
+      <p class="lc">à emporter | cb ou espèces | pas de réservation</p>
     </footer>
   </article>
 </Layout>
@@ -230,33 +219,12 @@ const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
     margin-top: 4rem;
   }
 
-  /* === footnotes "à savoir" === */
-  .menu-footnotes {
-    margin-top: 5rem;
-    padding-top: 2.5rem;
+  /* === footnotes compactes (à emporter | cb | pas de réservation) === */
+  .menu-footnotes-compact {
+    margin-top: 4rem;
+    padding-top: 2rem;
     border-top: 1px solid var(--color-line);
-  }
-
-  .menu-notes-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    max-width: 56ch;
-  }
-
-  .menu-notes-list li {
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
     color: var(--color-text-soft);
-    padding: 0.25rem 0;
-    position: relative;
-    padding-left: 1rem;
-  }
-  .menu-notes-list li::before {
-    content: '·';
-    position: absolute;
-    left: 0;
-    color: var(--color-muted);
   }
 </style>

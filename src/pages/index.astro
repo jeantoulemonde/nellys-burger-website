@@ -99,27 +99,6 @@ const previewItems = menu[0].items;
     subtitle="ouvert 7j/7, midi et soir."
   />
 
-  <section class="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-24 grid gap-10 md:grid-cols-12 md:gap-16">
-    <div class="md:col-span-5">
-      <p class="lc meta mb-4">la maison</p>
-      <h2 class="lc section-title">
-        un smash burger, ce n'est pas un steak haché. c'est un geste.
-      </h2>
-    </div>
-    <div class="md:col-span-7 prose-body lc space-y-4">
-      <p>
-        une boule de boeuf frais est écrasée sur la plancha à plus de 250°c. la croûte se forme en
-        quelques secondes. caramélisation, sucs, jus. une tranche d'american cheese fond dessus.
-        deux moitiés de pain brioché toasté au beurre. point.
-      </p>
-      <p>
-        carte courte. produits frais. tout est préparé sur place, le jour même. pas de
-        réservation, pas de téléphone, pas de livraison. on se sert au comptoir, on emporte, on
-        mange chaud.
-      </p>
-    </div>
-  </section>
-
   <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3">
     <InfoBlock label="où" title={`${site.street}, ${site.city}`} href="/contact" cta="voir le plan">
       {site.street}<br />{site.postalCode} {site.city}
@@ -139,12 +118,8 @@ const previewItems = menu[0].items;
       <div>
         <p class="lc meta text-white/60 mb-3">le menu</p>
         <h2 class="lc page-title mb-6">
-          trois burgers, deux sides, quelques boissons.
+          trois burgers, deux sides, six boissons.
         </h2>
-        <p class="lc prose-body text-white/85 max-w-md mb-8">
-          on ne change pas la carte. on la fait bien. tous les ingrédients sont reçus frais et
-          travaillés sur place.
-        </p>
         <a
           href="/menu"
           class="lc inline-block text-sm font-bold border-b border-white pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
@@ -174,13 +149,8 @@ const previewItems = menu[0].items;
       <h2 class="lc section-title mb-6">21 avenue du jardin public.</h2>
       <div class="prose-body lc space-y-4">
         <p>
-          on est installés dans le quartier du jardin public, à quelques minutes à pied de la
-          grande plage et des halles. cuisine ouverte, comptoir inox, plancha qui tourne midi et
-          soir.
-        </p>
-        <p>
-          on prend les commandes uniquement sur place. la préparation prend une dizaine de
-          minutes. on emballe pour la plage, le parc, le bureau ou la maison.
+          à deux pas du jardin public, dix minutes à pied de la grande plage. cuisine ouverte,
+          plancha en service midi et soir.
         </p>
       </div>
       <a
@@ -208,7 +178,7 @@ const previewItems = menu[0].items;
     <div class="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
       <div>
         <p class="lc meta mb-3">instagram</p>
-        <h2 class="lc section-title">les nouveautés, les ruptures, les coulisses.</h2>
+        <h2 class="lc section-title">{site.instagramHandle} sur instagram.</h2>
       </div>
       <div class="flex md:justify-end">
         <a
