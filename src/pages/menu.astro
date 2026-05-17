@@ -4,9 +4,26 @@ import MenuSectionComp from '~/components/MenuSection.astro';
 import { site } from '~/data/site';
 import { menu } from '~/data/menu';
 
+const dayMap: Record<string, string> = {
+  Mo: 'Monday',
+  Tu: 'Tuesday',
+  We: 'Wednesday',
+  Th: 'Thursday',
+  Fr: 'Friday',
+  Sa: 'Saturday',
+  Su: 'Sunday',
+};
+
+const openingHoursSpecification = site.hours.map((slot) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: slot.days.map((d) => dayMap[d]),
+  opens: slot.opens,
+  closes: slot.closes,
+}));
+
 const menuSchema = {
-  '@context': 'https://schema.org',
   '@type': 'Menu',
+  '@id': `${site.url}/menu#menu`,
   name: `menu de ${site.name}`,
   inLanguage: 'fr',
   hasMenuSection: menu.map((section) => ({
@@ -21,49 +38,225 @@ const menuSchema = {
         price: item.price.toFixed(2),
         priceCurrency: 'EUR',
       },
-      ...(item.tag === 'végétarien'
+      ...(item.name === 'vg+'
         ? { suitableForDiet: 'https://schema.org/VegetarianDiet' }
         : {}),
     })),
   })),
 };
+
+const restaurantSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': `${site.url}#restaurant`,
+  name: site.name,
+  url: site.url,
+  servesCuisine: 'Burger',
+  priceRange: '€',
+  acceptsReservations: false,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.street,
+    addressLocality: site.city,
+    postalCode: site.postalCode,
+    addressRegion: site.region,
+    addressCountry: site.country,
+  },
+  openingHoursSpecification,
+  sameAs: [site.instagram],
+  hasMenu: menuSchema,
+};
+
+// compteurs pour la mini-nav et le H1
+const counts = Object.fromEntries(menu.map((s) => [s.id, s.items.length]));
+
+const wordCounts: Record<string, string> = {
+  burgers: 'trois burgers',
+  sides: 'deux sides',
+  boissons: 'six boissons',
+};
+const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
 ---
 
 <Layout
   title="menu, smash burger à emporter à biarritz"
-  description="le menu complet de nelly's burger à biarritz : cheeseburger classique 9€, bacon 10€, vg+ 9,5€, frites graisse de boeuf 4€, boissons. à emporter."
+  description="le menu de nelly's burger à biarritz. cheeseburger 9€, bacon 10€, vg+ 9,50€, frites graisse de boeuf 4€. à emporter."
   path="/menu"
-  jsonLd={menuSchema}
+  jsonLd={restaurantSchema}
 >
-  <section class="mx-auto max-w-3xl px-5 md:px-8 pt-16 md:pt-24 pb-8">
-    <p class="lc meta mb-4">le menu</p>
-    <h1 class="lc page-title mb-6">trois burgers, deux sides, quelques boissons.</h1>
-    <p class="lc lead max-w-xl">
-      la carte ne bouge pas. tous les prix sont en euros. carte bleue et espèces acceptées. à
-      emporter uniquement.
-    </p>
-  </section>
+  <article class="menu-page">
+    <header class="menu-header">
+      <p class="lc meta menu-eyebrow">le menu</p>
+      <h1 class="menu-h1">{h1}</h1>
+      <p class="menu-lead">
+        une carte courte qui ne bouge pas. tous les prix en euros, carte bleue et espèces.
+        à emporter uniquement.
+      </p>
 
-  <div
-    class="mx-auto max-w-3xl px-5 md:px-8 pb-24"
-    itemscope
-    itemtype="https://schema.org/Menu"
-  >
-    <meta itemprop="name" content={`menu de ${site.name}`} />
-    {menu.map((section) => <MenuSectionComp section={section} />)}
-  </div>
+      <nav class="menu-mini-nav" aria-label="sections du menu">
+        {
+          menu.map((s, i) => (
+            <>
+              {i > 0 && (
+                <span class="menu-mini-sep" aria-hidden="true">·</span>
+              )}
+              <a href={`#${s.id}`} class="menu-mini-link">
+                <span class="menu-mini-label">{s.title}</span>
+                <span class="menu-mini-count">{counts[s.id]}</span>
+              </a>
+            </>
+          ))
+        }
+      </nav>
+    </header>
 
-  <section class="border-t border-[var(--color-line)]">
-    <div class="mx-auto max-w-3xl px-5 md:px-8 py-12 lc">
-      <p class="meta mb-2">à savoir</p>
-      <ul class="prose-body space-y-2 text-[0.95rem]">
-        <li>· viande hachée du jour, jamais congelée.</li>
-        <li>· pain brioché toasté au beurre, fournisseur local.</li>
-        <li>· pickles, sauces et coleslaw préparés sur place.</li>
-        <li>· frites cuites à la graisse de boeuf, friteuse végétale dédiée sur demande.</li>
-        <li>· pas de réservation. pas de téléphone. pas de livraison via plateforme.</li>
-        <li>· allergènes : liste détaillée disponible au comptoir.</li>
-      </ul>
+    <div class="menu-body" itemscope itemtype="https://schema.org/Menu">
+      <meta itemprop="name" content={`menu de ${site.name}`} />
+      {menu.map((section) => <MenuSectionComp section={section} />)}
     </div>
-  </section>
+
+    <footer class="menu-footnotes">
+      <p class="lc meta menu-eyebrow">à savoir</p>
+      <ul class="menu-notes-list">
+        <li>viande hachée du jour, jamais congelée.</li>
+        <li>pain brioché toasté au beurre, fournisseur local.</li>
+        <li>pickles, sauces et coleslaw préparés sur place.</li>
+        <li>frites cuites à la graisse de boeuf, friteuse végétale dédiée sur demande.</li>
+        <li>pas de réservation. pas de téléphone. pas de livraison via plateforme.</li>
+        <li>allergènes : liste détaillée disponible au comptoir.</li>
+      </ul>
+    </footer>
+  </article>
 </Layout>
+
+<style>
+  .menu-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+  @media (min-width: 768px) {
+    .menu-page {
+      padding: 6rem 2rem 8rem;
+    }
+  }
+
+  .menu-header {
+    margin-bottom: 4rem;
+  }
+
+  .menu-eyebrow {
+    margin-bottom: 1.25rem;
+  }
+
+  .menu-h1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    max-width: 18ch;
+    text-wrap: balance;
+    text-transform: lowercase;
+    margin: 0;
+    /* Fraunces variable, opsz haut pour les grands tailles = caractère plus dessiné */
+    font-variation-settings: 'opsz' 96, 'SOFT' 50;
+  }
+
+  .menu-lead {
+    margin-top: 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-text-soft);
+    max-width: 48ch;
+    text-transform: lowercase;
+  }
+
+  /* === mini-nav avec compteurs === */
+  .menu-mini-nav {
+    margin-top: 2.5rem;
+    padding: 0.875rem 0;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.875rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    text-transform: lowercase;
+  }
+
+  .menu-mini-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    font-weight: 500;
+    transition: color 180ms ease;
+    text-decoration: none;
+  }
+  .menu-mini-link:hover,
+  .menu-mini-link:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .menu-mini-label {
+    color: inherit;
+  }
+
+  .menu-mini-count {
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-muted);
+    opacity: 0.75;
+  }
+  .menu-mini-link:hover .menu-mini-count,
+  .menu-mini-link:focus-visible .menu-mini-count {
+    opacity: 1;
+  }
+
+  .menu-mini-sep {
+    color: var(--color-muted);
+    opacity: 0.6;
+  }
+
+  /* === body / sections === */
+  .menu-body {
+    margin-top: 4rem;
+  }
+
+  /* === footnotes "à savoir" === */
+  .menu-footnotes {
+    margin-top: 5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .menu-notes-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 56ch;
+  }
+
+  .menu-notes-list li {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-soft);
+    padding: 0.25rem 0;
+    position: relative;
+    padding-left: 1rem;
+  }
+  .menu-notes-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--color-muted);
+  }
+</style>

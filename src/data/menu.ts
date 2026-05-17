@@ -2,7 +2,10 @@ export type MenuItem = {
   name: string;
   description: string;
   price: number;
+  /** mention inline en muted (allergène / régime), séparateur " · " */
   tag?: string;
+  /** rend l'item en bloc large (template burger) au lieu de la ligne compacte (drinks) */
+  featured?: boolean;
 };
 
 export type MenuSection = {
@@ -33,7 +36,7 @@ export const menu: MenuSection[] = [
         description:
           'falafel aux noisettes, aubergine fondante, american cheese, laitue, sauce au fromage blanc',
         price: 9.5,
-        tag: 'végétarien',
+        tag: 'fruits à coque',
       },
     ],
   },
@@ -57,12 +60,18 @@ export const menu: MenuSection[] = [
     id: 'boissons',
     title: 'boissons',
     items: [
-      { name: 'canettes', description: 'coca, coca zero, fanta, sprite, 33 cl', price: 2 },
+      { name: 'soda', description: '33 cl', price: 2 },
       { name: 'thé glacé maison', description: 'infusion du jour, peu sucré', price: 4 },
-      { name: 'citronnade maison', description: 'citron pressé, eau, sucre de canne', price: 4 },
+      { name: 'citronnade maison', description: 'citron pressé', price: 4 },
       { name: 'kombucha datxa', description: 'kombucha basque, 33 cl', price: 4.5 },
       { name: 'bière asahi bouteille', description: '33 cl', price: 4 },
-      { name: "bière nelly's x landberry", description: 'collab avec la brasserie landberry, 44 cl', price: 6 },
+      {
+        name: "bière nelly's x landberry",
+        description: 'collab avec la brasserie landberry, brassée à anglet, 44 cl',
+        price: 6,
+        tag: 'collab',
+        featured: true,
+      },
     ],
   },
 ];

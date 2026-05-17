@@ -1,28 +1,324 @@
 ---
-import MenuItem from './MenuItem.astro';
-import type { MenuSection as MenuSectionType } from '~/data/menu';
+import type { MenuSection as MenuSectionType, MenuItem } from '~/data/menu';
 
 export interface Props {
   section: MenuSectionType;
 }
 
 const { section } = Astro.props;
+
+function formatPrice(n: number) {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 2,
+  }).format(n);
+}
+
+const isCompactSection = section.id === 'boissons';
+
+// pour les boissons : séparer la grille compacte des items featured (collab)
+const compactItems: MenuItem[] = isCompactSection
+  ? section.items.filter((i) => !i.featured)
+  : [];
+const featuredItems: MenuItem[] = isCompactSection
+  ? section.items.filter((i) => i.featured)
+  : [];
+
+// pour burgers/sides : tous en bloc
+const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
 ---
 
 <section
   id={section.id}
-  class="py-10 md:py-16"
+  class="menu-section"
   itemprop="hasMenuSection"
   itemscope
   itemtype="https://schema.org/MenuSection"
 >
   <meta itemprop="name" content={section.title} />
-  <header class="flex items-baseline justify-between mb-6 md:mb-8">
-    <h2 class="lc section-title">{section.title}</h2>
-    <span class="lc meta">{section.items.length} {section.items.length > 1 ? 'références' : 'référence'}</span>
-  </header>
 
-  <div>
-    {section.items.map((item) => <MenuItem {...item} />)}
-  </div>
+  <h2 class="menu-section-title">
+    <span aria-hidden="true">—&nbsp;</span>{section.title}
+  </h2>
+
+  {
+    /* === template "bloc" : burgers + sides + items featured === */
+    blockItems.length > 0 && (
+      <div class="menu-block-list">
+        {blockItems.map((item) => (
+          <article
+            class="menu-block"
+            itemprop="hasMenuItem"
+            itemscope
+            itemtype="https://schema.org/MenuItem"
+          >
+            <div class="menu-block-head">
+              <h3 class="menu-block-name">
+                <span itemprop="name">{item.name}</span>
+                {item.tag && (
+                  <span class="menu-tag" aria-label={`mention : ${item.tag}`}>
+                    {item.tag}
+                  </span>
+                )}
+              </h3>
+              <span
+                class="menu-price"
+                itemprop="offers"
+                itemscope
+                itemtype="https://schema.org/Offer"
+              >
+                <meta itemprop="priceCurrency" content="EUR" />
+                <meta itemprop="price" content={item.price.toFixed(2)} />
+                <span aria-hidden="false">{formatPrice(item.price)}</span>
+              </span>
+            </div>
+            <p class="menu-block-desc" itemprop="description">{item.description}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    /* === template "ligne compacte" : drinks en grille 2 colonnes === */
+    compactItems.length > 0 && (
+      <ul class="menu-compact-grid" role="list">
+        {compactItems.map((item) => (
+          <li
+            class="menu-compact"
+            itemprop="hasMenuItem"
+            itemscope
+            itemtype="https://schema.org/MenuItem"
+          >
+            <span class="menu-compact-name">
+              <span itemprop="name">{item.name}</span>
+              {item.description && (
+                <>
+                  {' '}
+                  <span class="menu-compact-detail" itemprop="description">
+                    {item.description}
+                  </span>
+                </>
+              )}
+            </span>
+            <span class="menu-compact-dots" aria-hidden="true" />
+            <span
+              class="menu-price"
+              itemprop="offers"
+              itemscope
+              itemtype="https://schema.org/Offer"
+            >
+              <meta itemprop="priceCurrency" content="EUR" />
+              <meta itemprop="price" content={item.price.toFixed(2)} />
+              <span aria-hidden="false">{formatPrice(item.price)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    /* === featured (collab) sous la grille compacte, fine séparation === */
+    featuredItems.length > 0 && (
+      <div class="menu-featured-wrap">
+        {featuredItems.map((item) => (
+          <article
+            class="menu-block menu-block--featured"
+            itemprop="hasMenuItem"
+            itemscope
+            itemtype="https://schema.org/MenuItem"
+          >
+            <div class="menu-block-head">
+              <h3 class="menu-block-name">
+                <span itemprop="name">{item.name}</span>
+                {item.tag && (
+                  <span class="menu-collab-label" aria-label="collaboration">
+                    {item.tag}
+                  </span>
+                )}
+              </h3>
+              <span
+                class="menu-price"
+                itemprop="offers"
+                itemscope
+                itemtype="https://schema.org/Offer"
+              >
+                <meta itemprop="priceCurrency" content="EUR" />
+                <meta itemprop="price" content={item.price.toFixed(2)} />
+                <span aria-hidden="false">{formatPrice(item.price)}</span>
+              </span>
+            </div>
+            <p class="menu-block-desc" itemprop="description">{item.description}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
 </section>
+
+<style is:global>
+  .menu-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 80px;
+  }
+
+  .menu-section-title {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem; /* ~11px */
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: lowercase;
+    color: var(--color-muted);
+    margin-bottom: 1.75rem;
+  }
+
+  /* === bloc (burgers / sides / featured) === */
+  .menu-block-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-block {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .menu-block:first-child {
+    padding-top: 0;
+  }
+  .menu-block:last-child {
+    border-bottom: 0;
+  }
+
+  .menu-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .menu-block-name {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem; /* 17px */
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-ink);
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .menu-block-desc {
+    margin-top: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem; /* 14px */
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-text-soft);
+    max-width: 48ch;
+  }
+
+  /* mention tag inline (allergène, dietary) */
+  .menu-tag {
+    font-size: 0.6875rem; /* 11px */
+    font-weight: 400;
+    color: var(--color-muted);
+    line-height: 1;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .menu-tag::before {
+    content: '·';
+    color: var(--color-muted);
+  }
+
+  /* === prix (commun) === */
+  .menu-price {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+
+  /* === ligne compacte (drinks) === */
+  .menu-compact-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 3rem;
+    row-gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .menu-compact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .menu-compact {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.4;
+  }
+
+  .menu-compact-name {
+    font-weight: 500;
+    color: var(--color-ink);
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .menu-compact-detail {
+    font-weight: 400;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+
+  .menu-compact-dots {
+    flex: 1;
+    min-width: 1rem;
+    border-bottom: 1px dotted var(--color-line);
+    transform: translateY(-3px);
+    align-self: stretch;
+  }
+
+  /* === featured (collab Landberry) === */
+  .menu-featured-wrap {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .menu-block--featured {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .menu-collab-label {
+    font-size: 0.625rem; /* 10px */
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-muted);
+    line-height: 1;
+    text-transform: lowercase;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .menu-collab-label::before {
+    content: '·';
+    color: var(--color-muted);
+  }
+</style>
