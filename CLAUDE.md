@@ -70,7 +70,7 @@ règles :
 - **json-ld par page** :
   - `/` → `Restaurant` (avec `openingHoursSpecification`, `address`, `geo`, `priceRange`, `hasMenu`)
   - `/menu` → `Menu` avec `hasMenuSection` / `hasMenuItem` + `Offer` par item
-  - `/le-concept` → `AboutPage`
+  - `/nos-valeurs` → `AboutPage`
   - `/contact` → `Restaurant` + `FAQPage`
 - **canonical** automatique via `SEOHead` (basé sur `Astro.site` + `path`).
 - toutes les images ont un **`alt` descriptif en français propre** (pas en lowercase forcé).

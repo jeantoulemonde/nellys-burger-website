@@ -49,7 +49,7 @@ src/
   pages/
     index.astro
     menu.astro
-    le-concept.astro
+    nos-valeurs.astro
     contact.astro
   styles/
     global.css

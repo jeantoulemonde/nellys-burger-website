@@ -1,0 +1,5 @@
+# Redirections 301
+# Lu par Cloudflare Pages et Netlify au déploiement.
+# Sur Vercel, configurer dans vercel.json à la place.
+
+/le-concept    /nos-valeurs    301
