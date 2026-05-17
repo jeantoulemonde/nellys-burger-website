@@ -77,16 +77,29 @@ const posterOptimized = await getImage({
     class="relative h-full mx-auto max-w-6xl px-5 md:px-8 flex flex-col justify-end pb-14 md:pb-24 text-[var(--color-bg)]"
   >
     {eyebrow && (
-      <p class="lc font-medium text-sm md:text-[0.9375rem] text-[var(--color-bg)]/85 mb-3 md:mb-5 tracking-wide">
+      <p
+        class="lc font-medium text-sm md:text-[0.9375rem] text-[var(--color-bg)]/85 mb-3 md:mb-5 tracking-wide"
+        data-intro-stagger="0"
+      >
         {eyebrow}
       </p>
     )}
-    <h1 class="lc hero-title max-w-4xl">{title}</h1>
+    <h1 class="lc hero-title max-w-4xl" data-intro-stagger="1">{title}</h1>
     {tagline && (
-      <p class="mt-4 md:mt-5 text-lg md:text-xl font-medium text-[var(--color-bg)]">{tagline}</p>
+      <p
+        class="mt-4 md:mt-5 text-lg md:text-xl font-medium text-[var(--color-bg)]"
+        data-intro-stagger="2"
+      >
+        {tagline}
+      </p>
     )}
     {subtitle && (
-      <p class="lc lead mt-5 md:mt-7 max-w-2xl text-[var(--color-bg)]/90 font-medium">{subtitle}</p>
+      <p
+        class="lc lead mt-5 md:mt-7 max-w-2xl text-[var(--color-bg)]/90 font-medium"
+        data-intro-stagger={tagline ? '3' : '2'}
+      >
+        {subtitle}
+      </p>
     )}
   </div>
 </section>

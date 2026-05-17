@@ -21,6 +21,24 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // pre-paint : positionne data-intro sur <html> avant le premier paint
+      // pour que l'IntroOverlay (home uniquement) ne flashe pas. Inerte sur
+      // les autres pages (aucun .intro-overlay ni [data-intro-stagger] présent).
+      (function () {
+        var seen = false;
+        try {
+          seen = sessionStorage.getItem('nellys_intro_seen') === '1';
+        } catch (e) {}
+        var rm =
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.documentElement.setAttribute(
+          'data-intro',
+          seen || rm ? 'done' : 'pending',
+        );
+      })();
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

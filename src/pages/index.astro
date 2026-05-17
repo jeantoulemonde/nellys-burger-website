@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import Hero from '~/components/Hero.astro';
+import IntroOverlay from '~/components/IntroOverlay.astro';
 import InfoBlock from '~/components/InfoBlock.astro';
 import MenuItem from '~/components/MenuItem.astro';
 import { site } from '~/data/site';
@@ -87,6 +88,7 @@ const previewItems = menu[0].items;
   type="restaurant"
   jsonLd={restaurantSchema}
 >
+  <IntroOverlay />
   <Hero
     video={heroVideo}
     videoBytes={heroVideoBytes}

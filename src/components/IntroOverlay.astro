@@ -1,0 +1,160 @@
+---
+/*
+  IntroOverlay
+  ============
+  Overlay plein écran joué une fois par session sur la home (inspiration
+  gethapply.com). Vanilla CSS + JS, aucune lib externe.
+
+  Valeurs ajustables :
+  - background-color de l'overlay  → --color-accent (coral #e85d3b)
+  - durée fade-in logo             → --intro-fade (600ms)
+  - pause logo visible             → constante PAUSE dans le script (800ms)
+  - durée slide-up overlay         → --intro-leave (900ms)
+  - délai entre éléments staggered → constante STEP dans le script (150ms)
+  - easing                         → --intro-ease cubic-bezier(0.65, 0, 0.35, 1)
+
+  Le pre-paint script qui pose data-intro="pending|done" sur <html> se
+  trouve dans Layout.astro (doit s'exécuter avant le premier paint pour
+  éviter tout FOUC). Voir aussi Hero.astro pour les éléments staggered
+  (data-intro-stagger="0|1|2").
+*/
+---
+
+<div class="intro-overlay" data-intro-overlay aria-hidden="true">
+  <picture class="intro-logo">
+    <source srcset="/media/logo.avif" type="image/avif" />
+    <img
+      src="/media/logo.png"
+      alt=""
+      width="480"
+      height="184"
+      decoding="sync"
+      fetchpriority="high"
+    />
+  </picture>
+</div>
+
+<style is:global>
+  :root {
+    --intro-ease: cubic-bezier(0.65, 0, 0.35, 1);
+    --intro-fade: 600ms;
+    --intro-leave: 900ms;
+  }
+
+  .intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: var(--color-accent, #e85d3b);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+    will-change: transform;
+    transition: transform var(--intro-leave) var(--intro-ease);
+  }
+  [data-intro='pending'] .intro-overlay {
+    display: flex;
+  }
+
+  .intro-logo {
+    display: block;
+    width: 62vw;
+    max-width: 460px;
+    opacity: 0;
+    transform: scale(0.85);
+    will-change: opacity, transform;
+    transition:
+      opacity var(--intro-fade) var(--intro-ease),
+      transform var(--intro-fade) var(--intro-ease);
+  }
+  .intro-logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .intro-overlay.is-logo-in .intro-logo {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .intro-overlay.is-leaving {
+    transform: translateY(-100%);
+  }
+
+  [data-intro='pending'] [data-intro-stagger] {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+  }
+  [data-intro-stagger] {
+    transition:
+      opacity var(--intro-fade) var(--intro-ease),
+      transform var(--intro-fade) var(--intro-ease);
+  }
+  [data-intro='pending'] [data-intro-stagger].is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-overlay,
+    .intro-logo,
+    [data-intro-stagger] {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var overlay = document.querySelector('[data-intro-overlay]');
+    if (!overlay) return;
+    var html = document.documentElement;
+
+    // pre-paint script (Layout.astro) a déjà posé data-intro="done"
+    // si sessionStorage flag ou reduce-motion → on n'anime rien
+    if (html.getAttribute('data-intro') === 'done') {
+      overlay.parentNode && overlay.parentNode.removeChild(overlay);
+      return;
+    }
+
+    var staggers = document.querySelectorAll('[data-intro-stagger]');
+
+    // === valeurs ajustables ===
+    var LOGO_IN = 600;
+    var PAUSE = 800;
+    var LEAVE = 900;
+    var STEP = 150;
+    // ==========================
+
+    // step 1 — fade-in + scale-in du logo (double rAF pour garantir
+    // que la transition s'applique au lieu de pop)
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        overlay.classList.add('is-logo-in');
+      });
+    });
+
+    // step 2 — pause puis slide-up overlay + stagger du contenu
+    var startLeaveAt = LOGO_IN + PAUSE;
+    setTimeout(function () {
+      overlay.classList.add('is-leaving');
+      staggers.forEach(function (el, i) {
+        setTimeout(function () {
+          el.classList.add('is-revealed');
+        }, i * STEP);
+      });
+    }, startLeaveAt);
+
+    // step 3 — nettoyage final, flag session
+    setTimeout(function () {
+      html.setAttribute('data-intro', 'done');
+      overlay.parentNode && overlay.parentNode.removeChild(overlay);
+      try {
+        sessionStorage.setItem('nellys_intro_seen', '1');
+      } catch (e) {
+        /* sessionStorage indispo (mode privé strict) — l'intro rejouera */
+      }
+    }, startLeaveAt + LEAVE);
+  })();
+</script>
