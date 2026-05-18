@@ -67,27 +67,20 @@ const restaurantSchema = {
   hasMenu: menuSchema,
 };
 
-// compteurs pour la mini-nav et le H1
+// compteurs pour la mini-nav
 const counts = Object.fromEntries(menu.map((s) => [s.id, s.items.length]));
-
-const wordCounts: Record<string, string> = {
-  burgers: 'trois burgers',
-  sides: 'deux sides',
-  boissons: 'six boissons',
-};
-const h1 = menu.map((s) => wordCounts[s.id] ?? s.title).join(', ') + '.';
 ---
 
 <Layout
   title="menu, smash burger à emporter à biarritz"
-  description="le menu de nelly's burger à biarritz. trois burgers, deux sides, six boissons. à emporter."
+  description="le menu de nelly's burger à biarritz, à emporter. pour le menu, c'est simple."
   path="/menu"
   jsonLd={restaurantSchema}
 >
   <article class="menu-page">
     <header class="menu-header">
       <p class="lc meta menu-eyebrow">le menu</p>
-      <h1 class="menu-h1">{h1}</h1>
+      <h1 class="menu-h1">pour le menu, c'est simple.</h1>
       <p class="menu-lead">à emporter | cb ou espèces</p>
 
       <nav class="menu-mini-nav" aria-label="sections du menu">
