@@ -18,12 +18,21 @@ function formatPrice(n: number) {
 const isCompactSection = section.id === 'boissons';
 
 // pour les boissons : séparer la grille compacte des items featured (collab)
-const compactItems: MenuItem[] = isCompactSection
-  ? section.items.filter((i) => !i.featured)
-  : [];
-const featuredItems: MenuItem[] = isCompactSection
-  ? section.items.filter((i) => i.featured)
-  : [];
+// + grouper par sous-rubrique (item.subsection) pour les sections type "bières"
+type Group = { compact: MenuItem[]; featured: MenuItem[] };
+const mainGroup: Group = { compact: [], featured: [] };
+const subsections = new Map<string, Group>();
+
+if (isCompactSection) {
+  for (const item of section.items) {
+    const bucket = item.subsection
+      ? (subsections.get(item.subsection) ?? { compact: [], featured: [] })
+      : mainGroup;
+    if (item.featured) bucket.featured.push(item);
+    else bucket.compact.push(item);
+    if (item.subsection) subsections.set(item.subsection, bucket);
+  }
+}
 
 // pour burgers/sides : tous en bloc
 const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
@@ -83,10 +92,10 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
   }
 
   {
-    /* === template "ligne compacte" : drinks en grille 2 colonnes === */
-    compactItems.length > 0 && (
+    /* === template "ligne compacte" : drinks en grille 2 colonnes (groupe principal) === */
+    mainGroup.compact.length > 0 && (
       <ul class="menu-compact-grid" role="list">
-        {compactItems.map((item) => (
+        {mainGroup.compact.map((item) => (
           <li
             class="menu-compact"
             itemprop="hasMenuItem"
@@ -122,10 +131,10 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
   }
 
   {
-    /* === featured (collab) sous la grille compacte, fine séparation === */
-    featuredItems.length > 0 && (
+    /* === featured du groupe principal (sans subsection) === */
+    mainGroup.featured.length > 0 && (
       <div class="menu-featured-wrap">
-        {featuredItems.map((item) => (
+        {mainGroup.featured.map((item) => (
           <article
             class="menu-block menu-block--featured"
             itemprop="hasMenuItem"
@@ -159,6 +168,88 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
         ))}
       </div>
     )
+  }
+
+  {
+    /* === sous-rubriques (ex. "bières") avec eyebrow + compact + featured === */
+    Array.from(subsections.entries()).map(([title, group]) => (
+      <div class="menu-subsection">
+        <h3 class="menu-subsection-title">{title}</h3>
+
+        {group.compact.length > 0 && (
+          <ul class="menu-compact-grid" role="list">
+            {group.compact.map((item) => (
+              <li
+                class="menu-compact"
+                itemprop="hasMenuItem"
+                itemscope
+                itemtype="https://schema.org/MenuItem"
+              >
+                <span class="menu-compact-name">
+                  <span itemprop="name">{item.name}</span>
+                  {item.description && (
+                    <>
+                      {' '}
+                      <span class="menu-compact-detail" itemprop="description">
+                        {item.description}
+                      </span>
+                    </>
+                  )}
+                </span>
+                <span class="menu-compact-dots" aria-hidden="true" />
+                <span
+                  class="menu-price"
+                  itemprop="offers"
+                  itemscope
+                  itemtype="https://schema.org/Offer"
+                >
+                  <meta itemprop="priceCurrency" content="EUR" />
+                  <meta itemprop="price" content={item.price.toFixed(2)} />
+                  <span aria-hidden="false">{formatPrice(item.price)}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {group.featured.length > 0 && (
+          <div class="menu-subsection-featured">
+            {group.featured.map((item) => (
+              <article
+                class="menu-block menu-block--featured"
+                itemprop="hasMenuItem"
+                itemscope
+                itemtype="https://schema.org/MenuItem"
+              >
+                <div class="menu-block-head">
+                  <h4 class="menu-block-name">
+                    <span itemprop="name">{item.name}</span>
+                    {item.tag && (
+                      <span class="menu-collab-label" aria-label="collaboration">
+                        {item.tag}
+                      </span>
+                    )}
+                  </h4>
+                  <span
+                    class="menu-price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <meta itemprop="priceCurrency" content="EUR" />
+                    <meta itemprop="price" content={item.price.toFixed(2)} />
+                    <span aria-hidden="false">{formatPrice(item.price)}</span>
+                  </span>
+                </div>
+                {item.description && (
+                  <p class="menu-block-desc" itemprop="description">{item.description}</p>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    ))
   }
 </section>
 
@@ -324,5 +415,28 @@ const blockItems: MenuItem[] = isCompactSection ? [] : section.items;
   .menu-collab-label::before {
     content: '·';
     color: var(--color-muted);
+  }
+
+  /* === sous-rubrique (ex. "bières" dans boissons) === */
+  .menu-subsection {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .menu-subsection-title {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem; /* aligné sur .menu-section-title */
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: lowercase;
+    color: var(--color-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .menu-subsection-featured {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
   }
 </style>

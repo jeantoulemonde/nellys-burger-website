@@ -6,6 +6,8 @@ export type MenuItem = {
   tag?: string;
   /** rend l'item en bloc large (template burger) au lieu de la ligne compacte (drinks) */
   featured?: boolean;
+  /** sous-rubrique dans la section (ex. "bières" dans boissons). regroupe visuellement les items partageant la même valeur. */
+  subsection?: string;
 };
 
 export type MenuSection = {
@@ -64,13 +66,14 @@ export const menu: MenuSection[] = [
       { name: 'thé glacé maison', description: '', price: 4 },
       { name: 'citronnade maison', description: '', price: 4 },
       { name: 'kombucha datxa', description: '33 cl', price: 4.5 },
-      { name: 'asahi', description: '33 cl', price: 4 },
+      { name: 'asahi', description: '33 cl', price: 4, subsection: 'bières' },
       {
         name: "nelly's × landberry",
         description: 'brassée à anglet · 44 cl',
         price: 6,
         tag: 'collab',
         featured: true,
+        subsection: 'bières',
       },
     ],
   },
