@@ -44,10 +44,15 @@ const heroVideoBytes = 6_399_320;
 
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
+import kitchenPrep from '~/assets/photos/kitchen-prep.jpg';
 import burgerBottom from '~/assets/photos/burger.jpg';
 import storefront from '~/assets/photos/storefront.jpg';
 import neonPhoto from '~/assets/photos/neon.png';
 import stickers from '~/assets/photos/stickers.jpg';
+import merchTshirts from '~/assets/photos/merch-tshirts.jpg';
+import menuBoardIlluminated from '~/assets/photos/menu-board-illuminated.jpg';
+import merchDenim from '~/assets/photos/merch-denim.jpg';
+import storefrontQueue from '~/assets/photos/storefront-queue.jpg';
 
 const dayMap: Record<string, string> = {
   Mo: 'Monday',
@@ -108,6 +113,10 @@ const heroCards = [
   { image: storefront, alt: "vitrine et store jaune de nelly's à biarritz" },
   { image: neonPhoto, alt: "enseigne néon nelly's" },
   { image: stickers, alt: "stickers nelly's" },
+  { image: merchTshirts, alt: "t-shirts et sweat nelly's, motif voiture vintage" },
+  { image: menuBoardIlluminated, alt: "panneau menu lumineux nelly's vu derrière des stores" },
+  { image: merchDenim, alt: "veste en jean nelly's, sérigraphie au dos" },
+  { image: storefrontQueue, alt: "file d'attente devant nelly's au crépuscule, enseigne néon allumée" },
 ];
 const heroLoop = [...heroCards, ...heroCards];
 
@@ -137,8 +146,8 @@ const fmt = (n: number) =>
     <V2HeroVideo
       video={heroVideo}
       videoBytes={heroVideoBytes}
-      posterImage={menuLightbox}
-      posterAlt="panneau menu lumineux nelly's burger à biarritz"
+      posterImage={kitchenPrep}
+      posterAlt="cuisine nelly's en service, smash burgers en préparation sur le pass"
     />
 
     <div class="v2-hero__inner">

@@ -23,6 +23,9 @@ pnpm-debug.log*
 # astro
 .astro/
 
+# claude worktrees / metadata
+.claude/
+
 # editor
 .vscode/*
 !.vscode/extensions.json
