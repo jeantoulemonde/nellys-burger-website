@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import Hero from '~/components/Hero.astro';
+import MobileHero from '~/components/MobileHero.astro';
 import IntroOverlay from '~/components/IntroOverlay.astro';
 import InfoBlock from '~/components/InfoBlock.astro';
 import MenuItem from '~/components/MenuItem.astro';
@@ -11,7 +12,6 @@ import { menu } from '~/data/menu';
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
 import counterPlancha from '~/assets/photos/counter-plancha.jpg';
-import neonMobile from '~/assets/photos/neon.png';
 import burgerBottom from '~/assets/photos/burger.jpg';
 
 const heroVideo = '/media/hero.mp4';
@@ -91,17 +91,20 @@ const previewItems = menu[0].items;
   jsonLd={restaurantSchema}
 >
   <IntroOverlay />
-  <Hero
-    video={heroVideo}
-    videoBytes={heroVideoBytes}
-    posterImage={menuLightbox}
-    posterAlt="panneau menu lumineux nelly's burger à biarritz"
-    mobilePosterImage={neonMobile}
-    mobilePosterAlt="enseigne néon nelly's à biarritz"
-    eyebrow="smash burger · à emporter · biarritz"
-    title="Come and get your fingers salty."
-    subtitle="ouvert 7j/7, midi et soir."
-  />
+
+  <MobileHero />
+
+  <div class="hidden md:block">
+    <Hero
+      video={heroVideo}
+      videoBytes={heroVideoBytes}
+      posterImage={menuLightbox}
+      posterAlt="panneau menu lumineux nelly's burger à biarritz"
+      eyebrow="smash burger · à emporter · biarritz"
+      title="Come and get your fingers salty."
+      subtitle="ouvert 7j/7, midi et soir."
+    />
+  </div>
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3">
     <InfoBlock label="où" title={`${site.street}, ${site.city}`} href="/contact" cta="voir le plan">
