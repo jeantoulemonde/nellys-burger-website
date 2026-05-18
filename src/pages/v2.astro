@@ -8,7 +8,10 @@
   dominant, crème lumineux #fff4c2 en secondaire. Fond #0a0a0a.
   Ambiance "diner américain, néon ambré qui clignote", pas cyberpunk.
   Scanlines + vignette CRT en overlay fixed via V2Layout.
-  Police titres et corps : VT323. Labels minuscules en Press Start 2P.
+  Typo : General Sans en corps de texte (≈80%), VT323 sur les grandes
+  headlines et item names (≈20%), Press Start 2P sur petits labels.
+  Hero desktop : vidéo v1 avec teinte ambrée légère ; mobile : marquee
+  de photos comme la v1.
 
   Règle absolue : le copy de la v1 est conservé mot pour mot. Seul
   l'enrobage visuel change. Tous les libellés, titres, descriptions
@@ -32,8 +35,12 @@ import V2Layout from '~/layouts/V2Layout.astro';
 import PixelMarquee from '~/components/v2/PixelMarquee.astro';
 import PixelIcon from '~/components/v2/PixelIcon.astro';
 import NeonGrid from '~/components/v2/NeonGrid.astro';
+import V2HeroVideo from '~/components/v2/V2HeroVideo.astro';
 import { site } from '~/data/site';
 import { menu } from '~/data/menu';
+
+const heroVideo = '/media/hero.mp4';
+const heroVideoBytes = 6_399_320;
 
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
@@ -127,9 +134,12 @@ const fmt = (n: number) =>
 
   <!-- 2. HERO -->
   <section class="v2-hero" aria-labelledby="v2-hero-title">
-    <div class="v2-hero__bg" aria-hidden="true">
-      <div class="v2-hero__scan"></div>
-    </div>
+    <V2HeroVideo
+      video={heroVideo}
+      videoBytes={heroVideoBytes}
+      posterImage={menuLightbox}
+      posterAlt="panneau menu lumineux nelly's burger à biarritz"
+    />
 
     <div class="v2-hero__inner">
       <p class="v2-tiny v2-hero__eyebrow">smash burger · à emporter · biarritz</p>
@@ -308,46 +318,38 @@ const fmt = (n: number) =>
   /* ---------- hero ---------- */
   .v2-hero {
     position: relative;
-    padding: 2.5rem 1.25rem 0;
+    min-height: 560px;
+    height: 78vh;
+    padding: 0 1.25rem;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--v2-ink);
   }
 
   @media (min-width: 768px) {
     .v2-hero {
-      padding: 4rem 2rem 0;
+      height: 82vh;
+      padding: 0 2rem;
     }
-  }
-
-  .v2-hero__bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        ellipse 80% 70% at 50% 30%,
-        rgba(255, 217, 103, 0.15),
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 60% 60% at 90% 10%,
-        rgba(240, 168, 48, 0.1),
-        transparent 60%
-      );
   }
 
   .v2-hero__inner {
     position: relative;
+    z-index: 2;
     max-width: 1280px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding-bottom: 2.5rem;
+    gap: 0.875rem;
+    padding-bottom: 3rem;
   }
 
   @media (min-width: 768px) {
     .v2-hero__inner {
-      padding-bottom: 3.5rem;
+      padding-bottom: 5rem;
       gap: 1.25rem;
     }
   }
@@ -362,7 +364,7 @@ const fmt = (n: number) =>
     margin: 0;
     font-family: var(--v2-font-pixel);
     font-weight: 400;
-    font-size: clamp(3rem, 11vw, 8.5rem);
+    font-size: clamp(3rem, 10vw, 7.5rem);
     line-height: 0.95;
     letter-spacing: 0;
     text-transform: lowercase;
@@ -371,9 +373,10 @@ const fmt = (n: number) =>
 
   .v2-hero__subtitle {
     margin: 0;
-    font-family: var(--v2-font-pixel);
-    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
-    line-height: 1.25;
+    font-family: var(--v2-font-body);
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.4;
     color: var(--v2-ink);
     text-transform: lowercase;
   }
@@ -384,20 +387,21 @@ const fmt = (n: number) =>
     letter-spacing: 0.18em;
   }
 
+  /* marquee photos = signature mobile (comme la v1 mobile-hero).
+     masquée sur desktop puisque la vidéo prend déjà ce rôle visuel. */
   .v2-hero__marquee-photos {
     position: relative;
     margin: 0 -1.25rem;
     padding: 1.5rem 0;
     overflow: hidden;
-    border-top: 2px solid var(--v2-line-strong);
-    border-bottom: 2px solid var(--v2-line-strong);
+    border-top: 1px solid var(--v2-line-strong);
+    border-bottom: 1px solid var(--v2-line-strong);
     background-color: var(--v2-bg-deep);
   }
 
   @media (min-width: 768px) {
     .v2-hero__marquee-photos {
-      margin: 0 -2rem;
-      padding: 2rem 0;
+      display: none;
     }
   }
 
@@ -510,24 +514,28 @@ const fmt = (n: number) =>
   }
 
   .v2-card__title {
-    font-family: var(--v2-font-pixel);
-    font-size: 1.85rem;
-    line-height: 1.05;
+    font-family: var(--v2-font-body);
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.2;
     color: var(--v2-ink);
     text-transform: lowercase;
+    letter-spacing: -0.005em;
     margin: 0 0 0.75rem;
   }
 
   .v2-card__body {
     margin: 0 0 1.1rem;
-    font-size: 1.15rem;
-    line-height: 1.4;
+    font-family: var(--v2-font-body);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.55;
     color: var(--v2-ink-dim);
     text-transform: lowercase;
   }
 
   .v2-card__cta {
-    font-size: 1.05rem;
+    font-size: 0.9375rem;
   }
 
   /* ---------- menu section ---------- */
@@ -612,18 +620,18 @@ const fmt = (n: number) =>
   }
 
   .v2-menu__price {
-    font-family: var(--v2-font-pixel);
-    font-size: 1.5rem;
+    font-family: var(--v2-font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
     color: var(--v2-cream);
-    text-shadow:
-      0 0 4px rgba(255, 244, 194, 0.75),
-      0 0 12px rgba(255, 217, 103, 0.35);
+    text-transform: lowercase;
   }
 
   .v2-menu__desc {
     margin: 0.5rem 0 0;
-    font-size: 1.1rem;
-    line-height: 1.45;
+    font-family: var(--v2-font-body);
+    font-size: 0.9375rem;
+    line-height: 1.55;
     color: var(--v2-ink-dim);
     text-transform: lowercase;
   }
@@ -697,8 +705,9 @@ const fmt = (n: number) =>
 
   .v2-where__text {
     margin: 0;
-    font-size: 1.2rem;
-    line-height: 1.5;
+    font-family: var(--v2-font-body);
+    font-size: 1rem;
+    line-height: 1.65;
     color: var(--v2-ink);
     text-transform: lowercase;
   }

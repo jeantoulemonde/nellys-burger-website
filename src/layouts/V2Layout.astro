@@ -6,9 +6,11 @@
   [data-theme="v2-pixel"]. Scanlines + vignette CRT en overlay fixed,
   désactivables via prefers-reduced-motion.
 
-  Google Fonts ajoutées (à vérifier en prod) :
-    — VT323
-    — Press Start 2P
+  Fonts utilisées :
+    — General Sans (Fontshare, déjà présente sur la v1) → corps de texte
+    — VT323 (Google Fonts) → grands titres, marquee, item names (accent pixel)
+    — Press Start 2P (Google Fonts) → labels minuscules (.v2-tiny)
+  Ratio cible ~80% General Sans / 20% pixel pour préserver la lisibilité.
 */
 import '~/styles/global.css';
 import SEOHead from '~/components/SEOHead.astro';
@@ -38,6 +40,12 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap"
@@ -72,30 +80,33 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
         --v2-cream: #fff4c2;
         --v2-cream-soft: #e8d9a8;
         --v2-cream-deep: #6a5e30;
+        --v2-font-body: 'General Sans', ui-sans-serif, system-ui, -apple-system,
+          'Helvetica Neue', Arial, sans-serif;
         --v2-font-pixel: 'VT323', ui-monospace, 'Courier New', monospace;
         --v2-font-tiny: 'Press Start 2P', ui-monospace, monospace;
 
         background-color: var(--v2-bg);
         color: var(--v2-ink);
         color-scheme: dark;
-        font-family: var(--v2-font-pixel);
+        font-family: var(--v2-font-body);
       }
 
       html[data-theme='v2-pixel'] body {
         background-color: var(--v2-bg);
         color: var(--v2-ink);
-        font-family: var(--v2-font-pixel);
-        font-size: 1.25rem;
-        line-height: 1.45;
+        font-family: var(--v2-font-body);
+        font-size: 1rem;
+        line-height: 1.55;
       }
 
       html[data-theme='v2-pixel'] h1,
       html[data-theme='v2-pixel'] h2,
       html[data-theme='v2-pixel'] h3 {
-        font-family: var(--v2-font-pixel);
-        font-weight: 400;
-        line-height: 1;
-        letter-spacing: 0;
+        /* font-family défini par composant ; les grosses headlines passent en
+           pixel, les titres secondaires restent en General Sans bold */
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
       }
 
       html[data-theme='v2-pixel'] ::selection {
@@ -221,16 +232,17 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
         box-shadow: 0 0 0 var(--v2-cream-deep);
       }
 
-      /* pixel underline link */
+      /* underline link */
       .v2-link {
         display: inline-block;
         color: var(--v2-cream);
         text-decoration: none;
-        font-family: var(--v2-font-pixel);
-        font-size: 1.1rem;
-        letter-spacing: 0.04em;
+        font-family: var(--v2-font-body);
+        font-size: 0.9375rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
         text-transform: lowercase;
-        border-bottom: 2px solid var(--v2-cream-deep);
+        border-bottom: 1px solid var(--v2-cream-deep);
         padding-bottom: 2px;
         transition: color 180ms ease, border-color 180ms ease;
       }
@@ -239,7 +251,9 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
         border-color: var(--v2-yellow);
       }
 
-      /* duotone image treatment */
+      /* image frame — traitement minimal pour intégrer les photos dans
+         l'ambiance sombre sans les dénaturer. désaturation légère, pas
+         de duotone, pas de pixelisation, contour 1px discret sans glow. */
       .v2-duotone {
         position: relative;
         overflow: hidden;
@@ -248,35 +262,17 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
       .v2-duotone > img,
       .v2-duotone > picture,
       .v2-duotone > picture > img {
-        filter: grayscale(100%) contrast(1.25) brightness(0.65);
+        filter: saturate(0.85) contrast(1.05);
         display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        image-rendering: pixelated;
-        image-rendering: -webkit-optimize-contrast;
-      }
-      .v2-duotone::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 217, 103, 0.6),
-          rgba(240, 168, 48, 0.35)
-        );
-        mix-blend-mode: color;
-        pointer-events: none;
       }
       .v2-duotone::before {
         content: '';
         position: absolute;
         inset: 0;
-        border: 2px solid var(--v2-yellow);
-        box-shadow:
-          0 0 0 2px var(--v2-bg),
-          0 0 0 4px var(--v2-yellow-deep),
-          0 0 18px rgba(255, 217, 103, 0.45);
+        border: 1px solid var(--v2-yellow-deep);
         pointer-events: none;
         z-index: 2;
       }
