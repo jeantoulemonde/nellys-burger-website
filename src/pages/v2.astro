@@ -318,8 +318,10 @@ const fmt = (n: number) =>
   /* ---------- hero ---------- */
   .v2-hero {
     position: relative;
-    min-height: 560px;
-    height: 78vh;
+    /* min-height seul (pas de height fixe) : le hero grandit pour
+       contenir son titre quand la viewport est courte, sinon il prend
+       la hauteur "cinéma" sur grands écrans. */
+    min-height: clamp(560px, 78vh, 860px);
     padding: 0 1.25rem;
     overflow: hidden;
     display: flex;
@@ -330,7 +332,7 @@ const fmt = (n: number) =>
 
   @media (min-width: 768px) {
     .v2-hero {
-      height: 82vh;
+      min-height: clamp(620px, 82vh, 960px);
       padding: 0 2rem;
     }
   }
@@ -364,11 +366,11 @@ const fmt = (n: number) =>
     margin: 0;
     font-family: var(--v2-font-pixel);
     font-weight: 400;
-    font-size: clamp(3rem, 10vw, 7.5rem);
+    font-size: clamp(2.75rem, 8vw, 6rem);
     line-height: 0.95;
     letter-spacing: 0;
     text-transform: lowercase;
-    max-width: 14ch;
+    max-width: 15ch;
   }
 
   .v2-hero__subtitle {
