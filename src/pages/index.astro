@@ -11,6 +11,8 @@ import { menu } from '~/data/menu';
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
 import counterPlancha from '~/assets/photos/counter-plancha.jpg';
+import neonMobile from '~/assets/photos/neon.png';
+import burgerBottom from '~/assets/photos/burger.jpg';
 
 const heroVideo = '/media/hero.mp4';
 const heroVideoBytes = 6_399_320;
@@ -94,6 +96,8 @@ const previewItems = menu[0].items;
     videoBytes={heroVideoBytes}
     posterImage={menuLightbox}
     posterAlt="panneau menu lumineux nelly's burger à biarritz"
+    mobilePosterImage={neonMobile}
+    mobilePosterAlt="enseigne néon nelly's à biarritz"
     eyebrow="smash burger · à emporter · biarritz"
     title="Come and get your fingers salty."
     subtitle="ouvert 7j/7, midi et soir."
@@ -166,8 +170,8 @@ const previewItems = menu[0].items;
 
   <section class="relative">
     <Picture
-      src={counterPlancha}
-      alt="comptoir inox et plancha en cuisine ouverte chez nelly's biarritz"
+      src={burgerBottom}
+      alt="cheeseburger nelly's : pain brioché toasté, american cheese, pickles maison"
       formats={['avif', 'webp']}
       widths={[768, 1280, 1600]}
       sizes="100vw"

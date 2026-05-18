@@ -8,6 +8,9 @@ export interface Props {
   videoBytes?: number;
   posterImage: ImageMetadata;
   posterAlt: string;
+  /** image alternative affichée uniquement sur mobile (<768px), au-dessus du poster vidéo */
+  mobilePosterImage?: ImageMetadata;
+  mobilePosterAlt?: string;
   eyebrow?: string;
   title: string;
   tagline?: string;
@@ -20,6 +23,8 @@ const {
   videoBytes = 0,
   posterImage,
   posterAlt,
+  mobilePosterImage,
+  mobilePosterAlt,
   eyebrow,
   title,
   tagline,
@@ -63,6 +68,22 @@ const posterOptimized = await getImage({
         loading="eager"
         fetchpriority="high"
         class="absolute inset-0 w-full h-full object-cover"
+      />
+    )
+  }
+
+  {
+    /* override mobile-only : image alternative au-dessus du poster vidéo (<768px) */
+    mobilePosterImage && (
+      <Picture
+        src={mobilePosterImage}
+        alt={mobilePosterAlt ?? posterAlt}
+        formats={['avif', 'webp']}
+        widths={[480, 640, 768]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="md:hidden absolute inset-0 w-full h-full object-cover z-[1]"
       />
     )
   }
