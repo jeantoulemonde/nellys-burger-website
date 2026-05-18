@@ -116,8 +116,8 @@ const fmt = (n: number) =>
 ---
 
 <V2Layout
-  title={`${site.name}. Come and get your fingers salty.`}
-  description="Smash burgers à Biarritz. Come and get your fingers salty. 21 avenue du jardin public, 7/7, 12h-22h."
+  title={`${site.name}. Get your fingers salty.`}
+  description="Smash burgers à Biarritz. Get your fingers salty. A proper burger joint. 21 avenue du jardin public, 7/7, 12h-22h."
   path="/v2"
   image={ogImage.src}
   type="restaurant"
@@ -125,10 +125,10 @@ const fmt = (n: number) =>
 >
   <!-- 1. BANNIÈRE MARQUEE SIGNATURE -->
   <PixelMarquee
-    text="come and get your fingers salty."
+    text={["get your fingers salty.", "a proper burger joint"]}
     separator="◆"
     color="yellow"
-    duration={28}
+    duration={34}
     position="top"
   />
 
@@ -145,7 +145,7 @@ const fmt = (n: number) =>
       <p class="v2-tiny v2-hero__eyebrow">smash burger · à emporter · biarritz</p>
 
       <h1 id="v2-hero-title" class="v2-hero__title v2-glow-yellow">
-        Come and get your fingers salty.
+        Get your fingers salty.
       </h1>
 
       <p class="v2-hero__subtitle">ouvert 7j/7, midi et soir.</p>

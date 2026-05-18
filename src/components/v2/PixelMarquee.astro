@@ -8,8 +8,9 @@
     — prefers-reduced-motion désactive l'animation
 */
 export interface Props {
-  /** texte répété. ne pas inclure les séparateurs, ils sont injectés. */
-  text: string;
+  /** texte unique répété OU tableau de phrases qui alternent. les séparateurs
+      sont injectés entre chaque phrase, ne pas les inclure dans le texte. */
+  text: string | string[];
   /** caractère décoratif entre chaque répétition */
   separator?: string;
   /** durée du défilement en secondes (24 par défaut) */
@@ -28,8 +29,15 @@ const {
   position = 'standalone',
 } = Astro.props;
 
+const phrases = Array.isArray(text) ? text : [text];
+const ariaLabel = phrases.join(` ${separator} `);
+/* boucle de 6 cycles complets pour que la moitié duplicate (en JSX en bas)
+   garantisse un loop sans saut visible quel que soit le nombre de phrases */
 const repeats = 6;
-const items = Array.from({ length: repeats }, (_, i) => ({ text, i }));
+const groups = Array.from({ length: repeats * phrases.length }, (_, i) => ({
+  text: phrases[i % phrases.length],
+  i,
+}));
 const sep = separator;
 ---
 
@@ -39,22 +47,22 @@ const sep = separator;
     `v2-marquee--${color}`,
     `v2-marquee--${position}`,
   ]}
-  aria-label={text}
+  aria-label={ariaLabel}
   style={`--v2-marquee-dur: ${duration}s;`}
 >
   <div class="v2-marquee__track" aria-hidden="true">
     {
-      items.map(() => (
+      groups.map((g) => (
         <span class="v2-marquee__group">
-          <span class="v2-marquee__text">{text}</span>
+          <span class="v2-marquee__text">{g.text}</span>
           <span class="v2-marquee__sep">{sep}</span>
         </span>
       ))
     }
     {
-      items.map(() => (
+      groups.map((g) => (
         <span class="v2-marquee__group">
-          <span class="v2-marquee__text">{text}</span>
+          <span class="v2-marquee__text">{g.text}</span>
           <span class="v2-marquee__sep">{sep}</span>
         </span>
       ))

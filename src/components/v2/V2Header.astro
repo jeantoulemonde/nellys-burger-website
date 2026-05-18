@@ -3,10 +3,9 @@ import { site } from '~/data/site';
 
 /*
   V2Header — pixel synthwave header, logo signature manuscrit "nelly's"
-  (le même que la v1) traité en néon jaune via CSS filter pour faire
-  contraste avec la typo pixel du reste de la page. C'est cette tension
-  signature manuscrite / pixel qui donne du caractère.
-  La technique filter est reprise de IntroOverlay (état final stabilisé).
+  (le même que la v1). Colorisé en jaune via mask-image (pas de filter
+  chain invert/sepia : couleur plate propre), glow néon via drop-shadow.
+  C'est la tension signature manuscrite / typo pixel qui donne le caractère.
 */
 
 const links = [
@@ -23,16 +22,7 @@ const links = [
       class="v2-header__brand"
       aria-label={`Aller à l'accueil v2, ${site.name}`}
     >
-      <picture class="v2-header__logo">
-        <source srcset="/media/logo.avif" type="image/avif" />
-        <img
-          src="/media/logo.png"
-          alt={site.name}
-          width="480"
-          height="184"
-          decoding="async"
-        />
-      </picture>
+      <span class="v2-header__logo" role="img" aria-label={site.name}></span>
     </a>
 
     <nav aria-label="Navigation principale">
@@ -94,23 +84,30 @@ const links = [
     line-height: 0;
   }
 
-  /* convertit le logo png noir-sur-transparent en signature jaune néon
-     avec glow multi-couches. même technique que IntroOverlay (état final),
-     mais glow plus discret pour ne pas surcharger le header. */
-  .v2-header__logo img {
+  /* logo en jaune plat via mask-image (pas de filter chain de conversion
+     couleur) + drop-shadow pour le glow néon. ratio ~480/184 = 2.61 */
+  .v2-header__logo {
     display: block;
-    width: auto;
-    /* taille modérée sur mobile, plus généreuse sur desktop */
+    width: 6.5rem;
     height: 2.5rem;
+    background-color: var(--v2-yellow);
+    -webkit-mask-image: url('/media/logo.png');
+    mask-image: url('/media/logo.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: left center;
+    mask-position: left center;
     filter:
-      invert(1) sepia(1) saturate(8) hue-rotate(-12deg) brightness(1.25)
-      drop-shadow(0 0 3px rgba(255, 244, 194, 0.7))
-      drop-shadow(0 0 8px rgba(255, 217, 103, 0.55))
-      drop-shadow(0 0 18px rgba(240, 168, 48, 0.35));
+      drop-shadow(0 0 3px rgba(255, 244, 194, 0.65))
+      drop-shadow(0 0 9px rgba(255, 217, 103, 0.45))
+      drop-shadow(0 0 18px rgba(240, 168, 48, 0.3));
   }
 
   @media (min-width: 768px) {
-    .v2-header__logo img {
+    .v2-header__logo {
+      width: 8.5rem;
       height: 3.25rem;
     }
   }
