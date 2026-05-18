@@ -1,0 +1,105 @@
+---
+import { site } from '~/data/site';
+import PixelMarquee from '~/components/v2/PixelMarquee.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="v2-footer">
+  <PixelMarquee
+    text="come and get your fingers salty."
+    separator="★"
+    color="cream"
+    duration={34}
+  />
+
+  <div class="v2-footer__inner">
+    <div class="v2-footer__col">
+      <p class="v2-tiny v2-footer__label">où</p>
+      <p class="v2-footer__line">{site.street}</p>
+      <p class="v2-footer__line">{site.postalCode} {site.city}</p>
+    </div>
+
+    <div class="v2-footer__col">
+      <p class="v2-tiny v2-footer__label">quand</p>
+      <p class="v2-footer__line">7j/7</p>
+      <p class="v2-footer__line">12h à 22h</p>
+    </div>
+
+    <div class="v2-footer__col">
+      <p class="v2-tiny v2-footer__label">contact</p>
+      <a class="v2-footer__line v2-footer__link" href={site.instagram} target="_blank" rel="me noopener">
+        {site.instagramHandle}
+      </a>
+      <a class="v2-footer__line v2-footer__link" href="/">retour v1</a>
+    </div>
+
+    <div class="v2-footer__col v2-footer__col--end">
+      <p class="v2-tiny v2-footer__label">v2</p>
+      <p class="v2-footer__line v2-footer__line--dim">© {year} {site.legalName}</p>
+      <p class="v2-footer__line v2-footer__line--dim">a/b test</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .v2-footer {
+    margin-top: 5rem;
+    border-top: 2px solid var(--v2-line-strong);
+  }
+
+  .v2-footer__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.25rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .v2-footer__inner {
+      grid-template-columns: repeat(4, 1fr);
+      padding: 4rem 2rem 3rem;
+      gap: 2rem;
+    }
+  }
+
+  .v2-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .v2-footer__label {
+    color: var(--v2-yellow);
+    margin: 0 0 0.5rem;
+  }
+
+  .v2-footer__line {
+    margin: 0;
+    font-family: var(--v2-font-pixel);
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: var(--v2-ink);
+    text-transform: lowercase;
+  }
+
+  .v2-footer__line--dim {
+    color: var(--v2-ink-dim);
+  }
+
+  .v2-footer__link {
+    color: var(--v2-cream);
+    text-decoration: none;
+    width: max-content;
+    border-bottom: 1px solid var(--v2-cream-deep);
+    padding-bottom: 1px;
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+
+  .v2-footer__link:hover {
+    color: var(--v2-yellow);
+    border-color: var(--v2-yellow);
+  }
+</style>

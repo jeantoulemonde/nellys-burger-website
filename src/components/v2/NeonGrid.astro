@@ -1,0 +1,156 @@
+---
+/*
+  NeonGrid — fond en perspective Tron. À utiliser sur UNE section max,
+  comme demandé dans le brief. Lignes en ambre fuyant vers l'horizon,
+  soleil pixel jaune Nelly's au point de fuite.
+  Animation : grille qui défile lentement vers l'observateur.
+  prefers-reduced-motion : animation arrêtée.
+*/
+---
+
+<div class="v2-neon-grid" aria-hidden="true">
+  <div class="v2-neon-grid__sky"></div>
+  <div class="v2-neon-grid__floor">
+    <div class="v2-neon-grid__plane"></div>
+  </div>
+  <div class="v2-neon-grid__horizon"></div>
+  <div class="v2-neon-grid__sun"></div>
+</div>
+
+<style>
+  .v2-neon-grid {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: var(--v2-bg-deep);
+  }
+
+  .v2-neon-grid__sky {
+    position: absolute;
+    inset: 0 0 50% 0;
+    background:
+      radial-gradient(
+        ellipse 60% 90% at 50% 100%,
+        rgba(240, 168, 48, 0.22),
+        transparent 70%
+      ),
+      linear-gradient(
+        to bottom,
+        var(--v2-bg-deep),
+        #110a04 80%,
+        #1f1408 100%
+      );
+  }
+
+  .v2-neon-grid__floor {
+    position: absolute;
+    inset: 50% 0 0 0;
+    perspective: 600px;
+    perspective-origin: 50% 0%;
+    background: linear-gradient(to bottom, #0a0602 0%, var(--v2-bg) 100%);
+  }
+
+  .v2-neon-grid__plane {
+    position: absolute;
+    inset: 0 -25% -25% -25%;
+    transform-origin: 50% 0%;
+    transform: rotateX(60deg);
+    background-image:
+      linear-gradient(to right,
+        rgba(240, 168, 48, 0.55) 0,
+        rgba(240, 168, 48, 0.55) 1px,
+        transparent 1px,
+        transparent 60px),
+      linear-gradient(to bottom,
+        rgba(240, 168, 48, 0.55) 0,
+        rgba(240, 168, 48, 0.55) 1px,
+        transparent 1px,
+        transparent 60px);
+    animation: v2-grid-scroll 6s linear infinite;
+    will-change: background-position;
+  }
+
+  .v2-neon-grid__horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% - 1px);
+    height: 2px;
+    background: var(--v2-yellow);
+    box-shadow:
+      0 0 6px var(--v2-yellow),
+      0 0 14px rgba(255, 217, 103, 0.65),
+      0 0 32px rgba(240, 168, 48, 0.4);
+  }
+
+  .v2-neon-grid__sun {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 36vmin;
+    height: 36vmin;
+    max-width: 320px;
+    max-height: 320px;
+    transform: translate(-50%, -85%);
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        var(--v2-yellow-bright) 0%,
+        var(--v2-yellow) 30%,
+        rgba(240, 168, 48, 0.55) 55%,
+        rgba(200, 122, 24, 0.25) 70%,
+        transparent 80%
+      );
+    /* lignes horizontales façon coucher de soleil pixel */
+    mask-image:
+      linear-gradient(to bottom,
+        #000 0,
+        #000 38%,
+        transparent 38%,
+        transparent 42%,
+        #000 42%,
+        #000 50%,
+        transparent 50%,
+        transparent 54%,
+        #000 54%,
+        #000 64%,
+        transparent 64%,
+        transparent 68%,
+        #000 68%,
+        #000 100%);
+    -webkit-mask-image:
+      linear-gradient(to bottom,
+        #000 0,
+        #000 38%,
+        transparent 38%,
+        transparent 42%,
+        #000 42%,
+        #000 50%,
+        transparent 50%,
+        transparent 54%,
+        #000 54%,
+        #000 64%,
+        transparent 64%,
+        transparent 68%,
+        #000 68%,
+        #000 100%);
+    filter: drop-shadow(0 0 18px rgba(255, 217, 103, 0.6));
+  }
+
+  @keyframes v2-grid-scroll {
+    from {
+      background-position: 0 0, 0 0;
+    }
+    to {
+      background-position: 0 0, 0 60px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v2-neon-grid__plane {
+      animation: none;
+    }
+  }
+</style>

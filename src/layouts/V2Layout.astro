@@ -1,0 +1,298 @@
+---
+/*
+  V2Layout — variante pixel synthwave (Tron / Hotline Miami / Stranger Things).
+  Scopée uniquement aux pages /v2. Charge VT323 (titres & corps pixel)
+  et Press Start 2P (labels minuscules), bascule en thème sombre via
+  [data-theme="v2-pixel"]. Scanlines + vignette CRT en overlay fixed,
+  désactivables via prefers-reduced-motion.
+
+  Google Fonts ajoutées (à vérifier en prod) :
+    — VT323
+    — Press Start 2P
+*/
+import '~/styles/global.css';
+import SEOHead from '~/components/SEOHead.astro';
+import V2Header from '~/components/v2/V2Header.astro';
+import V2Footer from '~/components/v2/V2Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  type?: 'website' | 'article' | 'restaurant';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, path, image, type, jsonLd } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr" data-theme="v2-pixel">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <SEOHead
+      title={title}
+      description={description}
+      path={path}
+      image={image}
+      type={type}
+      jsonLd={jsonLd}
+    />
+    <style is:global>
+      html[data-theme='v2-pixel'] {
+        --v2-bg: #0a0a0a;
+        --v2-bg-deep: #050505;
+        --v2-ink: #ededed;
+        --v2-ink-dim: #8a8a8a;
+        --v2-ink-faint: #4a4a4a;
+        --v2-line: #1c1c1c;
+        --v2-line-strong: #2a2a2a;
+        /* palette néon doré, alignée sur l'enseigne Nelly's (cf. IntroOverlay).
+           jaune ambré dominant, crème en accent secondaire. */
+        --v2-yellow: #ffd967;
+        --v2-yellow-bright: #fff4c2;
+        --v2-yellow-soft: #f0a830;
+        --v2-yellow-deep: #c87a18;
+        --v2-yellow-shadow: #4a2a06;
+        --v2-cream: #fff4c2;
+        --v2-cream-soft: #e8d9a8;
+        --v2-cream-deep: #6a5e30;
+        --v2-font-pixel: 'VT323', ui-monospace, 'Courier New', monospace;
+        --v2-font-tiny: 'Press Start 2P', ui-monospace, monospace;
+
+        background-color: var(--v2-bg);
+        color: var(--v2-ink);
+        color-scheme: dark;
+        font-family: var(--v2-font-pixel);
+      }
+
+      html[data-theme='v2-pixel'] body {
+        background-color: var(--v2-bg);
+        color: var(--v2-ink);
+        font-family: var(--v2-font-pixel);
+        font-size: 1.25rem;
+        line-height: 1.45;
+      }
+
+      html[data-theme='v2-pixel'] h1,
+      html[data-theme='v2-pixel'] h2,
+      html[data-theme='v2-pixel'] h3 {
+        font-family: var(--v2-font-pixel);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      html[data-theme='v2-pixel'] ::selection {
+        background-color: var(--v2-yellow);
+        color: var(--v2-bg);
+      }
+
+      html[data-theme='v2-pixel'] a:focus-visible,
+      html[data-theme='v2-pixel'] button:focus-visible,
+      html[data-theme='v2-pixel'] [tabindex]:focus-visible {
+        outline: 2px solid var(--v2-yellow);
+        outline-offset: 3px;
+      }
+
+      /* glow helpers */
+      .v2-glow-yellow {
+        color: var(--v2-yellow);
+        text-shadow:
+          0 0 4px rgba(255, 217, 103, 0.95),
+          0 0 14px rgba(240, 168, 48, 0.7),
+          0 0 30px rgba(200, 122, 24, 0.45);
+      }
+      .v2-glow-cream {
+        color: var(--v2-cream);
+        text-shadow:
+          0 0 4px rgba(255, 244, 194, 0.85),
+          0 0 14px rgba(255, 217, 103, 0.45),
+          0 0 30px rgba(240, 168, 48, 0.25);
+      }
+
+      .v2-tiny {
+        font-family: var(--v2-font-tiny);
+        font-size: 0.625rem;
+        letter-spacing: 0.04em;
+        line-height: 1.3;
+        text-transform: lowercase;
+      }
+
+      /* scanlines + CRT vignette en overlay fixed */
+      html[data-theme='v2-pixel'] body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 2px,
+          rgba(0, 0, 0, 0.55) 3px,
+          rgba(0, 0, 0, 0.55) 4px
+        );
+        mix-blend-mode: multiply;
+        z-index: 100;
+        opacity: 0.45;
+      }
+
+      html[data-theme='v2-pixel'] body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse at center,
+            transparent 38%,
+            rgba(0, 0, 0, 0.55) 100%
+          );
+        z-index: 99;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html[data-theme='v2-pixel'] body::before {
+          opacity: 0.15;
+        }
+      }
+
+      /* pixel button — bordure carrée, ombre offset, press 3D */
+      .v2-pixel-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.1rem 0.4rem;
+        background: transparent;
+        color: var(--v2-yellow);
+        border: 2px solid var(--v2-yellow);
+        border-radius: 0;
+        font-family: var(--v2-font-pixel);
+        font-size: 1.25rem;
+        line-height: 1;
+        letter-spacing: 0.02em;
+        text-transform: lowercase;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 var(--v2-yellow-deep);
+        transition:
+          transform 90ms steps(2),
+          box-shadow 90ms steps(2),
+          background-color 180ms ease,
+          color 180ms ease;
+        text-decoration: none;
+      }
+
+      .v2-pixel-btn:hover {
+        background-color: var(--v2-yellow);
+        color: var(--v2-bg);
+      }
+
+      .v2-pixel-btn:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 var(--v2-yellow-deep);
+      }
+
+      .v2-pixel-btn--cream {
+        color: var(--v2-cream);
+        border-color: var(--v2-cream);
+        box-shadow: 4px 4px 0 var(--v2-cream-deep);
+      }
+      .v2-pixel-btn--cream:hover {
+        background-color: var(--v2-cream);
+        color: var(--v2-bg);
+      }
+      .v2-pixel-btn--cream:active {
+        box-shadow: 0 0 0 var(--v2-cream-deep);
+      }
+
+      /* pixel underline link */
+      .v2-link {
+        display: inline-block;
+        color: var(--v2-cream);
+        text-decoration: none;
+        font-family: var(--v2-font-pixel);
+        font-size: 1.1rem;
+        letter-spacing: 0.04em;
+        text-transform: lowercase;
+        border-bottom: 2px solid var(--v2-cream-deep);
+        padding-bottom: 2px;
+        transition: color 180ms ease, border-color 180ms ease;
+      }
+      .v2-link:hover {
+        color: var(--v2-yellow);
+        border-color: var(--v2-yellow);
+      }
+
+      /* duotone image treatment */
+      .v2-duotone {
+        position: relative;
+        overflow: hidden;
+        display: block;
+      }
+      .v2-duotone > img,
+      .v2-duotone > picture,
+      .v2-duotone > picture > img {
+        filter: grayscale(100%) contrast(1.25) brightness(0.65);
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        image-rendering: pixelated;
+        image-rendering: -webkit-optimize-contrast;
+      }
+      .v2-duotone::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 217, 103, 0.6),
+          rgba(240, 168, 48, 0.35)
+        );
+        mix-blend-mode: color;
+        pointer-events: none;
+      }
+      .v2-duotone::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border: 2px solid var(--v2-yellow);
+        box-shadow:
+          0 0 0 2px var(--v2-bg),
+          0 0 0 4px var(--v2-yellow-deep),
+          0 0 18px rgba(255, 217, 103, 0.45);
+        pointer-events: none;
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-[var(--v2-yellow)] focus:text-[var(--v2-bg)] focus:px-3 focus:py-2"
+    >
+      aller au contenu
+    </a>
+    <V2Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <V2Footer />
+  </body>
+</html>

@@ -1,0 +1,90 @@
+---
+/*
+  PixelIcon — petites icônes 12x12 inline-svg, faites à la main en
+  carrés orthogonaux pour un rendu pixel. Couleur via currentColor.
+  Variants disponibles : 'pin', 'clock', 'bag'.
+*/
+export interface Props {
+  variant: 'pin' | 'clock' | 'bag';
+  size?: number;
+  class?: string;
+}
+
+const { variant, size = 24, class: cls = '' } = Astro.props;
+
+const paths: Record<Props['variant'], string> = {
+  // pin (carte) : carré 12x12, viewBox aligné sur pixels
+  pin: [
+    // tête (4x4 au centre haut)
+    'M4 1h4v1H4z',
+    'M3 2h6v1H3z',
+    'M3 3h6v1H3z',
+    'M3 4h6v1H3z',
+    'M3 5h6v1H3z',
+    'M4 6h4v1H4z',
+    'M5 7h2v1H5z',
+    'M5 8h2v1H5z',
+    'M5 9h2v1H5z',
+    // trou intérieur
+    'M5 3h2v1H5z',
+    'M5 4h2v1H5z',
+  ].join(' '),
+  // clock : cercle pixelisé + aiguilles
+  clock: [
+    'M4 1h4v1H4z',
+    'M2 2h2v1H2z',
+    'M8 2h2v1H8z',
+    'M1 3h1v1H1z',
+    'M10 3h1v1h-1z',
+    'M1 4h1v1H1z',
+    'M10 4h1v1h-1z',
+    'M1 5h1v1H1z',
+    'M10 5h1v1h-1z',
+    'M1 6h1v1H1z',
+    'M10 6h1v1h-1z',
+    'M1 7h1v1H1z',
+    'M10 7h1v1h-1z',
+    'M1 8h1v1H1z',
+    'M10 8h1v1h-1z',
+    'M2 9h2v1H2z',
+    'M8 9h2v1H8z',
+    'M4 10h4v1H4z',
+    // aiguilles
+    'M5 3h1v1H5z',
+    'M5 4h1v1H5z',
+    'M5 5h1v1H5z',
+    'M6 5h2v1H6z',
+  ].join(' '),
+  // bag : sac à emporter pixel
+  bag: [
+    'M4 1h1v1H4z',
+    'M7 1h1v1H7z',
+    'M4 2h1v1H4z',
+    'M7 2h1v1H7z',
+    'M2 3h8v1H2z',
+    'M2 4h8v1H2z',
+    'M2 5h8v1H2z',
+    'M2 6h8v1H2z',
+    'M2 7h8v1H2z',
+    'M2 8h8v1H2z',
+    'M2 9h8v1H2z',
+    'M2 10h8v1H2z',
+    // détails
+    'M4 5h1v1H4z',
+    'M7 5h1v1H7z',
+    'M4 7h4v1H4z',
+  ].join(' '),
+};
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 12 12"
+  fill="currentColor"
+  class={cls}
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+>
+  <path d={paths[variant]} />
+</svg>

@@ -1,0 +1,747 @@
+---
+/*
+  /v2 — variante pixel synthwave 70s/80s.
+  Inspirations : générique Stranger Things (typo + glow), Hotline Miami
+  (néons saturés sur sombre, sans cartoon), pochettes synthwave (The Midnight,
+  FM-84, Kavinsky), Tron / Asteroids arcade.
+  Palette néon doré : jaune Nelly's #ffd967 (cf. IntroOverlay v1) en
+  dominant, crème lumineux #fff4c2 en secondaire. Fond #0a0a0a.
+  Ambiance "diner américain, néon ambré qui clignote", pas cyberpunk.
+  Scanlines + vignette CRT en overlay fixed via V2Layout.
+  Police titres et corps : VT323. Labels minuscules en Press Start 2P.
+
+  Règle absolue : le copy de la v1 est conservé mot pour mot. Seul
+  l'enrobage visuel change. Tous les libellés, titres, descriptions
+  et CTA proviennent de l'index.astro v1.
+
+  Sections (mêmes que la v1) :
+    1. Bannière marquee signature
+    2. Hero (eyebrow + titre + sous-titre + "now serving" + marquee photos)
+    3. 3 InfoBlocks (où, quand, comment)
+    4. Section menu (le menu / pour le menu, c'est simple. + 3 burgers)
+    5. Section adresse (à biarritz / 21 avenue du jardin public.) sur grille Tron
+    6. Photo burger pleine largeur (duotone)
+    7. Instagram (on est sur instagram. / @nellysburgerz)
+
+  NOTE : la v1 a un IntroOverlay et un Hero vidéo desktop ; je les ai
+  remplacés par leur équivalent statique pixel pour rester scopé à cette
+  page sans casser ces composants ailleurs.
+*/
+import { Picture, getImage } from 'astro:assets';
+import V2Layout from '~/layouts/V2Layout.astro';
+import PixelMarquee from '~/components/v2/PixelMarquee.astro';
+import PixelIcon from '~/components/v2/PixelIcon.astro';
+import NeonGrid from '~/components/v2/NeonGrid.astro';
+import { site } from '~/data/site';
+import { menu } from '~/data/menu';
+
+import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
+import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
+import burgerBottom from '~/assets/photos/burger.jpg';
+import storefront from '~/assets/photos/storefront.jpg';
+import neonPhoto from '~/assets/photos/neon.png';
+import stickers from '~/assets/photos/stickers.jpg';
+
+const dayMap: Record<string, string> = {
+  Mo: 'Monday',
+  Tu: 'Tuesday',
+  We: 'Wednesday',
+  Th: 'Thursday',
+  Fr: 'Friday',
+  Sa: 'Saturday',
+  Su: 'Sunday',
+};
+
+const openingHoursSpecification = site.hours.map((slot) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: slot.days.map((d) => dayMap[d]),
+  opens: slot.opens,
+  closes: slot.closes,
+}));
+
+const ogImage = await getImage({
+  src: menuLightbox,
+  width: 1200,
+  height: 630,
+  format: 'jpg',
+  quality: 80,
+});
+
+const restaurantSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': `${site.url}#restaurant-v2`,
+  name: site.name,
+  url: `${site.url}/v2`,
+  description: site.description,
+  servesCuisine: site.cuisine,
+  priceRange: site.priceRange,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.street,
+    addressLocality: site.city,
+    postalCode: site.postalCode,
+    addressRegion: site.region,
+    addressCountry: site.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  openingHoursSpecification,
+  hasMenu: `${site.url}/menu`,
+  sameAs: [site.instagram],
+  acceptsReservations: false,
+};
+
+const previewItems = menu[0].items;
+
+const heroCards = [
+  { image: storefront, alt: "vitrine et store jaune de nelly's à biarritz" },
+  { image: neonPhoto, alt: "enseigne néon nelly's" },
+  { image: stickers, alt: "stickers nelly's" },
+];
+const heroLoop = [...heroCards, ...heroCards];
+
+const fmt = (n: number) =>
+  Number.isInteger(n) ? `${n}` : n.toFixed(2).replace('.', ',');
+---
+
+<V2Layout
+  title={`${site.name}. Come and get your fingers salty.`}
+  description="Smash burgers à Biarritz. Come and get your fingers salty. 21 avenue du jardin public, 7/7, 12h-22h."
+  path="/v2"
+  image={ogImage.src}
+  type="restaurant"
+  jsonLd={restaurantSchema}
+>
+  <!-- 1. BANNIÈRE MARQUEE SIGNATURE -->
+  <PixelMarquee
+    text="come and get your fingers salty."
+    separator="◆"
+    color="yellow"
+    duration={28}
+    position="top"
+  />
+
+  <!-- 2. HERO -->
+  <section class="v2-hero" aria-labelledby="v2-hero-title">
+    <div class="v2-hero__bg" aria-hidden="true">
+      <div class="v2-hero__scan"></div>
+    </div>
+
+    <div class="v2-hero__inner">
+      <p class="v2-tiny v2-hero__eyebrow">smash burger · à emporter · biarritz</p>
+
+      <h1 id="v2-hero-title" class="v2-hero__title v2-glow-yellow">
+        Come and get your fingers salty.
+      </h1>
+
+      <p class="v2-hero__subtitle">ouvert 7j/7, midi et soir.</p>
+
+      <p class="v2-tiny v2-hero__marker v2-glow-cream">now serving</p>
+    </div>
+
+    <div class="v2-hero__marquee-photos" aria-label="vues du restaurant">
+      <div class="v2-hero__photo-track">
+        {
+          heroLoop.map((card, i) => (
+            <div class="v2-hero__photo">
+              <span class="v2-duotone v2-hero__photo-inner">
+                <Picture
+                  src={card.image}
+                  alt={i >= heroCards.length ? '' : card.alt}
+                  formats={['avif', 'webp']}
+                  widths={[280, 400, 600]}
+                  sizes="220px"
+                  loading={i < 3 ? 'eager' : 'lazy'}
+                />
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. INFO BLOCKS -->
+  <section class="v2-section v2-info" aria-label="infos pratiques">
+    <div class="v2-info__grid">
+      <article class="v2-card">
+        <header class="v2-card__head">
+          <PixelIcon variant="pin" size={28} class="v2-card__icon" />
+          <p class="v2-tiny v2-card__label">où</p>
+        </header>
+        <h2 class="v2-card__title">{site.street}, {site.city}</h2>
+        <p class="v2-card__body">
+          {site.street}<br />{site.postalCode} {site.city}
+        </p>
+        <a href="/contact" class="v2-link v2-card__cta">voir le plan</a>
+      </article>
+
+      <article class="v2-card">
+        <header class="v2-card__head">
+          <PixelIcon variant="clock" size={28} class="v2-card__icon" />
+          <p class="v2-tiny v2-card__label">quand</p>
+        </header>
+        <h2 class="v2-card__title">7j/7 · 12h à 22h</h2>
+        <p class="v2-card__body">
+          midi et soir, service continu<br />
+          premier arrivé, premier servi
+        </p>
+        <a href="/contact" class="v2-link v2-card__cta">voir le détail</a>
+      </article>
+
+      <article class="v2-card">
+        <header class="v2-card__head">
+          <PixelIcon variant="bag" size={28} class="v2-card__icon" />
+          <p class="v2-tiny v2-card__label">comment</p>
+        </header>
+        <h2 class="v2-card__title">à emporter uniquement</h2>
+        <p class="v2-card__body">
+          commande au comptoir<br />
+          cb et espèces
+        </p>
+        <a href="/menu" class="v2-link v2-card__cta">voir le menu</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. SECTION MENU -->
+  <section class="v2-section v2-menu" aria-labelledby="v2-menu-title">
+    <div class="v2-menu__inner">
+      <div class="v2-menu__head">
+        <p class="v2-tiny v2-menu__eyebrow">le menu</p>
+        <h2 id="v2-menu-title" class="v2-menu__title v2-glow-yellow">
+          pour le menu, c'est simple.
+        </h2>
+        <a href="/menu" class="v2-pixel-btn v2-menu__btn">voir le menu complet</a>
+      </div>
+
+      <ul class="v2-menu__list">
+        {
+          previewItems.map((item) => (
+            <li class="v2-menu__row">
+              <div class="v2-menu__row-top">
+                <span class="v2-menu__name">{item.name}</span>
+                <span class="v2-menu__price">{fmt(item.price)} €</span>
+              </div>
+              <p class="v2-menu__desc">{item.description}</p>
+              {item.tag ? (
+                <p class="v2-menu__tag v2-tiny">{item.tag}</p>
+              ) : null}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. SECTION ADRESSE (grille Tron) -->
+  <section class="v2-section v2-where" aria-labelledby="v2-where-title">
+    <NeonGrid />
+    <div class="v2-where__inner">
+      <Picture
+        src={kitchenWide}
+        alt="cuisine de nelly's burger à biarritz : plancha, hotte inox, néons industriels"
+        formats={['avif', 'webp']}
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        loading="lazy"
+        class="v2-where__img-raw"
+      />
+      <div class="v2-where__img-wrap v2-duotone">
+        <Picture
+          src={kitchenWide}
+          alt=""
+          formats={['avif', 'webp']}
+          widths={[480, 768, 1024]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          loading="lazy"
+        />
+      </div>
+      <div class="v2-where__body">
+        <p class="v2-tiny v2-where__eyebrow v2-glow-cream">à biarritz</p>
+        <h2 id="v2-where-title" class="v2-where__title v2-glow-cream">
+          21 avenue du jardin public.
+        </h2>
+        <p class="v2-where__text">
+          à deux pas du jardin public, dix minutes à pied de la grande plage. cuisine ouverte,
+          plancha en service midi et soir.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. PHOTO BURGER pleine largeur -->
+  <section class="v2-burger" aria-hidden="true">
+    <span class="v2-duotone v2-burger__inner">
+      <Picture
+        src={burgerBottom}
+        alt="cheeseburger nelly's : pain brioché toasté, american cheese, pickles maison"
+        formats={['avif', 'webp']}
+        widths={[768, 1280, 1600]}
+        sizes="100vw"
+        loading="lazy"
+      />
+    </span>
+  </section>
+
+  <!-- 7. INSTAGRAM -->
+  <section class="v2-section v2-insta">
+    <div class="v2-insta__inner">
+      <h2 class="v2-insta__title v2-glow-yellow">on est sur instagram.</h2>
+      <a
+        href={site.instagram}
+        rel="me noopener"
+        target="_blank"
+        class="v2-pixel-btn v2-pixel-btn--cream"
+      >
+        {site.instagramHandle}
+      </a>
+    </div>
+  </section>
+</V2Layout>
+
+<style>
+  /* ---------- hero ---------- */
+  .v2-hero {
+    position: relative;
+    padding: 2.5rem 1.25rem 0;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .v2-hero {
+      padding: 4rem 2rem 0;
+    }
+  }
+
+  .v2-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 80% 70% at 50% 30%,
+        rgba(255, 217, 103, 0.15),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 60% at 90% 10%,
+        rgba(240, 168, 48, 0.1),
+        transparent 60%
+      );
+  }
+
+  .v2-hero__inner {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .v2-hero__inner {
+      padding-bottom: 3.5rem;
+      gap: 1.25rem;
+    }
+  }
+
+  .v2-hero__eyebrow {
+    color: var(--v2-cream);
+    margin: 0;
+    letter-spacing: 0.1em;
+  }
+
+  .v2-hero__title {
+    margin: 0;
+    font-family: var(--v2-font-pixel);
+    font-weight: 400;
+    font-size: clamp(3rem, 11vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    max-width: 14ch;
+  }
+
+  .v2-hero__subtitle {
+    margin: 0;
+    font-family: var(--v2-font-pixel);
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    line-height: 1.25;
+    color: var(--v2-ink);
+    text-transform: lowercase;
+  }
+
+  .v2-hero__marker {
+    margin: 0.25rem 0 0;
+    color: var(--v2-cream);
+    letter-spacing: 0.18em;
+  }
+
+  .v2-hero__marquee-photos {
+    position: relative;
+    margin: 0 -1.25rem;
+    padding: 1.5rem 0;
+    overflow: hidden;
+    border-top: 2px solid var(--v2-line-strong);
+    border-bottom: 2px solid var(--v2-line-strong);
+    background-color: var(--v2-bg-deep);
+  }
+
+  @media (min-width: 768px) {
+    .v2-hero__marquee-photos {
+      margin: 0 -2rem;
+      padding: 2rem 0;
+    }
+  }
+
+  .v2-hero__photo-track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding: 0 14px;
+    animation: v2-hero-photos 28s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes v2-hero-photos {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  .v2-hero__marquee-photos:hover .v2-hero__photo-track {
+    animation-play-state: paused;
+  }
+
+  .v2-hero__photo {
+    width: 160px;
+    height: 200px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .v2-hero__photo {
+      width: 220px;
+      height: 280px;
+    }
+  }
+
+  .v2-hero__photo-inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v2-hero__photo-track {
+      animation-duration: 120s;
+    }
+  }
+
+  /* ---------- shared section ---------- */
+  .v2-section {
+    position: relative;
+    padding: 4rem 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .v2-section {
+      padding: 6rem 2rem;
+    }
+  }
+
+  /* ---------- info blocks ---------- */
+  .v2-info__grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .v2-info__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .v2-card {
+    position: relative;
+    padding: 1.25rem 1.25rem 1.5rem;
+    border: 2px solid var(--v2-line-strong);
+    background-color: var(--v2-bg-deep);
+    box-shadow: 4px 4px 0 var(--v2-bg-deep);
+    transition:
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      transform 220ms ease;
+  }
+
+  .v2-card:hover {
+    border-color: var(--v2-yellow);
+    box-shadow:
+      4px 4px 0 var(--v2-yellow-deep),
+      0 0 24px rgba(255, 217, 103, 0.3);
+    transform: translate(-2px, -2px);
+  }
+
+  .v2-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .v2-card__icon {
+    color: var(--v2-cream);
+    flex-shrink: 0;
+  }
+
+  .v2-card__label {
+    margin: 0;
+    color: var(--v2-yellow);
+  }
+
+  .v2-card__title {
+    font-family: var(--v2-font-pixel);
+    font-size: 1.85rem;
+    line-height: 1.05;
+    color: var(--v2-ink);
+    text-transform: lowercase;
+    margin: 0 0 0.75rem;
+  }
+
+  .v2-card__body {
+    margin: 0 0 1.1rem;
+    font-size: 1.15rem;
+    line-height: 1.4;
+    color: var(--v2-ink-dim);
+    text-transform: lowercase;
+  }
+
+  .v2-card__cta {
+    font-size: 1.05rem;
+  }
+
+  /* ---------- menu section ---------- */
+  .v2-menu {
+    background:
+      linear-gradient(180deg, var(--v2-bg) 0%, var(--v2-bg-deep) 100%);
+    border-top: 2px solid var(--v2-yellow-deep);
+    border-bottom: 2px solid var(--v2-yellow-deep);
+  }
+
+  .v2-menu__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .v2-menu__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      gap: 5rem;
+    }
+  }
+
+  .v2-menu__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .v2-menu__eyebrow {
+    color: var(--v2-cream);
+    margin: 0;
+    letter-spacing: 0.1em;
+  }
+
+  .v2-menu__title {
+    margin: 0;
+    font-family: var(--v2-font-pixel);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    text-transform: lowercase;
+    max-width: 14ch;
+  }
+
+  .v2-menu__btn {
+    margin-top: 1rem;
+  }
+
+  .v2-menu__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--v2-line-strong);
+  }
+
+  .v2-menu__row {
+    padding: 1.25rem 0;
+    border-bottom: 2px solid var(--v2-line-strong);
+  }
+
+  .v2-menu__row-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .v2-menu__name {
+    font-family: var(--v2-font-pixel);
+    font-size: 1.85rem;
+    line-height: 1;
+    color: var(--v2-yellow);
+    text-shadow:
+      0 0 4px rgba(255, 217, 103, 0.85),
+      0 0 12px rgba(240, 168, 48, 0.45);
+    text-transform: lowercase;
+  }
+
+  .v2-menu__price {
+    font-family: var(--v2-font-pixel);
+    font-size: 1.5rem;
+    color: var(--v2-cream);
+    text-shadow:
+      0 0 4px rgba(255, 244, 194, 0.75),
+      0 0 12px rgba(255, 217, 103, 0.35);
+  }
+
+  .v2-menu__desc {
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+    line-height: 1.45;
+    color: var(--v2-ink-dim);
+    text-transform: lowercase;
+  }
+
+  .v2-menu__tag {
+    margin: 0.5rem 0 0;
+    color: var(--v2-yellow);
+  }
+
+  /* ---------- where (grille Tron) ---------- */
+  .v2-where {
+    overflow: hidden;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .v2-where {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+
+  .v2-where__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .v2-where__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  /* image raw cachée — utilisée par a11y/SEO, le visuel est dans .v2-where__img-wrap */
+  .v2-where__img-raw {
+    display: none;
+  }
+
+  .v2-where__img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+
+  .v2-where__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .v2-where__eyebrow {
+    margin: 0;
+    letter-spacing: 0.12em;
+  }
+
+  .v2-where__title {
+    margin: 0;
+    font-family: var(--v2-font-pixel);
+    font-weight: 400;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.02;
+    text-transform: lowercase;
+  }
+
+  .v2-where__text {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--v2-ink);
+    text-transform: lowercase;
+  }
+
+  /* ---------- burger photo full-width ---------- */
+  .v2-burger {
+    position: relative;
+  }
+
+  .v2-burger__inner {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    max-height: 55vh;
+  }
+
+  /* ---------- instagram ---------- */
+  .v2-insta {
+    border-top: 2px solid var(--v2-line-strong);
+  }
+
+  .v2-insta__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .v2-insta__inner {
+      grid-template-columns: 1fr auto;
+      gap: 2.5rem;
+    }
+  }
+
+  .v2-insta__title {
+    margin: 0;
+    font-family: var(--v2-font-pixel);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    line-height: 1;
+    text-transform: lowercase;
+  }
+</style>
