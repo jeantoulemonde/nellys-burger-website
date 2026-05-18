@@ -14,16 +14,12 @@ export default defineConfig({
   build: {
     format: 'file',
   },
-  redirects: {
-    // ancienne URL conservée pour SEO (301 par défaut sur output: 'static')
-    '/le-concept': '/nos-valeurs',
-  },
+  // redirects désactivés temporairement (nos-valeurs en pause). Réactiver :
+  // redirects: { '/le-concept': '/nos-valeurs' },
   integrations: [
     sitemap({
       changefreq: 'monthly',
       priority: 0.8,
-      // exclure l'ancienne URL redirigée du sitemap
-      filter: (page) => !page.endsWith('/le-concept') && !page.endsWith('/le-concept/'),
     }),
   ],
   vite: {
