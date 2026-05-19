@@ -1,5 +1,5 @@
 ---
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
 import Hero from '~/components/Hero.astro';
 import MobileHero from '~/components/MobileHero.astro';
@@ -8,85 +8,23 @@ import InfoBlock from '~/components/InfoBlock.astro';
 import MenuItem from '~/components/MenuItem.astro';
 import { site } from '~/data/site';
 import { menu } from '~/data/menu';
+import { restaurantSchema } from '~/data/schema';
 
 import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
 import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
-import counterPlancha from '~/assets/photos/counter-plancha.jpg';
 import burgerBottom from '~/assets/photos/burger.jpg';
 
 const heroVideo = '/media/hero.mp4';
 const heroVideoBytes = 6_399_320;
 
-const dayMap: Record<string, string> = {
-  Mo: 'Monday',
-  Tu: 'Tuesday',
-  We: 'Wednesday',
-  Th: 'Thursday',
-  Fr: 'Friday',
-  Sa: 'Saturday',
-  Su: 'Sunday',
-};
-
-const openingHoursSpecification = site.hours.map((slot) => ({
-  '@type': 'OpeningHoursSpecification',
-  dayOfWeek: slot.days.map((d) => dayMap[d]),
-  opens: slot.opens,
-  closes: slot.closes,
-}));
-
-const ogImage = await getImage({
-  src: menuLightbox,
-  width: 1200,
-  height: 630,
-  format: 'jpg',
-  quality: 80,
-});
-
-const schemaImageMenu = await getImage({ src: menuLightbox, width: 1600, format: 'jpg', quality: 80 });
-const schemaImageKitchen = await getImage({ src: kitchenWide, width: 1600, format: 'jpg', quality: 80 });
-const schemaImageCounter = await getImage({ src: counterPlancha, width: 1600, format: 'jpg', quality: 80 });
-
-// À remplacer à la mise en prod : remplacer site.url (https://example.com) par l'URL canonique
-const abs = (p: string) => new URL(p, site.url).toString();
-
-const restaurantSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Restaurant',
-  '@id': `${site.url}#restaurant`,
-  name: site.name,
-  url: site.url,
-  logo: abs('/media/logo.png'),
-  image: [abs(schemaImageMenu.src), abs(schemaImageKitchen.src), abs(schemaImageCounter.src)],
-  description: site.description,
-  servesCuisine: site.cuisine,
-  priceRange: site.priceRange,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: site.street,
-    addressLocality: site.city,
-    postalCode: site.postalCode,
-    addressRegion: site.region,
-    addressCountry: site.country,
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: site.geo.latitude,
-    longitude: site.geo.longitude,
-  },
-  openingHoursSpecification,
-  hasMenu: `${site.url}/menu`,
-  sameAs: [site.instagram],
-  acceptsReservations: false,
-};
-
 const previewItems = menu[0].items;
 ---
 
 <Layout
-  title={`${site.name}. Come and get your fingers salty.`}
-  description="Smash burgers à Biarritz. Come and get your fingers salty. 21 avenue du jardin public, 7/7, 12h-22h."
+  title="Smash burger Biarritz — Nelly's, à emporter 7j/7"
+  description="Le premier smash burger de Biarritz. Trois burgers, frites maison, à emporter face au jardin public. Ouvert 7j/7, midi et soir."
   path="/"
-  image={ogImage.src}
+  image="/og-image.jpg"
   type="restaurant"
   jsonLd={restaurantSchema}
 >

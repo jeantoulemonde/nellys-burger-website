@@ -3,79 +3,26 @@ import Layout from '~/layouts/Layout.astro';
 import MenuSectionComp from '~/components/MenuSection.astro';
 import { site } from '~/data/site';
 import { menu } from '~/data/menu';
+import { menuSchema, breadcrumbSchema } from '~/data/schema';
 
-const dayMap: Record<string, string> = {
-  Mo: 'Monday',
-  Tu: 'Tuesday',
-  We: 'Wednesday',
-  Th: 'Thursday',
-  Fr: 'Friday',
-  Sa: 'Saturday',
-  Su: 'Sunday',
-};
-
-const openingHoursSpecification = site.hours.map((slot) => ({
-  '@type': 'OpeningHoursSpecification',
-  dayOfWeek: slot.days.map((d) => dayMap[d]),
-  opens: slot.opens,
-  closes: slot.closes,
-}));
-
-const menuSchema = {
-  '@type': 'Menu',
-  '@id': `${site.url}/menu#menu`,
-  name: `menu de ${site.name}`,
-  inLanguage: 'fr',
-  hasMenuSection: menu.map((section) => ({
-    '@type': 'MenuSection',
-    name: section.title,
-    hasMenuItem: section.items.map((item) => ({
-      '@type': 'MenuItem',
-      name: item.name,
-      description: item.description,
-      offers: {
-        '@type': 'Offer',
-        price: item.price.toFixed(2),
-        priceCurrency: 'EUR',
-      },
-      ...(item.name === 'vg+'
-        ? { suitableForDiet: 'https://schema.org/VegetarianDiet' }
-        : {}),
-    })),
-  })),
-};
-
-const restaurantSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Restaurant',
-  '@id': `${site.url}#restaurant`,
-  name: site.name,
-  url: site.url,
-  servesCuisine: 'Burger',
-  priceRange: '€',
-  acceptsReservations: false,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: site.street,
-    addressLocality: site.city,
-    postalCode: site.postalCode,
-    addressRegion: site.region,
-    addressCountry: site.country,
-  },
-  openingHoursSpecification,
-  sameAs: [site.instagram],
-  hasMenu: menuSchema,
-};
+const jsonLd = [
+  menuSchema,
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/' },
+    { name: 'Menu', path: '/menu' },
+  ]),
+];
 
 // compteurs pour la mini-nav
 const counts = Object.fromEntries(menu.map((s) => [s.id, s.items.length]));
 ---
 
 <Layout
-  title="menu, smash burger à emporter à biarritz"
-  description="le menu de nelly's burger à biarritz, à emporter. pour le menu, c'est simple."
+  title="Menu — Smash burger Biarritz — Nelly's"
+  description="Cheeseburger, bacon, vg+. Trois smash burgers à Biarritz, à emporter. 9 à 10 €."
   path="/menu"
-  jsonLd={restaurantSchema}
+  image="/og-image.jpg"
+  jsonLd={jsonLd}
 >
   <article class="menu-page">
     <header class="menu-header">
