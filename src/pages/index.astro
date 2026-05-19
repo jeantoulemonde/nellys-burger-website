@@ -59,7 +59,7 @@ const previewItems = menu[0].items;
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3">
     <InfoBlock label="où" title={`${site.street}, ${site.city}`} href="/contact" cta="voir le plan">
-      {site.street}<br />{site.postalCode} {site.city}
+      {site.street}<br />{`${site.postalCode} ${site.city}`}
     </InfoBlock>
     <InfoBlock label="quand" title="7j/7 · 12h à 22h" href="/contact" cta="voir le détail">
       midi et soir, service continu<br />
