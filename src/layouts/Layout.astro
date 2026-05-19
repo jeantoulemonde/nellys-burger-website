@@ -1,6 +1,6 @@
 ---
 import '~/styles/global.css';
-import SEOHead from '~/components/SEOHead.astro';
+import SEOHead, { type Locale } from '~/components/SEOHead.astro';
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
 
@@ -11,13 +11,15 @@ export interface Props {
   image?: string;
   type?: 'website' | 'article' | 'restaurant';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: Locale;
+  alternates?: Partial<Record<Locale, string>>;
 }
 
-const { title, description, path, image, type, jsonLd } = Astro.props;
+const { title, description, path, image, type, jsonLd, locale = 'fr', alternates } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={locale === 'en' ? 'en' : 'fr'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -68,6 +70,8 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
       image={image}
       type={type}
       jsonLd={jsonLd}
+      locale={locale}
+      alternates={alternates}
     />
   </head>
   <body class="min-h-screen flex flex-col">
@@ -75,12 +79,12 @@ const { title, description, path, image, type, jsonLd } = Astro.props;
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-black focus:text-white focus:px-3 focus:py-2"
     >
-      aller au contenu
+      {locale === 'en' ? 'skip to content' : 'aller au contenu'}
     </a>
-    <Header />
+    <Header locale={locale} />
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <Footer />
+    <Footer locale={locale} />
   </body>
 </html>

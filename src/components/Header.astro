@@ -1,13 +1,28 @@
 ---
 import { site } from '~/data/site';
 
-const links = [
-  { href: '/', label: 'accueil' },
-  { href: '/menu', label: 'menu' },
-  // { href: '/nos-valeurs', label: 'nos valeurs' }, // désactivé, réactiver avec _nos-valeurs.astro
+export interface Props {
+  locale?: 'fr' | 'en';
+}
 
-  { href: '/contact', label: 'contact' },
-];
+const { locale = 'fr' } = Astro.props;
+
+const linksByLocale = {
+  fr: [
+    { href: '/', label: 'accueil' },
+    { href: '/menu', label: 'menu' },
+    { href: '/contact', label: 'contact' },
+  ],
+  en: [
+    { href: '/en', label: 'home' },
+    { href: '/en/menu', label: 'menu' },
+    { href: '/en/contact', label: 'contact' },
+  ],
+} as const;
+
+const links = linksByLocale[locale];
+const homeHref = locale === 'en' ? '/en' : '/';
+const ariaHome = locale === 'en' ? `Go to home, ${site.name}` : `Aller à l'accueil, ${site.name}`;
 
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
@@ -17,9 +32,9 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 >
   <div class="mx-auto max-w-6xl px-5 md:px-8 h-16 md:h-18 flex items-center justify-between">
     <a
-      href="/"
+      href={homeHref}
       class="flex items-center"
-      aria-label={`Aller à l'accueil, ${site.name}`}
+      aria-label={ariaHome}
     >
       <picture>
         <source srcset="/media/logo.avif" type="image/avif" />
@@ -34,13 +49,13 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
       </picture>
     </a>
 
-    <nav aria-label="Navigation principale">
+    <nav aria-label={locale === 'en' ? 'Main navigation' : 'Navigation principale'}>
       <ul class="flex items-center gap-5 md:gap-8 text-sm">
         {
           links.map((link) => {
             const isActive =
-              link.href === '/'
-                ? pathname === '/'
+              link.href === homeHref
+                ? pathname === link.href || (link.href === '/' && pathname === '/')
                 : pathname === link.href || pathname.startsWith(link.href + '/');
             return (
               <li>

@@ -3,10 +3,9 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// À remplacer à la mise en prod : URL canonique du domaine (ex. 'https://nellys.fr').
-// Cette valeur est propagée dans : sitemap, schema.org (logo/image absolus),
+// URL canonique du domaine. Propagée dans : sitemap, schema.org (logo/image absolus),
 // canonical, Open Graph, Twitter Card. Toucher ici suffit, pas besoin de chercher ailleurs.
-const SITE_URL = 'https://example.com';
+const SITE_URL = 'https://nellys.fr';
 
 export default defineConfig({
   site: SITE_URL,
@@ -20,6 +19,15 @@ export default defineConfig({
     sitemap({
       changefreq: 'monthly',
       priority: 0.8,
+      // exclure la variante A/B (noindex) du sitemap
+      filter: (page) => !/\/v2(\/|$)/.test(page),
+      i18n: {
+        defaultLocale: 'fr',
+        locales: {
+          fr: 'fr-FR',
+          en: 'en-US',
+        },
+      },
     }),
   ],
   vite: {

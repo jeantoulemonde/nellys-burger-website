@@ -1,45 +1,114 @@
 ---
 import { site } from '~/data/site';
+
+export interface Props {
+  locale?: 'fr' | 'en';
+}
+
+const { locale = 'fr' } = Astro.props;
+
+const t = locale === 'en'
+  ? {
+      tagline: 'smash burger takeaway · biarritz',
+      address: 'address',
+      hours: 'hours',
+      takeawayOnly: 'takeaway only',
+      explore: 'explore',
+      smashBurger: 'smash burger biarritz',
+      bestBurger: 'best burger biarritz',
+      menu: 'menu',
+      contact: 'contact',
+      legal: 'legal',
+      hoursLine: 'every day · 12pm to 10pm',
+    }
+  : {
+      tagline: 'smash burger à emporter · biarritz',
+      address: 'adresse',
+      hours: 'horaires',
+      takeawayOnly: 'à emporter uniquement',
+      explore: 'explorer',
+      smashBurger: 'smash burger biarritz',
+      bestBurger: 'burger à emporter biarritz',
+      menu: 'le menu',
+      contact: 'contact',
+      legal: 'mentions légales',
+      hoursLine: '',
+    };
+
+const seoLinks = locale === 'en'
+  ? [
+      { href: '/en/smash-burger-biarritz', label: t.smashBurger },
+      { href: '/en/best-burger-biarritz', label: t.bestBurger },
+      { href: '/en/menu', label: t.menu },
+      { href: '/en/contact', label: t.contact },
+    ]
+  : [
+      { href: '/smash-burger-biarritz', label: 'smash burger biarritz' },
+      { href: '/burger-a-emporter-biarritz', label: 'burger à emporter biarritz' },
+      { href: '/biarritz/jardin-public', label: 'au jardin public, biarritz' },
+      { href: '/notre-histoire', label: 'notre histoire' },
+    ];
+
+const homeHref = locale === 'en' ? '/en' : '/';
 ---
 
 <footer class="border-t border-[var(--color-line)] mt-24">
   <div class="mx-auto max-w-6xl px-5 md:px-8 py-12 grid gap-10 md:grid-cols-4">
     <div class="md:col-span-2">
-      <picture>
-        <source srcset="/media/logo.avif" type="image/avif" />
-        <img
-          src="/media/logo.png"
-          alt={site.name}
-          width="480"
-          height="184"
-          class="h-16 md:h-20 w-auto"
-          loading="lazy"
-          decoding="async"
-        />
-      </picture>
-      <p class="lc meta mt-4">smash burger à emporter · biarritz</p>
+      <a href={homeHref} aria-label={site.name}>
+        <picture>
+          <source srcset="/media/logo.avif" type="image/avif" />
+          <img
+            src="/media/logo.png"
+            alt={site.name}
+            width="480"
+            height="184"
+            class="h-16 md:h-20 w-auto"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </a>
+      <p class="lc meta mt-4">{t.tagline}</p>
     </div>
 
     <div>
-      <h2 class="lc font-bold text-sm mb-3">adresse</h2>
+      <h2 class="lc font-bold text-sm mb-3">{t.address}</h2>
       <address class="not-italic prose-body text-[0.95rem] leading-relaxed">
         {site.street}<br />
         {site.postalCode} {site.city}
       </address>
-      <p class="lc meta mt-3">à emporter uniquement</p>
+      <p class="lc meta mt-3">{t.takeawayOnly}</p>
     </div>
 
     <div>
-      <h2 class="lc font-bold text-sm mb-3">horaires</h2>
-      <ul class="meta space-y-1">
-        {
-          site.hoursDisplay.map((row) => (
-            <li class="lc">
-              <span class="font-bold text-[var(--color-ink)]">{row.day}</span>
-              <span class="block">{row.value}</span>
-            </li>
-          ))
-        }
+      <h2 class="lc font-bold text-sm mb-3">{t.hours}</h2>
+      {locale === 'en' ? (
+        <p class="lc meta">{t.hoursLine}</p>
+      ) : (
+        <ul class="meta space-y-1">
+          {
+            site.hoursDisplay.map((row) => (
+              <li class="lc">
+                <span class="font-bold text-[var(--color-ink)]">{row.day}</span>
+                <span class="block">{row.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+      )}
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--color-line)]">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-6">
+      <h2 class="lc font-bold text-sm mb-3 text-[var(--color-ink-muted)]">{t.explore}</h2>
+      <ul class="flex flex-wrap gap-x-5 gap-y-2 lc meta">
+        {seoLinks.map((link) => (
+          <li>
+            <a href={link.href} class="hover:text-[var(--color-ink)]">{link.label}</a>
+          </li>
+        ))}
       </ul>
     </div>
   </div>
@@ -62,8 +131,13 @@ import { site } from '~/data/site';
           </a>
         </li>
         <li>
-          <a href="/mentions-legales" class="hover:text-[var(--color-ink)]">mentions légales</a>
+          <a href="/mentions-legales" class="hover:text-[var(--color-ink)]">{t.legal}</a>
         </li>
+        {locale === 'en' ? (
+          <li><a href="/" class="hover:text-[var(--color-ink)]">français</a></li>
+        ) : (
+          <li><a href="/en" class="hover:text-[var(--color-ink)]">english</a></li>
+        )}
       </ul>
     </div>
   </div>

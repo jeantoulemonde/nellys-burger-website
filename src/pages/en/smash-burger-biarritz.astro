@@ -1,0 +1,96 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '~/layouts/Layout.astro';
+import { restaurantSchema, breadcrumbSchema } from '~/data/schema';
+
+import kitchenPrep from '~/assets/photos/kitchen-prep.jpg';
+import burgerPlate from '~/assets/photos/burger.jpg';
+
+const jsonLd = [
+  restaurantSchema,
+  breadcrumbSchema([
+    { name: 'Home', path: '/en' },
+    { name: 'Smash Burger Biarritz', path: '/en/smash-burger-biarritz' },
+  ]),
+];
+---
+
+<Layout
+  title="Smash Burger Biarritz — Nelly's, since 2022"
+  description="The first smash burger in Biarritz. Patties smashed on a flat top, caramelised crust, brioche bun. Three burgers, takeaway, every day."
+  path="/en/smash-burger-biarritz"
+  image="/og-image.jpg"
+  locale="en"
+  alternates={{ fr: '/smash-burger-biarritz', en: '/en/smash-burger-biarritz' }}
+  jsonLd={jsonLd}
+>
+  <article class="mx-auto max-w-3xl px-5 md:px-8 pt-12 md:pt-20 pb-20">
+    <p class="lc meta mb-3">smash burger</p>
+    <h1 class="lc page-title mb-6">smash burger in Biarritz.</h1>
+
+    <Picture
+      src={kitchenPrep}
+      alt="Smash burger Biarritz Nelly's, patty smashing on the flat top"
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 768px) 720px, 100vw"
+      loading="eager"
+      class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)] mb-10"
+    />
+
+    <div class="prose-body lc space-y-5 text-[var(--color-ink)]">
+      <p class="lead">
+        Nelly's opened in Biarritz in 2022. It was the first smash burger
+        in town. Takeaway only, counter, kraft bag.
+      </p>
+
+      <p>
+        A smash burger is a ball of fresh beef pressed flat on a screaming
+        hot flat top. The crust caramelises in seconds. That's the Maillard
+        reaction. Concentrated juices, tender centre, two thin patties per
+        burger. No thick puck. No guessing the doneness.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">why the smash burger biarritz happens at Nelly's</h2>
+      <p>
+        Three burgers on the menu. Cheeseburger, bacon, vg+. That's it. No
+        triple stack, no fifteen items, no fries you can drown in. A short
+        menu lets us prep everything the same day. Beef comes from a Basque
+        butcher. Brioche buns from the bakery next door. Pickles, sauces,
+        coleslaw, lemonade — house made.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">in Biarritz, at the public garden</h2>
+      <p>
+        Address: 21 avenue du jardin public, 64200 Biarritz. Look for the
+        yellow awning and the neon sign. Ten minutes on foot from the
+        Grande Plage. Public garden across the street, perfect for sitting
+        down with your kraft bag. Open every day, lunch and dinner,
+        12pm to 10pm. Card or cash. No reservations, no phone.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">smash burger, smashed burger, burger smashé</h2>
+      <p>
+        Same technique, three names. Brought over from the US diners,
+        spread across Europe. In Biarritz, Nelly's got there first, in
+        2022. The concept has not changed since: three burgers, takeaway.
+      </p>
+
+      <Picture
+        src={burgerPlate}
+        alt="Nelly's Biarritz cheeseburger on a striped plate, smash burger takeaway"
+        formats={['avif', 'webp']}
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 768px) 720px, 100vw"
+        loading="lazy"
+        class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)] mt-10"
+      />
+    </div>
+
+    <nav class="mt-12 pt-8 border-t border-[var(--color-line)] lc meta flex flex-col gap-2" aria-label="related pages">
+      <a href="/en/menu" class="hover:text-[var(--color-ink)]">→ see the menu (cheeseburger €9, bacon €10, vg+ €9.50)</a>
+      <a href="/en/best-burger-biarritz" class="hover:text-[var(--color-ink)]">→ the best burger in Biarritz</a>
+      <a href="/en/contact" class="hover:text-[var(--color-ink)]">→ contact, address and hours</a>
+    </nav>
+  </article>
+</Layout>

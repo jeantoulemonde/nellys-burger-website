@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-F · sticker collage</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,700,800&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #efe7d3; color: #1a1410; font-family: 'General Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .label { position: fixed; top: 12px; right: 12px; background: #1a1410; color: #efe7d3; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 99; letter-spacing: 0.04em; }
+  /* paper grain */
+  body::before { content: ''; position: fixed; inset: 0; pointer-events: none; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; opacity: 0.6; z-index: 1; }
+
+  header { position: relative; z-index: 5; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .logo { width: 7rem; height: 2.6rem; background-color: #c4332a; -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+  nav { display: flex; gap: 2rem; font-size: 0.9375rem; font-weight: 500; text-transform: lowercase; }
+  nav a { color: #5a4a3a; text-decoration: none; }
+
+  /* TABLETOP COLLAGE */
+  .table { position: relative; max-width: 1280px; margin: 0 auto; padding: 4rem 2rem 8rem; min-height: 80vh; }
+
+  .card { position: absolute; box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 2px 4px rgba(0,0,0,0.1); transition: transform 220ms cubic-bezier(.22,1,.36,1); }
+  .card:hover { transform: scale(1.03) rotate(0deg) !important; z-index: 50; }
+
+  /* the big title card — center stage */
+  .card-title { background: #fff8e4; padding: 2.5rem 3rem; transform: rotate(-1.5deg); top: 12%; left: 6%; width: 56%; z-index: 6; border: 1px solid rgba(0,0,0,0.06); }
+  .card-title h1 { font-weight: 800; font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.03em; text-transform: lowercase; color: #1a1410; }
+  .card-title h1 em { font-style: normal; color: #c4332a; }
+  .card-title p { font-size: 1rem; color: #5a4a3a; margin-top: 1rem; text-transform: lowercase; max-width: 32ch; }
+
+  /* sticker NELLY'S oblique red */
+  .card-sticker { width: 16rem; height: 16rem; top: 3%; right: 4%; transform: rotate(8deg); z-index: 5; background: #c4332a; color: #fff8e4; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: 4px; }
+  .card-sticker .big { font-family: 'General Sans', sans-serif; font-weight: 800; font-size: 3.5rem; letter-spacing: -0.04em; line-height: 0.9; text-transform: uppercase; }
+  .card-sticker .small { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+
+  /* polaroid photo */
+  .card-photo { width: 14rem; height: 18rem; top: 50%; left: 22%; transform: rotate(4deg); background: #fff; padding: 0.75rem 0.75rem 3rem; z-index: 4; }
+  .card-photo .photo-area { width: 100%; height: 100%; background: linear-gradient(135deg, #8a6a4a, #4a3a2a); }
+  .card-photo .caption { position: absolute; bottom: 0.5rem; left: 0; right: 0; text-align: center; font-family: 'Caveat', cursive; font-size: 1.25rem; color: #1a1410; }
+
+  /* ticket */
+  .card-ticket { background: #fff8e4; padding: 1.25rem 1.5rem; transform: rotate(-3deg); top: 56%; right: 6%; width: 18rem; z-index: 7; border-left: 4px solid #c4332a; }
+  .card-ticket .ticket-num { font-family: ui-monospace, 'SF Mono', monospace; font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5a4a3a; margin-bottom: 0.625rem; }
+  .card-ticket .ticket-line { display: flex; justify-content: space-between; font-family: ui-monospace, monospace; font-size: 0.8125rem; padding: 0.25rem 0; color: #1a1410; }
+  .card-ticket .ticket-line:not(:last-child) { border-bottom: 1px dashed rgba(0,0,0,0.18); }
+  .card-ticket .ticket-line b { font-weight: 600; }
+
+  /* handwritten note */
+  .card-note { background: #fff8e4; padding: 1rem 1.25rem; transform: rotate(2deg); top: 8%; left: 38%; z-index: 8; font-family: 'Caveat', cursive; font-size: 1.5rem; color: #c4332a; max-width: 14rem; }
+
+  /* small dot */
+  .dot-cluster { position: absolute; top: 90%; left: 50%; transform: translate(-50%, 0); display: flex; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #1a1410; }
+  .dot.red { background: #c4332a; }
+
+  @media (max-width: 768px) {
+    .card-title { width: 88%; top: 8%; left: 6%; }
+    .card-sticker { width: 10rem; height: 10rem; top: 60%; right: 4%; padding: 1rem; }
+    .card-sticker .big { font-size: 2rem; }
+    .card-photo { width: 9rem; height: 12rem; top: 36%; left: 8%; }
+    .card-ticket { display: none; }
+    .card-note { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="label">v3 · f · sticker collage</div>
+<header>
+  <div class="logo" aria-label="nelly's"></div>
+  <nav>
+    <a href="#">menu</a>
+    <a href="#">contact</a>
+  </nav>
+</header>
+<section class="table">
+  <article class="card card-title">
+    <h1>get your<br>fingers salty<em>.</em></h1>
+    <p>smash burger à emporter. trois recettes, deux sides, six boissons.</p>
+  </article>
+  <article class="card card-sticker">
+    <span class="small">★ since 2021 ★</span>
+    <span class="big">a proper burger joint</span>
+    <span class="small">biarritz · 64200</span>
+  </article>
+  <article class="card card-photo">
+    <div class="photo-area"></div>
+    <span class="caption">~ on smashe ~</span>
+  </article>
+  <article class="card card-ticket">
+    <p class="ticket-num">order · n° 001</p>
+    <div class="ticket-line"><span>cheeseburger</span><b>9 €</b></div>
+    <div class="ticket-line"><span>bacon</span><b>10 €</b></div>
+    <div class="ticket-line"><span>vg+</span><b>9,50 €</b></div>
+    <div class="ticket-line"><span>frites</span><b>4 €</b></div>
+  </article>
+  <p class="card card-note">"the best in town" — tout le monde</p>
+  <div class="dot-cluster">
+    <span class="dot"></span><span class="dot"></span><span class="dot red"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+</section>
+</body>
+</html>

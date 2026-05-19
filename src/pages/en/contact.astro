@@ -1,0 +1,146 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '~/layouts/Layout.astro';
+import { site } from '~/data/site';
+import { restaurantSchema, breadcrumbSchema } from '~/data/schema';
+
+import woodenBlinds from '~/assets/photos/wooden-blinds.jpg';
+
+const faq = [
+  {
+    q: 'Where can I park?',
+    a: "The jardin public area is paid parking. Closest public car parks are 5 minutes on foot (Sainte-Eugénie and Halles). In peak season, walking, cycling or taking the bus is easier.",
+  },
+  {
+    q: 'Do you have a vegetarian option?',
+    a: "Yes, the vg+: hazelnut falafel, eggplant, american cheese, lettuce, fromage blanc sauce. Not vegan (contains american cheese and fromage blanc sauce).",
+  },
+];
+
+const contactSchema = [
+  restaurantSchema,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  },
+  breadcrumbSchema([
+    { name: 'Home', path: '/en' },
+    { name: 'Contact', path: '/en/contact' },
+  ]),
+];
+
+const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(site.fullAddress)}&z=16&output=embed`;
+---
+
+<Layout
+  title="Contact — Nelly's Biarritz, jardin public"
+  description="Nelly's burger, 21 avenue du jardin public, Biarritz. Open every day, 12pm to 10pm. Takeaway, no reservations."
+  path="/en/contact"
+  image="/og-image.jpg"
+  locale="en"
+  alternates={{ fr: '/contact', en: '/en/contact' }}
+  jsonLd={contactSchema}
+>
+  <section class="mx-auto max-w-6xl px-5 md:px-8 pt-16 md:pt-24 pb-12">
+    <p class="lc meta mb-4">contact</p>
+    <h1 class="lc page-title max-w-3xl">find us.</h1>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-2 gap-10 md:gap-16 pb-16 md:pb-24">
+    <div>
+      <h2 class="lc section-title mb-6">address</h2>
+      <address class="not-italic prose-body text-lg leading-relaxed mb-6">
+        Nelly's<br />
+        21 avenue du jardin public<br />
+        64200 Biarritz<br />
+        France
+      </address>
+
+      <h2 class="lc section-title mb-4 mt-12">how to reach us</h2>
+      <ul class="prose-body space-y-3">
+        <li>
+          <span class="lc meta">instagram</span><br />
+          <a
+            href={site.instagram}
+            rel="me noopener"
+            target="_blank"
+            class="lc font-bold hover:text-[var(--color-accent)]"
+          >
+            {site.instagramHandle}
+          </a>
+        </li>
+        <li class="lc meta pt-2">orders at the counter · cash or card</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="lc section-title mb-6">hours</h2>
+      <dl class="border-t border-[var(--color-line)]">
+        <div class="flex justify-between py-3 border-b border-[var(--color-line)] prose-body lc">
+          <dt class="font-bold">every day</dt>
+          <dd class="text-right">12pm to 10pm</dd>
+        </div>
+      </dl>
+
+      <h2 class="lc section-title mb-4 mt-12">getting there</h2>
+      <p class="lc meta">
+        10 min from the Grande Plage | 5 min from the Halles | parking at
+        Sainte-Eugénie and Halles | bus to the Grande Plage
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-[var(--color-ink)]">
+    <div class="w-full aspect-[16/9] md:aspect-[21/9]">
+      <iframe
+        title="Map of Nelly's burger Biarritz, 21 avenue du jardin public"
+        src={mapsEmbed}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="w-full h-full border-0"
+      ></iframe>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-12 gap-10 md:gap-16">
+    <div class="md:col-span-7">
+      <Picture
+        src={woodenBlinds}
+        alt="Wooden blinds and warm light at Nelly's smash burger Biarritz entrance"
+        formats={['avif', 'webp']}
+        widths={[480, 768, 1024, 1400]}
+        sizes="(min-width: 768px) 58vw, 100vw"
+        loading="lazy"
+        class="w-full aspect-[4/3] object-cover rounded-[var(--radius-lg)]"
+      />
+    </div>
+    <div class="md:col-span-5 prose-body lc space-y-4">
+      <p class="lc meta">the neighbourhood</p>
+      <h2 class="lc section-title">jardin public, biarritz.</h2>
+      <p>
+        Halfway between the Halles and the centre. Grande Plage is ten
+        minutes away, the public garden thirty seconds.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 py-20 md:py-28 lc">
+    <h2 class="page-title mb-10">frequently asked questions.</h2>
+    <div class="space-y-8">
+      {faq.map((item) => (
+        <details class="border-b border-[var(--color-line)] pb-5 group">
+          <summary class="cursor-pointer list-none flex items-start gap-4 py-2">
+            <span class="font-bold text-lg flex-1">{item.q}</span>
+            <span class="meta shrink-0 mt-1 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <p class="prose-body mt-2 text-[0.95rem] max-w-2xl">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Layout>
