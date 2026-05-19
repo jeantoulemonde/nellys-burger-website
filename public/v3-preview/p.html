@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-P · dash v2 (chunky display + marquees lourds)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700;800&family=Caveat:wght@400;700&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #efe5cb;
+    --bg-2: #f7eed5;
+    --ink: #0a0908;
+    --muted: #6c6354;
+    --yellow: #f5c218;
+    --yellow-deep: #e0a900;
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .label { position: fixed; top: 12px; right: 12px; background: var(--ink); color: var(--yellow); padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 999; letter-spacing: 0.04em; }
+
+  .anton { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: lowercase; letter-spacing: -0.005em; }
+  .scribble { font-family: 'Caveat', cursive; font-weight: 700; }
+
+  /* ---- STICKY HEADER NOIR + LOGO JAUNE + GROS CTA ---- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .logo {
+    width: 7.5rem; height: 2.75rem;
+    background-color: var(--yellow);
+    -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  nav.h-nav { display: flex; gap: 0.5rem; align-items: center; }
+  nav.h-nav a {
+    color: var(--bg);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    padding: 0.625rem 1rem;
+    border-radius: 999px;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  nav.h-nav a:hover { background: rgba(255,255,255,0.08); }
+  nav.h-nav a.cta {
+    background: var(--yellow);
+    color: var(--ink);
+    font-weight: 800;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  nav.h-nav a.cta::after { content: '→'; font-weight: 800; }
+  nav.h-nav a.cta:hover { background: var(--bg); }
+
+  /* ---- HERO MASSIF avec ANTON + stickers tournés ---- */
+  .hero {
+    position: relative;
+    padding: 4.5rem 1.5rem 5rem;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--yellow);
+    padding: 0.5rem 1rem 0.5rem 0.625rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 1.5rem;
+  }
+  .hero .eyebrow .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 0 0 var(--yellow);
+    animation: pulse 1.6s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(245,194,24,0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(245,194,24,0); }
+    100% { box-shadow: 0 0 0 0 rgba(245,194,24,0); }
+  }
+
+  .hero h1 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: clamp(4.5rem, 19vw, 22rem);
+    line-height: 0.82;
+    letter-spacing: -0.01em;
+    text-transform: lowercase;
+    color: var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .yhl {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 0.05em 0.18em;
+    transform: rotate(-2deg);
+    margin: 0 0.05em;
+    line-height: 0.95;
+  }
+  .hero h1 .outline {
+    -webkit-text-stroke: 3px var(--ink);
+    color: transparent;
+  }
+
+  .hero .sub {
+    margin: 2rem auto 0;
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 44ch;
+    text-transform: lowercase;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+  }
+  .hero .ctas {
+    margin: 2.5rem auto 0;
+    display: flex;
+    gap: 0.875rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1rem 1.75rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: lowercase;
+    text-decoration: none;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+    box-shadow: 0 2px 0 var(--ink);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
+  .btn.dark { background: var(--ink); color: var(--yellow); border: 2px solid var(--ink); }
+  .btn.light { background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); }
+
+  /* stickers tournés */
+  .sticker {
+    position: absolute;
+    background: var(--yellow);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    box-shadow: 4px 4px 0 var(--ink);
+    z-index: 3;
+  }
+  .sticker .inside {
+    font-weight: 800;
+    font-size: 0.875rem;
+    line-height: 1.05;
+    text-transform: lowercase;
+    padding: 1rem;
+  }
+  .sticker .inside .big {
+    display: block;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.875rem;
+    line-height: 0.95;
+    margin: 0.1rem 0;
+    letter-spacing: -0.01em;
+  }
+  .sticker .inside .small {
+    display: block;
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+  .sticker.s1 {
+    top: 7rem; left: 4%;
+    width: 9.5rem; height: 9.5rem;
+    transform: rotate(-12deg);
+  }
+  .sticker.s2 {
+    top: 9rem; right: 5%;
+    width: 9rem; height: 9rem;
+    transform: rotate(10deg);
+    background: var(--bg);
+  }
+  .sticker.s3 {
+    bottom: 1rem; left: 8%;
+    background: var(--ink);
+    color: var(--yellow);
+    width: 11rem; height: 4rem;
+    border-radius: 0.75rem;
+    transform: rotate(-4deg);
+    box-shadow: 4px 4px 0 var(--yellow-deep);
+  }
+  .sticker.s3 .inside .big { font-size: 1.5rem; color: var(--yellow); }
+
+  /* ---- MARQUEE NOIRE 1 ---- */
+  .marquee {
+    background: var(--ink);
+    color: var(--yellow);
+    padding: 1.5rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: scroll 22s linear infinite;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.005em;
+    text-transform: lowercase;
+  }
+  .marquee-inner span { padding: 0 1.5rem; }
+  .marquee-inner .star { color: var(--bg); padding: 0 1rem; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* marquee jaune inversée */
+  .marquee.alt {
+    background: var(--yellow);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .marquee.alt .marquee-inner { animation-direction: reverse; animation-duration: 28s; }
+  .marquee.alt .marquee-inner .star { color: var(--ink); }
+
+  /* ---- SECTION MENU : cards diner ---- */
+  .menu {
+    background: var(--yellow);
+    padding: 5rem 1.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .menu .head {
+    max-width: 1280px;
+    margin: 0 auto 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .menu h2 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: lowercase;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .menu h2 .scribble {
+    font-family: 'Caveat', cursive;
+    font-size: 0.55em;
+    color: var(--ink);
+    display: inline-block;
+    margin-left: 0.3em;
+    transform: rotate(-3deg);
+    vertical-align: middle;
+  }
+  .menu .head .note {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    max-width: 24ch;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .cards {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .card {
+    background: var(--bg);
+    border: 2px solid var(--ink);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 6px 6px 0 var(--ink);
+    transition: transform 200ms ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0 var(--ink); }
+  .card .img {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #ab8a5d, #2c2113);
+    position: relative;
+    border-bottom: 2px solid var(--ink);
+  }
+  .card.c2 .img { background: linear-gradient(135deg, #c5a673, #4d3a20); }
+  .card.c3 .img { background: linear-gradient(135deg, #8f7a55, #1f1810); }
+  .card .img::after {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+  .card .tape {
+    position: absolute;
+    top: 0.875rem; left: -1.25rem;
+    transform: rotate(-22deg);
+    background: var(--yellow);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    padding: 0.35rem 1.75rem;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 800;
+    z-index: 3;
+  }
+  .card .body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .card h3 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: lowercase;
+    margin-bottom: 0.75rem;
+  }
+  .card .desc {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--muted);
+    text-transform: lowercase;
+    flex: 1;
+  }
+  .card .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 2px dashed var(--ink);
+  }
+  .card .price {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .card .price small {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+  .card .add {
+    background: var(--ink);
+    color: var(--yellow);
+    border: none;
+    padding: 0.625rem 1rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    text-transform: lowercase;
+    cursor: pointer;
+  }
+
+  /* ---- SECTION INFO BAND ---- */
+  .info-band {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 5rem 1.5rem;
+  }
+  .info-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .info-inner h2 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: lowercase;
+    max-width: 14ch;
+    color: var(--bg);
+  }
+  .info-inner h2 em {
+    font-style: normal;
+    color: var(--yellow);
+  }
+  .info-cell {
+    border-top: 2px solid var(--yellow);
+    padding-top: 1rem;
+  }
+  .info-cell .lbl {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--yellow);
+    font-weight: 800;
+    margin-bottom: 0.875rem;
+  }
+  .info-cell .big {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 2.25rem;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: lowercase;
+    color: var(--bg);
+    margin-bottom: 0.5rem;
+  }
+  .info-cell .small {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: rgba(239,229,203,0.7);
+    text-transform: lowercase;
+  }
+
+  @media (max-width: 900px) {
+    nav.h-nav a:not(.cta) { display: none; }
+    .logo { width: 6rem; height: 2.2rem; }
+    .hero { padding: 3rem 1rem 3rem; }
+    .sticker { display: none; }
+    .menu { padding: 3rem 1rem; }
+    .menu h2 { font-size: 3rem; }
+    .cards { grid-template-columns: 1fr; }
+    .info-band { padding: 3rem 1rem; }
+    .info-inner { grid-template-columns: 1fr; gap: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="label">v3 · p · dash v2</div>
+
+<header>
+  <div class="logo" aria-label="nelly's"></div>
+  <nav class="h-nav">
+    <a href="#">menu</a>
+    <a href="#">l'histoire</a>
+    <a href="#">contact</a>
+    <a href="#" class="cta">commander</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <span class="eyebrow"><span class="dot"></span>ouvert · 12h → 22h</span>
+
+  <h1>
+    <span class="line">smash,</span>
+    <span class="line"><span class="yhl">salty</span>, voilà.</span>
+    <span class="line outline">no fuss.</span>
+  </h1>
+
+  <p class="sub">trois recettes, deux sides, six boissons. à emporter, sept jours sur sept. on smashe, on assemble, c'est prêt en huit minutes.</p>
+
+  <div class="ctas">
+    <a href="#" class="btn dark">voir le menu →</a>
+    <a href="#" class="btn light">venir au comptoir ↗</a>
+  </div>
+
+  <div class="sticker s1" aria-hidden="true">
+    <div class="inside">
+      <span class="small">★ since ★</span>
+      <span class="big">2021</span>
+      <span class="small">biarritz</span>
+    </div>
+  </div>
+  <div class="sticker s2" aria-hidden="true">
+    <div class="inside">
+      <span class="small">★ recettes ★</span>
+      <span class="big">3</span>
+      <span class="small">jamais 4</span>
+    </div>
+  </div>
+  <div class="sticker s3" aria-hidden="true">
+    <div class="inside">
+      <span class="big">à emporter</span>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>get your fingers salty</span><span class="star">★</span><span>smash burger biarritz</span><span class="star">★</span><span>depuis 2021</span><span class="star">★</span><span>21 av. du jardin public</span><span class="star">★</span><span>12h → 22h</span><span class="star">★</span><span>get your fingers salty</span><span class="star">★</span><span>smash burger biarritz</span><span class="star">★</span><span>depuis 2021</span><span class="star">★</span><span>21 av. du jardin public</span><span class="star">★</span><span>12h → 22h</span><span class="star">★</span>
+  </div>
+</div>
+
+<section class="menu">
+  <div class="head">
+    <h2>le menu, <span class="scribble">— il est court —</span></h2>
+    <p class="note">trois burgers, deux sides, six boissons. on a fait le tour avant d'ouvrir.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card c1">
+      <div class="img"></div>
+      <span class="tape">★ best-seller</span>
+      <div class="body">
+        <h3>le classique</h3>
+        <p class="desc">double smash, cheddar affiné, oignons confits, sauce moutarde maison.</p>
+        <div class="foot">
+          <span class="price">9€<small>frites 12€</small></span>
+          <button class="add">ajouter +</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card c2">
+      <div class="img"></div>
+      <span class="tape">★ fumé maison</span>
+      <div class="body">
+        <h3>le bacon</h3>
+        <p class="desc">double smash, bacon fumé à froid par franck à bayonne, cheddar, sauce bbq.</p>
+        <div class="foot">
+          <span class="price">10€<small>frites 13€</small></span>
+          <button class="add">ajouter +</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card c3">
+      <div class="img"></div>
+      <span class="tape">★ vg+ sérieux</span>
+      <div class="body">
+        <h3>le vg+</h3>
+        <p class="desc">galette pois cassés et orge maltée, cheddar végétal, sauce harissa douce.</p>
+        <div class="foot">
+          <span class="price">9,50€<small>frites 12,50€</small></span>
+          <button class="add">ajouter +</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="marquee alt" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>★ commande au comptoir ★</span><span>prêt en 8 minutes</span><span class="star">★</span><span>pas de livraison</span><span class="star">★</span><span>pas d'appli</span><span class="star">★</span><span>juste un burger</span><span class="star">★</span><span>commande au comptoir</span><span class="star">★</span><span>prêt en 8 minutes</span><span class="star">★</span><span>pas de livraison</span><span class="star">★</span><span>pas d'appli</span><span class="star">★</span><span>juste un burger</span><span class="star">★</span>
+  </div>
+</div>
+
+<section class="info-band">
+  <div class="info-inner">
+    <h2>passe à la <em>maison.</em><br>on t'attend.</h2>
+
+    <div class="info-cell">
+      <div class="lbl">★ adresse</div>
+      <div class="big">21 av. du<br>jardin public</div>
+      <p class="small">64200 biarritz<br>en face de l'arrêt de bus</p>
+    </div>
+
+    <div class="info-cell">
+      <div class="lbl">★ horaires</div>
+      <div class="big">12h → 22h</div>
+      <p class="small">tous les jours<br>sans interruption</p>
+    </div>
+
+    <div class="info-cell">
+      <div class="lbl">★ format</div>
+      <div class="big">à emporter</div>
+      <p class="small">commande au comptoir<br>prêt en huit minutes</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
