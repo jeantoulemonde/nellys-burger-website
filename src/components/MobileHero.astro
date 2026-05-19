@@ -12,9 +12,9 @@ type Card = {
 };
 
 const cards: Card[] = [
-  { image: storefront, alt: "vitrine et store jaune de nelly's à biarritz" },
-  { image: neon, alt: "enseigne néon nelly's" },
-  { image: stickers, alt: "stickers nelly's" },
+  { image: storefront, alt: "vitrine du smash burger Nelly's à Biarritz, store jaune avenue du jardin public" },
+  { image: neon, alt: "enseigne néon jaune Nelly's, smash burger Biarritz" },
+  { image: stickers, alt: "stickers Nelly's burger Biarritz" },
 ];
 
 // duplique les 3 cards (6 au total) pour la boucle marquee sans saut
@@ -24,6 +24,7 @@ const loop = [...cards, ...cards];
 <section class="mobile-hero md:hidden" aria-label="hero">
   <div class="mobile-hero-text">
     <h1 class="lc hero-title">come and get your fingers salty.</h1>
+    <h2 class="lc mobile-hero-h2">smash burger à emporter à Biarritz, depuis 2022.</h2>
     <p class="lc lead mobile-hero-subtitle">ouvert 7j/7, midi et soir.</p>
   </div>
 
@@ -60,8 +61,17 @@ const loop = [...cards, ...cards];
     padding: 0 1.25rem 1.5rem;
   }
 
+  .mobile-hero-h2 {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--color-text-soft);
+    max-width: 32ch;
+  }
+
   .mobile-hero-subtitle {
-    margin-top: 0.875rem;
+    margin-top: 0.625rem;
   }
 
   .mobile-hero-marker {

@@ -37,12 +37,24 @@ const previewItems = menu[0].items;
       video={heroVideo}
       videoBytes={heroVideoBytes}
       posterImage={menuLightbox}
-      posterAlt="panneau menu lumineux nelly's burger à biarritz"
+      posterAlt="smash burger Biarritz Nelly's, panneau menu lumineux avenue du jardin public"
       eyebrow="smash burger · à emporter · biarritz"
       title="Come and get your fingers salty."
+      heading2="Smash burger à emporter à Biarritz, depuis 2022."
       subtitle="ouvert 7j/7, midi et soir."
     />
   </div>
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 py-10 md:py-14 lc prose-body">
+    <p class="text-[var(--color-text-soft)] text-[0.95rem] leading-relaxed">
+      Nelly's, c'est le premier smash burger de Biarritz. Comptoir, sac kraft,
+      jardin public en face. Trois burgers à la carte, frites maison à la
+      graisse de boeuf, six boissons. Boulettes écrasées sur la plancha,
+      croûte caramélisée, pain brioché toasté au beurre. À emporter, 7j/7,
+      midi et soir. <a href="/notre-histoire" class="underline underline-offset-4 hover:text-[var(--color-ink)]">notre histoire</a>,
+      <a href="/smash-burger-biarritz" class="underline underline-offset-4 hover:text-[var(--color-ink)]">le smash burger expliqué</a>.
+    </p>
+  </section>
 
   <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3">
     <InfoBlock label="où" title={`${site.street}, ${site.city}`} href="/contact" cta="voir le plan">
@@ -82,7 +94,7 @@ const previewItems = menu[0].items;
   <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
     <Picture
       src={kitchenWide}
-      alt="cuisine de nelly's burger à biarritz : plancha, hotte inox, néons industriels"
+      alt="smash burger Biarritz Nelly's, cuisine ouverte avec plancha avenue du jardin public"
       formats={['avif', 'webp']}
       widths={[480, 768, 1024]}
       sizes="(min-width: 768px) 50vw, 100vw"
@@ -112,7 +124,7 @@ const previewItems = menu[0].items;
   <section class="relative">
     <Picture
       src={burgerBottom}
-      alt="cheeseburger nelly's : pain brioché toasté, american cheese, pickles maison"
+      alt="cheeseburger Nelly's Biarritz, smash burger à emporter, pain brioché et american cheese"
       formats={['avif', 'webp']}
       widths={[768, 1280, 1600]}
       sizes="100vw"
