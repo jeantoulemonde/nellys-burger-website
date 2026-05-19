@@ -1,0 +1,67 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { menu } from '~/data/menu';
+import { menuSchema, breadcrumbSchema } from '~/data/schema';
+
+const jsonLd = [
+  { ...menuSchema, inLanguage: 'en' },
+  breadcrumbSchema([
+    { name: 'Home', path: '/en' },
+    { name: 'Menu', path: '/en/menu' },
+  ]),
+];
+
+const fmt = (n: number) =>
+  Number.isInteger(n) ? `€${n}` : `€${n.toFixed(2).replace('.', '.')}`;
+---
+
+<Layout
+  title="Menu — Smash burger Biarritz — Nelly's"
+  description="Cheeseburger, bacon, vg+. Three smash burgers in Biarritz, takeaway. €9 to €10."
+  path="/en/menu"
+  image="/og-image.jpg"
+  locale="en"
+  alternates={{ fr: '/menu', en: '/en/menu' }}
+  jsonLd={jsonLd}
+>
+  <article class="mx-auto max-w-3xl px-5 md:px-8 pt-12 md:pt-20 pb-16">
+    <p class="lc meta mb-3">the menu</p>
+    <h1 class="lc page-title mb-6">simple menu, three burgers.</h1>
+    <p class="lc lead mb-10">takeaway · cash or card</p>
+
+    {menu.map((section) => (
+      <section class="mb-10" id={section.id}>
+        <h2 class="lc text-[0.6875rem] font-medium tracking-[0.18em] text-[var(--color-muted)] mb-4">
+          {section.title}
+        </h2>
+        <ul class="space-y-4">
+          {section.items.map((item) => (
+            <li class="border-b border-[var(--color-line)] pb-4 last:border-b-0">
+              <div class="flex items-baseline justify-between gap-3">
+                <span class="lc font-medium text-[1.0625rem]">{item.name}</span>
+                <span class="font-bold tabular-nums">{fmt(item.price)}</span>
+              </div>
+              {item.description && (
+                <p class="lc mt-1 text-[0.875rem] text-[var(--color-text-soft)] leading-relaxed">
+                  {item.description}
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    <footer class="mt-12 pt-6 border-t border-[var(--color-line)]">
+      <p class="lc text-[0.85rem] text-[var(--color-text-soft)]">
+        takeaway · cash or card · no reservation
+      </p>
+    </footer>
+
+    <nav class="mt-12 pt-8 border-t border-[var(--color-line)] lc meta flex flex-col gap-2" aria-label="related pages">
+      <a href="/en/smash-burger-biarritz" class="hover:text-[var(--color-ink)]">→ what is a smash burger?</a>
+      <a href="/en/best-burger-biarritz" class="hover:text-[var(--color-ink)]">→ the best burger in Biarritz</a>
+      <a href="/en/contact" class="hover:text-[var(--color-ink)]">→ contact and hours</a>
+    </nav>
+  </article>
+</Layout>

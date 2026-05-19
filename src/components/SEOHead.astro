@@ -1,6 +1,8 @@
 ---
 import { site } from '~/data/site';
 
+export type Locale = 'fr' | 'en';
+
 export interface Props {
   title: string;
   description: string;
@@ -8,28 +10,62 @@ export interface Props {
   image?: string;
   type?: 'website' | 'article' | 'restaurant';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: Locale;
+  /**
+   * Liens hreflang vers les variantes localisées. Clés = code locale,
+   * valeurs = chemins relatifs (ex: { fr: '/menu', en: '/en/menu' }).
+   * x-default est généré automatiquement depuis la version 'fr'.
+   */
+  alternates?: Partial<Record<Locale, string>>;
 }
 
 const {
   title,
   description,
   path,
-  image = '/og-default.jpg',
+  image = '/og-image.jpg',
   type = 'website',
   jsonLd,
+  locale = 'fr',
+  alternates,
 } = Astro.props;
 
-const canonical = new URL(path, Astro.site ?? site.url).toString();
-const ogImage = new URL(image, Astro.site ?? site.url).toString();
+const siteBase = Astro.site ?? new URL(site.url);
+const canonical = new URL(path, siteBase).toString();
+const ogImage = new URL(image, siteBase).toString();
 const ogType = type === 'restaurant' ? 'website' : type;
 
 const fullTitle = title.includes(site.name) ? title : `${title} · ${site.name}`;
 const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+
+const ogLocale = locale === 'en' ? 'en_US' : 'fr_FR';
+const localeMeta: Record<Locale, string> = { fr: 'fr-FR', en: 'en-US' };
+
+type AlternateLink = { hreflang: string; href: string };
+const alternateLinks: AlternateLink[] = [];
+if (alternates) {
+  for (const [loc, p] of Object.entries(alternates) as [Locale, string][]) {
+    alternateLinks.push({
+      hreflang: localeMeta[loc],
+      href: new URL(p, siteBase).toString(),
+    });
+  }
+  if (alternates.fr) {
+    alternateLinks.push({
+      hreflang: 'x-default',
+      href: new URL(alternates.fr, siteBase).toString(),
+    });
+  }
+}
 ---
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+
+{alternateLinks.map((alt) => (
+  <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+))}
 
 <meta property="og:site_name" content={site.name} />
 <meta property="og:type" content={ogType} />
@@ -37,7 +73,7 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
-<meta property="og:locale" content="fr_FR" />
+<meta property="og:locale" content={ogLocale} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
