@@ -1,0 +1,97 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '~/layouts/Layout.astro';
+import { restaurantSchema, breadcrumbSchema } from '~/data/schema';
+
+import kitchenPrep from '~/assets/photos/kitchen-prep.jpg';
+import burgerPlate from '~/assets/photos/burger.jpg';
+
+const jsonLd = [
+  restaurantSchema,
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/' },
+    { name: 'Smash burger Biarritz', path: '/smash-burger-biarritz' },
+  ]),
+];
+---
+
+<Layout
+  title="Smash burger Biarritz — Nelly's, depuis 2022"
+  description="Le premier smash burger de Biarritz. Boulettes écrasées sur plaque, croûte caramélisée, pain brioché. Trois burgers, à emporter, 7j/7."
+  path="/smash-burger-biarritz"
+  image="/og-image.jpg"
+  jsonLd={jsonLd}
+>
+  <article class="mx-auto max-w-3xl px-5 md:px-8 pt-12 md:pt-20 pb-20">
+    <p class="lc meta mb-3">smash burger</p>
+    <h1 class="lc page-title mb-6">smash burger à Biarritz.</h1>
+
+    <Picture
+      src={kitchenPrep}
+      alt="smash burger Biarritz Nelly's, smash en cours de cuisson sur la plancha"
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 768px) 720px, 100vw"
+      loading="eager"
+      class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)] mb-10"
+    />
+
+    <div class="prose-body lc space-y-5 text-[var(--color-ink)]">
+      <p class="lead">
+        Nelly's a ouvert à Biarritz en 2022. C'est le premier smash burger
+        de la ville. À emporter, comptoir, sac kraft.
+      </p>
+
+      <p>
+        Le smash burger, c'est une boulette de boeuf frais écrasée sur une
+        plaque brûlante. La croûte caramélise en quelques secondes. C'est
+        la réaction de Maillard. Sucs concentrés, intérieur tendre, deux
+        steaks fins par burger. Pas de pavé épais. Pas de cuisson approximative.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">pourquoi le smash burger biarritz se fait chez Nelly's</h2>
+      <p>
+        Trois burgers à la carte. Cheeseburger, bacon, vg+. C'est tout. Pas
+        de pavé géant, pas de version triple, pas de carte de quinze items.
+        Une carte courte permet de tout préparer le jour même. La viande
+        arrive du boucher du pays basque. Le pain brioché vient du boulanger
+        d'à côté. Pickles, sauces, coleslaw, citronnade : maison.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">à Biarritz, jardin public</h2>
+      <p>
+        L'adresse : 21 avenue du jardin public, 64200 Biarritz. Repère
+        visuel : le store jaune et l'enseigne néon. À dix minutes à pied de
+        la Grande Plage. Devant, le jardin public, idéal pour s'asseoir avec
+        le sac kraft sur les genoux. Ouvert 7j/7, midi et soir, 12h à 22h.
+        CB ou espèces. Pas de réservation, pas de téléphone.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">smash burger, smashed burger, burger smashé</h2>
+      <p>
+        Smash burger, smashed burger, burger smashé : trois noms pour la
+        même technique. Importée des États-Unis, popularisée par les diners
+        américains, désormais répandue dans toute l'Europe. À Biarritz,
+        Nelly's est arrivé en premier, en 2022. Le concept est resté le
+        même depuis : trois burgers, à emporter.
+      </p>
+
+      <Picture
+        src={burgerPlate}
+        alt="cheeseburger Nelly's Biarritz sur assiette à liseré, smash burger à emporter"
+        formats={['avif', 'webp']}
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 768px) 720px, 100vw"
+        loading="lazy"
+        class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)] mt-10"
+      />
+    </div>
+
+    <nav class="mt-12 pt-8 border-t border-[var(--color-line)] lc meta flex flex-col gap-2" aria-label="pages liées">
+      <a href="/menu" class="hover:text-[var(--color-ink)]">→ voir le menu (cheeseburger 9 €, bacon 10 €, vg+ 9,50 €)</a>
+      <a href="/notre-histoire" class="hover:text-[var(--color-ink)]">→ notre histoire, depuis 2022</a>
+      <a href="/burger-a-emporter-biarritz" class="hover:text-[var(--color-ink)]">→ le burger à emporter à Biarritz</a>
+      <a href="/biarritz/jardin-public" class="hover:text-[var(--color-ink)]">→ au jardin public, Biarritz</a>
+    </nav>
+  </article>
+</Layout>
