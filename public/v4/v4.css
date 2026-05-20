@@ -35,35 +35,9 @@ html, body {
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; height: auto; }
 
-/* ========== layers fixed (sparkles + constellation) ========== */
+/* ========== layer fixed (sparkles) ========== */
 .sky {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
-}
-.sky-constellation {
-  position: fixed; inset: 0; pointer-events: none; z-index: 1;
-  width: 100%; height: 100%;
-}
-.sky-constellation .star {
-  fill: var(--ink); opacity: 0;
-  animation: starIn 600ms var(--ease) forwards;
-}
-.sky-constellation .star-glow {
-  fill: var(--ink); opacity: 0;
-  animation: starIn 600ms var(--ease) forwards;
-}
-.sky-constellation .line {
-  stroke: var(--ink); stroke-width: 0.5; fill: none;
-  stroke-dasharray: 200; stroke-dashoffset: 200;
-  opacity: 0;
-  animation: lineDraw 1000ms var(--ease) forwards;
-}
-@keyframes starIn {
-  0% { opacity: 0; transform: scale(0); }
-  60% { opacity: 0.9; transform: scale(1.4); }
-  100% { opacity: 0.5; transform: scale(1); }
-}
-@keyframes lineDraw {
-  to { opacity: 0.25; stroke-dashoffset: 0; }
 }
 
 /* sparkle dots */
@@ -71,6 +45,10 @@ img { display: block; max-width: 100%; height: auto; }
   position: absolute; width: 8px; height: 8px;
   transform: translate(-50%, -50%); opacity: 0;
   animation: spIn 800ms var(--ease) forwards;
+  /* micro-interaction souris (desktop only, désactivée si reduced motion) :
+     translate et scale individuels se composent avec transform sans casser
+     les keyframes spIn / spTwinkle. JS pose les valeurs, on transitionne. */
+  transition: translate 420ms ease-out, scale 420ms ease-out;
 }
 .sp::before, .sp::after {
   content: ''; position: absolute; left: 50%; top: 50%;
@@ -200,17 +178,6 @@ p { font-size: 1.0625rem; line-height: 1.55; }
   -webkit-mask-position: center; mask-position: center;
   z-index: 2;
 }
-.hero-sigils {
-  position: absolute; inset: -60%; width: 220%; height: 220%; z-index: 1;
-  pointer-events: none;
-}
-.hero-sigils path {
-  stroke: var(--ink); stroke-width: 0.5; fill: none; opacity: 0.55;
-  stroke-dasharray: 200; stroke-dashoffset: 200;
-  animation: sigilDraw 2.4s var(--ease) 0.4s forwards;
-}
-@keyframes sigilDraw { to { stroke-dashoffset: 0; } }
-
 .hero-slogan {
   font-weight: 800; font-size: clamp(2.4rem, 7vw, 5rem);
   line-height: 0.96; letter-spacing: -0.04em; text-transform: lowercase;
@@ -408,5 +375,5 @@ p { font-size: 1.0625rem; line-height: 1.55; }
 .mt-8 { margin-top: 2rem; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sp, .sky-constellation .star, .sky-constellation .line, .hero-sigils path { animation: none !important; opacity: 0.5 !important; transform: none !important; stroke-dashoffset: 0 !important; }
+  .sp { animation: none !important; opacity: 0.5 !important; transform: translate(-50%, -50%) !important; translate: 0 !important; scale: 1 !important; transition: none !important; }
 }

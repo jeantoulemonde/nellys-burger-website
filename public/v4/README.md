@@ -1,8 +1,8 @@
 # Nelly's — v4 (site complet cyber-sigilism)
 
 Site complet multi-pages dérivé de la preview `v3-C1`. **B&W strict**, sparkles
-animés, ornements sigil qui s'effilent depuis le logo, **constellation animée**
-qui remplace la comète.
+animés (étoiles ✦ et croix +) éparpillés dans le ciel. Le logo reste seul
+au centre, sans construction graphique autour.
 
 ## Pages
 
@@ -16,43 +16,26 @@ qui remplace la comète.
 
 URLs sans extension grâce au `vercel.json` `cleanUrls: true` déjà en place.
 
-## Constellation par page
+## Animations
 
-Chaque page a une constellation distincte tracée au load (sparkles + lignes fines).
-Code dans `v4.js`, données en `CONSTELLATIONS[key]`. Le `key` est lu sur
-`<body data-page="...">`.
-
-| Page       | Forme                                                          |
-| ---------- | -------------------------------------------------------------- |
-| `home`     | Étoile sigil 8 pointes + losange central (13 stars / 20 lines) |
-| `menu`     | Silhouette de burger empilé (15 stars / 18 lines)              |
-| `lieu`     | Marqueur géographique / triangle (11 stars / 14 lines)         |
-| `about`    | Radial minimal (9 stars / 8 lines)                             |
-| `contact`  | Croix X simple (5 stars / 4 lines)                             |
-
-Une fois tracée, la constellation reste à `opacity: 0.25` en arrière-plan.
-
-## Animations conservées de v3-C1
-
-- **Sparkles random** qui s'allument un par un au load (~38 par page),
+- **Sparkles random** (~38 par page) qui s'allument un par un au load,
   moitié en twinkle infini
-- **Sigils émanant du logo** dans le hero, stroke-dasharray draw 2.4s
 - **Burst de sparkles** au hover sur les `.menu-item` (`data-sparkle`)
 - **Sigils header** qui apparaissent au hover sur le brand mark
-
-Nouveau : la comète diagonale est remplacée par la **constellation par page**
-(brief). Garde l'esprit "ciel étoilé qui se révèle" mais devient une
-**signature stellaire propre à chaque page**.
+- **Micro-interaction souris sur sparkles** (desktop only) : passage de
+  la souris dans un rayon de 50px → léger déplacement opposite-to-cursor
+  (max 3px) et scale (max 1.15). Transition CSS 420ms ease-out.
+  Désactivé sur touch (`hover: none`) et `prefers-reduced-motion`.
 
 ## Choix techniques
 
 - **HTML/CSS/JS vanilla**, pas de framework
 - `v4.css` (design system partagé, ~330 lignes) + `v4.js` (sparkles +
-  constellation, ~140 lignes) chargés une fois, mis en cache
+  micro-interaction souris, ~130 lignes) chargés une fois, mis en cache
 - **Mobile-first** : breakpoints à 640 / 768 / 1024px
 - **Animations GPU** : `transform`, `opacity`, `stroke-dashoffset`. Aucune
   animation de propriétés layout-trigger.
-- **prefers-reduced-motion** : sparkles + constellation animations désactivées
+- **prefers-reduced-motion** : sparkles + interaction souris désactivés
 - **JSON-LD Restaurant** sur `/v4/` et `Menu` complet sur `/v4/menu`
   (identique à la v1)
 - **Schema.org `aria-current="page"`** sur le lien nav actif
@@ -107,7 +90,7 @@ Pour chaque page v4, on retrouve **exactement** :
 - 1 script partagé, defer, ~3 KB minifié
 - Pas de framework JS, pas de runtime hydration
 - Images en `loading="lazy"` (sauf hero potentiel)
-- Pas de vidéo (la v4 mise sur la typo + constellation, pas sur du contenu lourd)
+- Pas de vidéo (la v4 mise sur la typo + sparkles, pas sur du contenu lourd)
 
 Cible Lighthouse : **Performance 90+, SEO 100, Accessibilité 95+**.
 

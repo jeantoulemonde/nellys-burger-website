@@ -1,11 +1,12 @@
 /* ============================================================
    Nelly's v4 — runtime cyber-sigilism partagé
-   sparkles random + constellation par page (data-constellation)
+   sparkles random + micro-interaction souris sur sparkles (desktop)
    ============================================================ */
 (function () {
   'use strict';
 
   var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isCoarsePointer = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   /* ---------------- sparkles ---------------- */
   function spawnSparkles(layer, count) {
@@ -23,113 +24,7 @@
     }
   }
 
-  /* ---------------- constellations ---------------- */
-  var CONSTELLATIONS = {
-    /* home : 8-pointed sigil star */
-    home: {
-      stars: [
-        [50, 18], [82, 28], [86, 50], [82, 72], [50, 82], [18, 72], [14, 50], [18, 28],
-        [50, 50], [62, 36], [38, 36], [62, 64], [38, 64]
-      ],
-      lines: [
-        [0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,8],[7,8],
-        [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0],
-        [9,10],[10,11],[11,12],[12,9]
-      ]
-    },
-    /* menu : burger silhouette */
-    menu: {
-      stars: [
-        [50, 25], [30, 32], [70, 32],
-        [22, 45], [50, 42], [78, 45],
-        [20, 58], [50, 56], [80, 58],
-        [22, 70], [50, 72], [78, 70],
-        [30, 82], [50, 85], [70, 82]
-      ],
-      lines: [
-        [0,1],[0,2],[1,3],[2,5],[3,4],[4,5],
-        [3,6],[5,8],[6,7],[7,8],
-        [6,9],[8,11],[9,10],[10,11],
-        [9,12],[11,14],[12,13],[13,14]
-      ]
-    },
-    /* lieu : geographic marker / pin */
-    lieu: {
-      stars: [
-        [50, 18], [38, 32], [62, 32],
-        [28, 50], [50, 50], [72, 50],
-        [38, 68], [62, 68], [50, 82],
-        [20, 70], [80, 70]
-      ],
-      lines: [
-        [0,1],[0,2],[1,3],[2,5],[1,4],[2,4],[3,6],[5,7],[4,6],[4,7],[6,8],[7,8],
-        [6,9],[7,10]
-      ]
-    },
-    /* about : minimal radial */
-    about: {
-      stars: [
-        [50, 30], [50, 50], [50, 70],
-        [30, 50], [70, 50],
-        [36, 36], [64, 36], [36, 64], [64, 64]
-      ],
-      lines: [
-        [0,1],[1,2],[3,1],[1,4],
-        [5,1],[6,1],[7,1],[8,1]
-      ]
-    },
-    /* contact : simple X cross */
-    contact: {
-      stars: [
-        [20, 20], [50, 50], [80, 80],
-        [20, 80], [80, 20]
-      ],
-      lines: [
-        [0,1],[1,2],[3,1],[1,4]
-      ]
-    }
-  };
-
-  function buildConstellation(svgEl, key) {
-    if (!svgEl) return;
-    var data = CONSTELLATIONS[key] || CONSTELLATIONS.home;
-    var w = window.innerWidth, h = window.innerHeight;
-    svgEl.setAttribute('viewBox', '0 0 100 100');
-    svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    var ns = 'http://www.w3.org/2000/svg';
-
-    // lignes (rendues d'abord pour être derrière)
-    data.lines.forEach(function (l, idx) {
-      var a = data.stars[l[0]], b = data.stars[l[1]];
-      if (!a || !b) return;
-      var line = document.createElementNS(ns, 'line');
-      line.setAttribute('class', 'line');
-      line.setAttribute('x1', a[0]);
-      line.setAttribute('y1', a[1]);
-      line.setAttribute('x2', b[0]);
-      line.setAttribute('y2', b[1]);
-      // longueur approx pour stroke-dasharray
-      var dx = b[0] - a[0], dy = b[1] - a[1];
-      var len = Math.sqrt(dx*dx + dy*dy);
-      line.style.strokeDasharray = len + 'px';
-      line.style.strokeDashoffset = len + 'px';
-      line.style.animationDelay = (800 + idx * 120) + 'ms';
-      svgEl.appendChild(line);
-    });
-
-    // étoiles
-    data.stars.forEach(function (s, idx) {
-      var c = document.createElementNS(ns, 'circle');
-      c.setAttribute('class', 'star');
-      c.setAttribute('cx', s[0]);
-      c.setAttribute('cy', s[1]);
-      c.setAttribute('r', 0.55);
-      c.style.animationDelay = (idx * 80) + 'ms';
-      svgEl.appendChild(c);
-    });
-  }
-
-  /* ---------------- sigils au hover sur les burger cards ---------------- */
+  /* ---------------- sparkle burst au hover sur burger cards ---------------- */
   function attachSparkleBurst() {
     document.querySelectorAll('[data-sparkle]').forEach(function (card) {
       card.addEventListener('mouseenter', function () {
@@ -154,18 +49,97 @@
     });
   }
 
+  /* ---------------- micro-interaction souris sur sparkles ----------------
+     Desktop seulement, désactivée si prefers-reduced-motion.
+     - rayon d'influence 50px
+     - max 3px de déplacement opposite-to-cursor (effet fuite délicat)
+     - scale max 1.15 (grossissement léger)
+     - rAF throttle sur mousemove
+     - positions mises en cache (sparkles fixed, recompute au resize seulement)
+     ------------------------------------------------------------------- */
+  function setupSigilProximity() {
+    if (prefersReducedMotion || isCoarsePointer) return;
+
+    var sky = document.querySelector('.sky');
+    if (!sky) return;
+
+    var RADIUS = 50;
+    var MAX_OFFSET = 3;
+    var MAX_SCALE = 1.15;
+
+    var sigils = [];
+    var raf = null;
+    var mx = -9999, my = -9999;
+
+    function refresh() {
+      sigils = [];
+      sky.querySelectorAll('.sp').forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        sigils.push({
+          el: el,
+          cx: r.left + r.width / 2,
+          cy: r.top + r.height / 2,
+          active: false,
+        });
+      });
+    }
+
+    function update() {
+      raf = null;
+      for (var i = 0; i < sigils.length; i++) {
+        var s = sigils[i];
+        var dx = s.cx - mx;
+        var dy = s.cy - my;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < RADIUS && dist > 0) {
+          var t = 1 - dist / RADIUS;
+          var ox = (dx / dist) * MAX_OFFSET * t;
+          var oy = (dy / dist) * MAX_OFFSET * t;
+          var sc = 1 + (MAX_SCALE - 1) * t;
+          s.el.style.translate = ox.toFixed(2) + 'px ' + oy.toFixed(2) + 'px';
+          s.el.style.scale = sc.toFixed(3);
+          s.active = true;
+        } else if (s.active) {
+          s.el.style.translate = '';
+          s.el.style.scale = '';
+          s.active = false;
+        }
+      }
+    }
+
+    function onMove(e) {
+      mx = e.clientX;
+      my = e.clientY;
+      if (raf === null) raf = requestAnimationFrame(update);
+    }
+
+    function onLeave() {
+      mx = -9999;
+      my = -9999;
+      if (raf === null) raf = requestAnimationFrame(update);
+    }
+
+    // débounce léger sur resize
+    var resizeTimer;
+    function onResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(refresh, 120);
+    }
+
+    // laisse les sparkles spawn et terminer leur entrée avant de mesurer
+    setTimeout(refresh, 900);
+
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('mouseleave', onLeave);
+    window.addEventListener('resize', onResize);
+  }
+
   /* ---------------- init ---------------- */
   document.addEventListener('DOMContentLoaded', function () {
     if (prefersReducedMotion) return;
 
     spawnSparkles(document.querySelector('.sky'), 38);
-
-    var c = document.querySelector('.sky-constellation');
-    if (c) {
-      var key = document.body.getAttribute('data-page') || 'home';
-      buildConstellation(c, key);
-    }
-
     attachSparkleBurst();
+    setupSigilProximity();
   });
 })();
