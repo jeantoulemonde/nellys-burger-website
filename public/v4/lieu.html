@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Le lieu — Nelly's Biarritz, jardin public</title>
+<meta name="description" content="Nelly's burger, 21 avenue du jardin public, Biarritz. Ouvert 7j/7, 12h à 22h. À emporter, sans réservation." />
+<link rel="canonical" href="https://nellys.fr/v4/lieu" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Le lieu — Nelly's Biarritz, jardin public" />
+<meta property="og:description" content="Nelly's burger, 21 avenue du jardin public, Biarritz. Ouvert 7j/7, 12h à 22h. À emporter, sans réservation." />
+<meta property="og:image" content="/og-image.jpg" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" />
+<link rel="stylesheet" href="/v4/v4.css" />
+<style>
+  .lieu-grid { display: grid; gap: 2rem; grid-template-columns: 1fr; margin-top: 3rem; }
+  @media (min-width: 768px) { .lieu-grid { grid-template-columns: 1fr 1fr; } }
+  .lieu-block { padding: 0; }
+  .lieu-block h3 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; font-weight: 500; }
+  .lieu-block address, .lieu-block ul { font-style: normal; font-size: 1.0625rem; line-height: 1.6; list-style: none; text-transform: lowercase; }
+  .lieu-block ul li { display: flex; gap: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--line); }
+  .lieu-block ul li:last-child { border-bottom: 0; }
+  .lieu-block ul li span:last-child { font-family: var(--mono); color: var(--muted); margin-left: auto; font-size: 0.9rem; }
+  .map { aspect-ratio: 16/9; border: 1px solid var(--ink); margin-top: 3rem; overflow: hidden; }
+  .map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(1) contrast(1.05); }
+  .corner-ornament { position: absolute; width: 60px; height: 60px; pointer-events: none; }
+  .corner-ornament line { stroke: var(--ink); stroke-width: 0.6; }
+  .corner-ornament.tl { top: 12px; left: 12px; }
+  .corner-ornament.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+  .corner-ornament.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+  .corner-ornament.br { bottom: 12px; right: 12px; transform: scale(-1, -1); }
+  .photo-pair { margin-top: 4rem; }
+</style>
+</head>
+<body data-page="lieu">
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
+
+<div class="sky" aria-hidden="true"></div>
+<svg class="sky-constellation" aria-hidden="true"></svg>
+
+<!-- ornements aux coins de la page -->
+<svg class="corner-ornament tl" viewBox="0 0 60 60" aria-hidden="true">
+  <line x1="0" y1="30" x2="20" y2="30" /><line x1="30" y1="0" x2="30" y2="20" />
+  <line x1="0" y1="0" x2="14" y2="14" /><line x1="14" y1="0" x2="20" y2="6" /><line x1="0" y1="14" x2="6" y2="20" />
+</svg>
+<svg class="corner-ornament tr" viewBox="0 0 60 60" aria-hidden="true">
+  <line x1="0" y1="30" x2="20" y2="30" /><line x1="30" y1="0" x2="30" y2="20" />
+  <line x1="0" y1="0" x2="14" y2="14" /><line x1="14" y1="0" x2="20" y2="6" /><line x1="0" y1="14" x2="6" y2="20" />
+</svg>
+<svg class="corner-ornament bl" viewBox="0 0 60 60" aria-hidden="true">
+  <line x1="0" y1="30" x2="20" y2="30" /><line x1="30" y1="0" x2="30" y2="20" />
+  <line x1="0" y1="0" x2="14" y2="14" /><line x1="14" y1="0" x2="20" y2="6" /><line x1="0" y1="14" x2="6" y2="20" />
+</svg>
+<svg class="corner-ornament br" viewBox="0 0 60 60" aria-hidden="true">
+  <line x1="0" y1="30" x2="20" y2="30" /><line x1="30" y1="0" x2="30" y2="20" />
+  <line x1="0" y1="0" x2="14" y2="14" /><line x1="14" y1="0" x2="20" y2="6" /><line x1="0" y1="14" x2="6" y2="20" />
+</svg>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="/v4/" aria-label="Nelly's, accueil"><span class="brand-logo" aria-hidden="true"></span></a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/v4/menu">menu</a>
+      <a href="/v4/lieu" aria-current="page">lieu</a>
+      <a href="/v4/a-propos">à propos</a>
+      <a href="/v4/contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">le lieu</p>
+      <h1>au jardin public, biarritz.</h1>
+      <p class="lead mt-6">
+        nelly's est au 21 avenue du jardin public, à biarritz. repère : le store
+        jaune et l'enseigne néon nelly's, allumée le soir.
+      </p>
+
+      <div class="lieu-grid">
+        <div class="lieu-block">
+          <h3>adresse</h3>
+          <address>
+            nelly's<br />
+            21 avenue du jardin public<br />
+            64200 biarritz, france
+          </address>
+        </div>
+        <div class="lieu-block">
+          <h3>horaires</h3>
+          <ul>
+            <li><span>tous les jours</span><span>12h — 22h</span></li>
+            <li><span>service</span><span>continu</span></li>
+            <li><span>paiement</span><span>cb ou espèces</span></li>
+            <li><span>réservation</span><span>non</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lieu-grid mt-8">
+        <div class="lieu-block">
+          <h3>comment venir</h3>
+          <p style="font-size: 1.0625rem; line-height: 1.6; text-transform: lowercase;">
+            à pied depuis la grande plage : remontez l'avenue de la marne puis l'avenue
+            du jardin public. dix minutes. à pied depuis la gare : environ vingt minutes
+            par le centre. en bus : lignes desservant la grande plage. à vélo : pistes
+            le long de l'avenue. en voiture : zone payante, parkings publics à cinq
+            minutes (sainte-eugénie, halles).
+          </p>
+        </div>
+        <div class="lieu-block">
+          <h3>repères</h3>
+          <ul>
+            <li><span>grande plage</span><span>10 min</span></li>
+            <li><span>halles</span><span>5 min</span></li>
+            <li><span>parking</span><span>sainte-eugénie</span></li>
+            <li><span>bus</span><span>grande plage</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="map">
+        <iframe
+          title="plan d'accès google maps, nelly's burger biarritz"
+          src="https://www.google.com/maps?q=21%20avenue%20du%20jardin%20public%2C%2064200%20Biarritz&z=16&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <div class="photo-pair grid-2">
+        <div class="img-bw-frame" style="aspect-ratio: 4/5;">
+          <img src="/v4/img/storefront-queue.jpg" alt="Nelly's burger Biarritz, file devant la vitrine au crépuscule, enseigne néon allumée avenue du jardin public" loading="lazy" />
+        </div>
+        <div class="img-bw-frame" style="aspect-ratio: 4/5;">
+          <img src="/v4/img/storefront.jpg" alt="vitrine Nelly's burger Biarritz, store jaune sur l'avenue du jardin public" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div><div class="site-footer-mark" aria-label="Nelly's"></div><p class="muted" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;">smash burger à emporter · biarritz</p></div>
+    <div><h4>adresse</h4><address style="font-style: normal; font-size: 0.95rem; line-height: 1.55;">21 avenue du jardin public<br />64200 Biarritz</address></div>
+    <div><h4>horaires</h4><p style="font-size: 0.95rem;">tous les jours<br /><span class="muted">12h à 22h</span></p></div>
+    <div><h4>suivre</h4><p style="font-size: 0.95rem;"><a href="https://www.instagram.com/nellysburgerz/" rel="me noopener" target="_blank">@nellysburgerz</a></p></div>
+  </div>
+  <div class="site-footer-inner site-footer-bottom">
+    <span>© 2026. Nelly's. Come and get your fingers salty.</span>
+    <span><a href="/mentions-legales">mentions légales</a></span>
+  </div>
+</footer>
+
+<script src="/v4/v4.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Menu — Smash burger Biarritz — Nelly's</title>
+<meta name="description" content="Cheeseburger, bacon, vg+. Trois smash burgers à Biarritz, à emporter. 9 à 10 €." />
+<link rel="canonical" href="https://nellys.fr/v4/menu" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Menu — Smash burger Biarritz — Nelly's" />
+<meta property="og:description" content="Cheeseburger, bacon, vg+. Trois smash burgers à Biarritz, à emporter. 9 à 10 €." />
+<meta property="og:image" content="/og-image.jpg" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" />
+<link rel="stylesheet" href="/v4/v4.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Menu","@id":"https://nellys.fr/v4/menu#menu","name":"Menu Nelly's","inLanguage":"fr","hasMenuSection":[{"@type":"MenuSection","name":"burgers","hasMenuItem":[{"@type":"MenuItem","name":"cheeseburger","description":"boeuf · american cheese · pickles · oignons · laitue · ketchup · moutarde","offers":{"@type":"Offer","price":"9.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"bacon","description":"boeuf · american cheese · oignons confits · bacon · laitue · sauce nelly's","offers":{"@type":"Offer","price":"10.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"vg+","description":"falafel · aubergine · american cheese · laitue · sauce fromage blanc","offers":{"@type":"Offer","price":"9.50","priceCurrency":"EUR"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"sides","hasMenuItem":[{"@type":"MenuItem","name":"frites","description":"graisse de boeuf · fleur de sel","offers":{"@type":"Offer","price":"4.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"coleslaw","description":"carotte · chou","offers":{"@type":"Offer","price":"3.00","priceCurrency":"EUR"}}]},{"@type":"MenuSection","name":"boissons","hasMenuItem":[{"@type":"MenuItem","name":"soda","offers":{"@type":"Offer","price":"2.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"thé glacé maison","offers":{"@type":"Offer","price":"4.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"citronnade maison","offers":{"@type":"Offer","price":"4.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"kombucha datxa","offers":{"@type":"Offer","price":"4.50","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"asahi","offers":{"@type":"Offer","price":"4.00","priceCurrency":"EUR"}},{"@type":"MenuItem","name":"nelly's × landberry","description":"brassée à anglet · 44 cl","offers":{"@type":"Offer","price":"6.00","priceCurrency":"EUR"}}]}]}</script>
+<style>
+  .menu-page { padding: 4rem 0 6rem; }
+  .menu-block { margin-top: 3rem; }
+  .menu-block h2 { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.22em; text-transform: lowercase; color: var(--muted); margin-bottom: 1rem; }
+  .menu-item {
+    display: grid; grid-template-columns: 1fr auto; gap: 1.5rem;
+    padding: 1.4rem 0; border-bottom: 1px solid var(--line);
+    align-items: baseline;
+    transition: background 200ms var(--ease);
+  }
+  .menu-item:hover { background: rgba(10,10,10,0.025); }
+  .menu-item-name { font-size: clamp(1.15rem, 2.5vw, 1.5rem); font-weight: 600; letter-spacing: -0.02em; text-transform: lowercase; }
+  .menu-item-name .tg { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-left: 0.6rem; }
+  .menu-item-desc { margin-top: 0.4rem; font-size: 0.9375rem; line-height: 1.5; color: var(--muted); text-transform: lowercase; max-width: 56ch; }
+  .menu-item-price { font-family: var(--mono); font-size: 1.0625rem; font-weight: 600; tabular-nums: tabular-nums; white-space: nowrap; }
+  .menu-feat { background: var(--ink); color: var(--bg); padding: 2rem; margin-top: 2rem; position: relative; }
+  .menu-feat::before, .menu-feat::after { content: ''; position: absolute; width: 18px; height: 18px; }
+  .menu-feat::before { top: -1px; left: -1px; border-top: 1px solid var(--bg); border-left: 1px solid var(--bg); }
+  .menu-feat::after { bottom: -1px; right: -1px; border-bottom: 1px solid var(--bg); border-right: 1px solid var(--bg); }
+  .menu-feat .ix { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+  .menu-feat .nm { font-size: 1.4rem; font-weight: 700; margin-top: 0.5rem; }
+  .menu-feat .tg { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: rgba(255,255,255,0.7); margin-left: 0.5rem; }
+  .menu-feat .desc { margin-top: 0.6rem; font-size: 0.9375rem; color: rgba(255,255,255,0.8); text-transform: lowercase; }
+  .menu-feat .pr { font-family: var(--mono); font-size: 1.0625rem; font-weight: 600; margin-top: 0.5rem; }
+  .photo-strip { margin-top: 4rem; }
+  .photo-frame { aspect-ratio: 4/5; }
+</style>
+</head>
+<body data-page="menu">
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
+
+<div class="sky" aria-hidden="true"></div>
+<svg class="sky-constellation" aria-hidden="true"></svg>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="/v4/" aria-label="Nelly's, accueil">
+      <span class="brand-logo" aria-hidden="true"></span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/v4/menu" aria-current="page">menu</a>
+      <a href="/v4/lieu">lieu</a>
+      <a href="/v4/a-propos">à propos</a>
+      <a href="/v4/contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="menu-page">
+    <div class="container">
+      <p class="eyebrow">le menu</p>
+      <h1>trois burgers, deux sides, six boissons.</h1>
+      <p class="lead mt-6">à emporter · cb ou espèces</p>
+
+      <section class="menu-block" id="burgers">
+        <h2>— burgers</h2>
+        <div class="menu-item" id="cheeseburger" data-sparkle>
+          <div>
+            <div class="menu-item-name">cheeseburger</div>
+            <p class="menu-item-desc">boeuf · american cheese · pickles · oignons · laitue · ketchup · moutarde</p>
+          </div>
+          <div class="menu-item-price">9 €</div>
+        </div>
+        <div class="menu-item" id="bacon" data-sparkle>
+          <div>
+            <div class="menu-item-name">bacon</div>
+            <p class="menu-item-desc">boeuf · american cheese · oignons confits · bacon · laitue · sauce nelly's</p>
+          </div>
+          <div class="menu-item-price">10 €</div>
+        </div>
+        <div class="menu-item" id="vg" data-sparkle>
+          <div>
+            <div class="menu-item-name">vg+ <span class="tg">fruits à coque</span></div>
+            <p class="menu-item-desc">falafel · aubergine · american cheese · laitue · sauce fromage blanc</p>
+          </div>
+          <div class="menu-item-price">9,50 €</div>
+        </div>
+      </section>
+
+      <section class="menu-block" id="sides">
+        <h2>— sides</h2>
+        <div class="menu-item" data-sparkle>
+          <div>
+            <div class="menu-item-name">frites</div>
+            <p class="menu-item-desc">graisse de boeuf · fleur de sel</p>
+          </div>
+          <div class="menu-item-price">4 €</div>
+        </div>
+        <div class="menu-item" data-sparkle>
+          <div>
+            <div class="menu-item-name">coleslaw</div>
+            <p class="menu-item-desc">carotte · chou</p>
+          </div>
+          <div class="menu-item-price">3 €</div>
+        </div>
+      </section>
+
+      <section class="menu-block" id="boissons">
+        <h2>— boissons</h2>
+        <div class="menu-item" data-sparkle><div><div class="menu-item-name">soda</div><p class="menu-item-desc">33 cl</p></div><div class="menu-item-price">2 €</div></div>
+        <div class="menu-item" data-sparkle><div><div class="menu-item-name">thé glacé maison</div></div><div class="menu-item-price">4 €</div></div>
+        <div class="menu-item" data-sparkle><div><div class="menu-item-name">citronnade maison</div></div><div class="menu-item-price">4 €</div></div>
+        <div class="menu-item" data-sparkle><div><div class="menu-item-name">kombucha datxa</div><p class="menu-item-desc">33 cl</p></div><div class="menu-item-price">4,50 €</div></div>
+
+        <h2 class="mt-8">— bières</h2>
+        <div class="menu-item" data-sparkle><div><div class="menu-item-name">asahi</div><p class="menu-item-desc">33 cl</p></div><div class="menu-item-price">4 €</div></div>
+
+        <article class="menu-feat" data-sparkle>
+          <span class="ix">collab</span>
+          <div class="nm">nelly's × landberry</div>
+          <p class="desc">brassée à anglet · 44 cl</p>
+          <div class="pr">6 €</div>
+        </article>
+      </section>
+
+      <div class="photo-strip grid-2">
+        <div class="img-bw-frame photo-frame">
+          <img src="/v4/img/burger.jpg" alt="cheeseburger Nelly's Biarritz, smash burger à emporter, pain brioché et american cheese" loading="lazy" />
+        </div>
+        <div class="img-bw-frame photo-frame">
+          <img src="/v4/img/counter-plancha.jpg" alt="comptoir inox et plancha en cuisine ouverte chez Nelly's Biarritz" loading="lazy" />
+        </div>
+      </div>
+
+      <p class="mt-8 muted" style="font-family: var(--mono); font-size: 0.85rem; text-transform: lowercase;">
+        viande hachée du jour, jamais congelée. pain brioché toasté au beurre, fournisseur local.
+        pickles, sauces et coleslaw préparés sur place. frites cuites à la graisse de boeuf,
+        friteuse végétale dédiée sur demande. allergènes : liste détaillée disponible au comptoir.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div><div class="site-footer-mark" aria-label="Nelly's"></div><p class="muted" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;">smash burger à emporter · biarritz</p></div>
+    <div><h4>adresse</h4><address style="font-style: normal; font-size: 0.95rem; line-height: 1.55;">21 avenue du jardin public<br />64200 Biarritz</address></div>
+    <div><h4>horaires</h4><p style="font-size: 0.95rem;">tous les jours<br /><span class="muted">12h à 22h</span></p></div>
+    <div><h4>suivre</h4><p style="font-size: 0.95rem;"><a href="https://www.instagram.com/nellysburgerz/" rel="me noopener" target="_blank">@nellysburgerz</a></p></div>
+  </div>
+  <div class="site-footer-inner site-footer-bottom">
+    <span>© 2026. Nelly's. Come and get your fingers salty.</span>
+    <span><a href="/mentions-legales">mentions légales</a></span>
+  </div>
+</footer>
+
+<script src="/v4/v4.js" defer></script>
+</body>
+</html>

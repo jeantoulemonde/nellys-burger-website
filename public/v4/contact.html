@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — Nelly's Biarritz, jardin public</title>
+<meta name="description" content="Nelly's burger, 21 avenue du jardin public, Biarritz. Ouvert 7j/7, 12h à 22h. À emporter, sans réservation." />
+<link rel="canonical" href="https://nellys.fr/v4/contact" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Contact — Nelly's Biarritz, jardin public" />
+<meta property="og:description" content="Nelly's burger, 21 avenue du jardin public, Biarritz. Ouvert 7j/7, 12h à 22h. À emporter, sans réservation." />
+<meta property="og:image" content="/og-image.jpg" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" />
+<link rel="stylesheet" href="/v4/v4.css" />
+<style>
+  .contact-grid { display: grid; gap: 2rem; grid-template-columns: 1fr; margin-top: 4rem; }
+  @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+  .contact-block h3 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; font-weight: 500; }
+  .contact-block address, .contact-block ul { font-style: normal; font-size: 1.0625rem; line-height: 1.65; list-style: none; text-transform: lowercase; }
+  .contact-block ul li { padding: 0.3rem 0; }
+  .contact-large {
+    font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: 600;
+    text-transform: lowercase; letter-spacing: -0.015em;
+  }
+  .insta-cta {
+    margin-top: 4rem; padding: 3rem 0; border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line); text-align: center;
+  }
+  .insta-cta h2 { margin-bottom: 1.5rem; }
+  .faq-list { margin-top: 4rem; }
+  .faq-list details { border-bottom: 1px solid var(--line); padding: 1.25rem 0; }
+  .faq-list summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 1rem; font-size: 1.0625rem; font-weight: 600; text-transform: lowercase; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after { content: '+'; margin-left: auto; font-family: var(--mono); color: var(--muted); transition: transform 200ms var(--ease); }
+  .faq-list details[open] summary::after { transform: rotate(45deg); }
+  .faq-list p { margin-top: 0.6rem; font-size: 0.95rem; line-height: 1.55; color: var(--muted); text-transform: lowercase; }
+</style>
+</head>
+<body data-page="contact">
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
+
+<div class="sky" aria-hidden="true"></div>
+<svg class="sky-constellation" aria-hidden="true"></svg>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="/v4/" aria-label="Nelly's, accueil"><span class="brand-logo" aria-hidden="true"></span></a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="/v4/menu">menu</a>
+      <a href="/v4/lieu">lieu</a>
+      <a href="/v4/a-propos">à propos</a>
+      <a href="/v4/contact" aria-current="page">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">contact</p>
+      <h1>nous trouver, nous suivre.</h1>
+
+      <div class="contact-grid">
+        <div class="contact-block">
+          <h3>adresse</h3>
+          <address class="contact-large">
+            21 avenue du jardin public<br />
+            64200 biarritz
+          </address>
+        </div>
+        <div class="contact-block">
+          <h3>horaires</h3>
+          <p class="contact-large">7j/7 · 12h — 22h</p>
+          <p class="mt-2 muted" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;">service continu, midi et soir</p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-block">
+          <h3>commandes</h3>
+          <ul>
+            <li>au comptoir uniquement</li>
+            <li>cb ou espèces</li>
+            <li>pas de réservation</li>
+            <li>pas de téléphone</li>
+            <li>pas de livraison</li>
+          </ul>
+        </div>
+        <div class="contact-block">
+          <h3>suivre</h3>
+          <p>
+            <a class="link-underline contact-large" href="https://www.instagram.com/nellysburgerz/" rel="me noopener" target="_blank">@nellysburgerz</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="insta-cta">
+        <h2>passez nous voir.</h2>
+        <a class="btn btn--ink" href="/v4/lieu">voir le plan d'accès</a>
+      </div>
+
+      <section class="faq-list">
+        <h2 class="mt-8" style="margin-bottom: 2rem;">questions fréquentes.</h2>
+        <details>
+          <summary>où peut-on se garer ?</summary>
+          <p>le quartier du jardin public est en zone payante. les parkings publics les plus proches sont à 5 minutes à pied : parking sainte-eugénie et parking les halles. en haute saison, mieux vaut venir en vélo, à pied ou en bus (lignes desservant la grande plage).</p>
+        </details>
+        <details>
+          <summary>avez-vous une option végétarienne ?</summary>
+          <p>oui, le vg+ : falafel aux noisettes, aubergine, american cheese, laitue, sauce au fromage blanc. il n'est pas vegan (american cheese, sauce au fromage blanc).</p>
+        </details>
+        <details>
+          <summary>peut-on manger sur place ?</summary>
+          <p>non. nelly's est un format à emporter uniquement. la salle ne comporte pas de table assise. on emballe soigneusement et vous mangez où vous voulez. la grande plage est à dix minutes à pied, le jardin public à trente secondes.</p>
+        </details>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div><div class="site-footer-mark" aria-label="Nelly's"></div><p class="muted" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;">smash burger à emporter · biarritz</p></div>
+    <div><h4>adresse</h4><address style="font-style: normal; font-size: 0.95rem; line-height: 1.55;">21 avenue du jardin public<br />64200 Biarritz</address></div>
+    <div><h4>horaires</h4><p style="font-size: 0.95rem;">tous les jours<br /><span class="muted">12h à 22h</span></p></div>
+    <div><h4>suivre</h4><p style="font-size: 0.95rem;"><a href="https://www.instagram.com/nellysburgerz/" rel="me noopener" target="_blank">@nellysburgerz</a></p></div>
+  </div>
+  <div class="site-footer-inner site-footer-bottom">
+    <span>© 2026. Nelly's. Come and get your fingers salty.</span>
+    <span><a href="/mentions-legales">mentions légales</a></span>
+  </div>
+</footer>
+
+<script src="/v4/v4.js" defer></script>
+</body>
+</html>
