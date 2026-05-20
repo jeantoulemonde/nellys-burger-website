@@ -10,6 +10,8 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #efe7d3; color: #1a1410; font-family: 'General Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); transition: background 200ms ease; }
+  .back-dash:hover { background: #0a0a0a; }
   .label { position: fixed; top: 12px; right: 12px; background: #1a1410; color: #efe7d3; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 99; letter-spacing: 0.04em; }
   /* paper grain */
   body::before { content: ''; position: fixed; inset: 0; pointer-events: none; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; opacity: 0.6; z-index: 1; }
@@ -67,6 +69,7 @@
 </style>
 </head>
 <body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
 <div class="label">v3 · f · sticker collage</div>
 <header>
   <div class="logo" aria-label="nelly's"></div>

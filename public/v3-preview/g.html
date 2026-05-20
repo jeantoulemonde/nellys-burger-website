@@ -10,6 +10,8 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #c83e29; color: #fff5e8; font-family: 'General Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); transition: background 200ms ease; }
+  .back-dash:hover { background: #0a0a0a; }
   .label { position: fixed; top: 12px; right: 12px; background: #1a0a08; color: #fff5e8; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 99; letter-spacing: 0.04em; }
 
   /* full-bleed warm photo placeholder */
@@ -52,6 +54,7 @@
 </style>
 </head>
 <body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
 <div class="label">v3 · g · magazine cover</div>
 <section class="cover">
   <div class="masthead">

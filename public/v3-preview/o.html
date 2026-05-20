@@ -25,6 +25,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); transition: background 200ms ease; }
+  .back-dash:hover { background: #0a0a0a; }
   .label { position: fixed; top: 12px; right: 12px; background: var(--ink); color: var(--bg); padding: 6px 10px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; z-index: 999; letter-spacing: 0.04em; }
 
   .mono { font-family: 'IBM Plex Mono', monospace; }
@@ -363,6 +365,7 @@
 </style>
 </head>
 <body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
 <div class="label">v3 · o · koppen v2</div>
 
 <header>

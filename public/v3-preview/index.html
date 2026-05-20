@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nelly's — Previews</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap"
+/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0a0a0a;
+    --bg: #fafafa;
+    --line: rgba(10,10,10,0.12);
+    --muted: #5a5a57;
+    --dim: #807a6e;
+    --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  html, body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'General Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* top */
+  header.top {
+    padding: 4vh 5vw 3vh;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 1rem; }
+  .brand-mark {
+    width: 88px; height: 32px;
+    background-color: var(--ink);
+    -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  .brand-tag {
+    font-family: ui-monospace, monospace; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+  }
+  .count {
+    font-family: ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim);
+  }
+  .count b { color: var(--ink); font-weight: 600; }
+
+  /* intro */
+  .intro { padding: 8vh 5vw 6vh; max-width: 1280px; margin: 0 auto; }
+  .intro p.eyebrow {
+    font-family: ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim);
+    margin-bottom: 1rem;
+  }
+  .intro h1 {
+    font-weight: 800; font-size: clamp(2.5rem, 6.5vw, 5rem);
+    line-height: 1; letter-spacing: -0.035em;
+    text-transform: lowercase; max-width: 14ch;
+  }
+  .intro p.lead {
+    margin-top: 1.5rem; max-width: 48ch;
+    font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.55; color: var(--muted);
+    text-transform: lowercase; font-weight: 500;
+  }
+
+  /* grille */
+  .grid {
+    padding: 0 5vw 12vh; max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr; gap: 1rem;
+  }
+  @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+  @media (min-width: 1400px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .card {
+    position: relative; aspect-ratio: 4 / 5;
+    border: 1px solid var(--line); text-decoration: none; color: var(--ink);
+    background: var(--bg); overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 320ms var(--ease), border-color 320ms var(--ease);
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--ink); }
+  .card-thumb {
+    flex: 1; border-bottom: 1px solid var(--line); position: relative;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
+  }
+  .card-foot {
+    padding: 1rem 1.1rem;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  }
+  .card-id {
+    font-family: ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+  }
+  .card-title {
+    font-size: 1rem; font-weight: 600; text-transform: lowercase;
+    letter-spacing: -0.01em; line-height: 1.25; flex: 1;
+  }
+  .card-arrow {
+    font-family: ui-monospace, monospace; color: var(--dim);
+    transition: color 200ms var(--ease), transform 200ms var(--ease);
+  }
+  .card:hover .card-arrow { color: var(--ink); transform: translateX(3px); }
+
+  /* thumbs */
+  .thumb {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-transform: lowercase; font-weight: 800;
+    position: relative;
+  }
+
+  /* a — diner ambré */
+  .thumb-a { background: #f4ecd6; color: #0a0a0a; }
+  .thumb-a .w { font-size: clamp(1.6rem, 5vw, 2.8rem); letter-spacing: -0.04em; }
+  .thumb-a .w em { font-style: normal; color: #f0a830; }
+
+  /* b — jour / nuit */
+  .thumb-b { display: grid; grid-template-columns: 1fr 1fr; }
+  .thumb-b > div { display: flex; align-items: center; justify-content: center; padding: 1rem; font-size: clamp(1rem, 2.6vw, 1.5rem); }
+  .thumb-b .day { background: #fafafa; color: #0a0a0a; }
+  .thumb-b .night { background: #0a0a0a; color: #fafafa; }
+
+  /* c — éditorial chrome */
+  .thumb-c { background: linear-gradient(135deg, #e8e8e8 0%, #c4c4c4 100%); color: #0a0a0a; }
+  .thumb-c .w { font-size: clamp(1.6rem, 5vw, 2.6rem); letter-spacing: -0.05em; }
+
+  /* d — pixel diurne */
+  .thumb-d { background: #faf6ec; color: #0a0a0a; }
+  .thumb-d .w { font-family: 'Courier New', monospace; font-size: clamp(1.3rem, 4vw, 2.2rem); letter-spacing: 0; }
+
+  /* e — neon menu */
+  .thumb-e {
+    background: #0a0a0a; color: #ffd967;
+    text-shadow: 0 0 8px #ffd967, 0 0 18px rgba(255, 217, 103, 0.6);
+  }
+  .thumb-e .w { font-size: clamp(1.6rem, 5vw, 2.6rem); letter-spacing: -0.03em; font-style: italic; }
+
+  /* f — sticker collage */
+  .thumb-f { background: #fafafa; color: #0a0a0a; }
+  .thumb-f::before, .thumb-f::after {
+    content: ''; position: absolute; width: 38%; aspect-ratio: 1;
+    border-radius: 50%; border: 1.5px solid #0a0a0a;
+  }
+  .thumb-f::before { top: 12%; left: 8%; transform: rotate(-8deg); background: #0a0a0a; }
+  .thumb-f::after { bottom: 12%; right: 8%; transform: rotate(12deg); }
+  .thumb-f .w { font-size: clamp(1.2rem, 3.6vw, 1.8rem); position: relative; z-index: 2; }
+
+  /* g — magazine cover */
+  .thumb-g { background: #fafafa; color: #0a0a0a; border-top: 14px solid #0a0a0a; padding: 1rem; align-items: flex-start; justify-content: space-between; }
+  .thumb-g .w { font-size: clamp(1.5rem, 4.5vw, 2.2rem); letter-spacing: -0.04em; }
+  .thumb-g .num { font-family: ui-monospace, monospace; font-size: 9px; color: #5a5a57; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* h — risograph poster */
+  .thumb-h {
+    background: #f4ecd6;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(176, 50, 50, 0.08) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, rgba(50, 100, 176, 0.06) 0 1px, transparent 1px 4px);
+    color: #b03232; font-style: italic;
+  }
+  .thumb-h .w { font-size: clamp(1.5rem, 4.5vw, 2.2rem); letter-spacing: -0.02em; }
+
+  /* i — koppen calm (cream + yellow accent) */
+  .thumb-i { background: #f1ebdc; color: #141210; }
+  .thumb-i .w { font-size: clamp(1.5rem, 4.5vw, 2.3rem); letter-spacing: -0.04em; }
+  .thumb-i .w em { font-style: normal; color: #f3c530; -webkit-text-stroke: 0.5px #141210; }
+
+  /* j — koppen index (cream + monospace columns) */
+  .thumb-j { background: #ede5d2; color: #161311; padding: 1rem; flex-direction: column; align-items: stretch; gap: 0.3rem; justify-content: center; }
+  .thumb-j .row { display: grid; grid-template-columns: 1.5rem 1fr 1.5rem; gap: 0.6rem; align-items: baseline; font-size: clamp(0.7rem, 1.8vw, 0.95rem); font-weight: 600; padding: 0.25rem 0; border-bottom: 1px solid #cfc6b2; }
+  .thumb-j .row .n { font-family: ui-monospace, monospace; font-size: 0.55em; color: #6c635a; font-weight: 400; letter-spacing: 0.06em; }
+  .thumb-j .row .p { font-family: ui-monospace, monospace; font-size: 0.5em; color: #6c635a; font-weight: 400; text-align: right; }
+
+  /* k — koppen sequence (mini frames) */
+  .thumb-k { background: #f1ebdc; padding: 1rem; align-items: stretch; flex-direction: column; justify-content: center; gap: 0.4rem; }
+  .thumb-k .frame { background: #fff; border: 1px solid #cfc6b2; padding: 0.4rem 0.6rem; font-size: clamp(0.65rem, 1.6vw, 0.85rem); display: flex; justify-content: space-between; align-items: baseline; color: #161311; }
+  .thumb-k .frame .n { font-family: ui-monospace, monospace; font-size: 0.6em; color: #6c635a; }
+
+  /* l — dash stamp (yellow badge) */
+  .thumb-l { background: #1a1a1a; color: #0a0a0a; }
+  .thumb-l .stamp { background: #efc12b; padding: 0.4rem 0.8rem; transform: rotate(-6deg); border-radius: 2px; font-size: clamp(1.2rem, 3.5vw, 1.8rem); font-weight: 800; letter-spacing: -0.02em; }
+
+  /* m — dash mosaic (block punch) */
+  .thumb-m { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0; }
+  .thumb-m > div { display: flex; align-items: center; justify-content: center; font-size: clamp(0.8rem, 2.2vw, 1.15rem); font-weight: 800; }
+  .thumb-m .b1 { background: #efc12b; color: #0a0a0a; }
+  .thumb-m .b2 { background: #0a0a0a; color: #efc12b; }
+  .thumb-m .b3 { background: #0a0a0a; color: #fafafa; }
+  .thumb-m .b4 { background: #fafafa; color: #0a0a0a; border: 1px solid #cfc6b2; }
+
+  /* n — dash diner card (stacked cards) */
+  .thumb-n { background: #1f1c18; padding: 1rem; flex-direction: column; align-items: stretch; gap: 0.35rem; justify-content: center; }
+  .thumb-n .card-mini { background: #efc12b; color: #0a0a0a; padding: 0.4rem 0.7rem; font-size: clamp(0.65rem, 1.8vw, 0.95rem); font-weight: 800; display: flex; justify-content: space-between; }
+  .thumb-n .card-mini.alt { background: #fff5e8; }
+  .thumb-n .card-mini .p { font-family: ui-monospace, monospace; font-size: 0.65em; font-weight: 500; }
+
+  /* o — koppen v2 (serif massif) */
+  .thumb-o { background: #f4ecd6; color: #161311; }
+  .thumb-o .w { font-family: 'Times New Roman', Georgia, serif; font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: -0.04em; font-style: italic; font-weight: 400; }
+
+  /* p — dash v2 (chunky display + marquee) */
+  .thumb-p { background: #efc12b; color: #0a0a0a; padding: 0; align-items: stretch; flex-direction: column; justify-content: space-between; }
+  .thumb-p .scroll-bar { background: #0a0a0a; color: #efc12b; padding: 0.4rem 1rem; font-family: ui-monospace, monospace; font-size: clamp(0.65rem, 1.8vw, 0.85rem); letter-spacing: 0.18em; text-transform: uppercase; overflow: hidden; white-space: nowrap; }
+  .thumb-p .center { flex: 1; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: clamp(2rem, 6vw, 3rem); letter-spacing: -0.06em; }
+
+  /* q — manifeste mono */
+  .thumb-q { background: #fafafa; color: #0a0a0a; }
+  .thumb-q .w { font-size: clamp(2rem, 5.5vw, 3rem); letter-spacing: -0.05em; }
+  .thumb-q .w::after { content: ''; display: block; width: 28%; height: 1px; background: #0a0a0a; margin: 0.4rem auto 0; }
+
+  /* r — split asymétrique */
+  .thumb-r { display: grid; grid-template-columns: 1fr 1.4fr; }
+  .thumb-r .col-l { background: #fafafa; color: #0a0a0a; padding: 1rem; display: flex; flex-direction: column; justify-content: center; gap: 0.4rem; font-size: clamp(0.75rem, 1.8vw, 1rem); font-weight: 600; }
+  .thumb-r .col-l span { color: #5a5a57; }
+  .thumb-r .col-l span.active { color: #0a0a0a; }
+  .thumb-r .col-l span.active::before { content: '— '; }
+  .thumb-r .col-r { background: #0a0a0a; color: #fafafa; display: flex; align-items: center; justify-content: center; font-size: clamp(1.2rem, 3.5vw, 1.8rem); padding: 0.5rem; text-align: center; }
+
+  /* footer */
+  footer.bottom {
+    border-top: 1px solid var(--line);
+    padding: 3vh 5vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    font-family: ui-monospace, monospace; font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim);
+  }
+  footer.bottom a { color: var(--ink); text-decoration: none; }
+  footer.bottom a:hover { opacity: 0.6; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="brand-mark" aria-label="Nelly's"></div>
+    <span class="brand-tag">previews · biarritz</span>
+  </div>
+  <span class="count"><b>18</b> directions</span>
+</header>
+
+<section class="intro">
+  <p class="eyebrow">dashboard · v3</p>
+  <h1>dix-huit directions, une marque.</h1>
+  <p class="lead">
+    chaque carte ouvre une preview indépendante de la homepage. cliquez pour
+    naviguer, revenez ici via le lien « dashboard » en haut à gauche de chaque
+    preview.
+  </p>
+</section>
+
+<section class="grid" aria-label="liste des previews">
+  <a class="card" href="/v3-preview/a" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-a"><span class="w">salty <em>fingers.</em></span></div></div>
+    <div class="card-foot"><span class="card-id">a</span><span class="card-title">diner ambré</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/b" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-b"><div class="day">jour</div><div class="night">nuit</div></div></div>
+    <div class="card-foot"><span class="card-id">b</span><span class="card-title">jour / nuit</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/c" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-c"><span class="w">éditorial</span></div></div>
+    <div class="card-foot"><span class="card-id">c</span><span class="card-title">éditorial chrome</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/d" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-d"><span class="w">nelly's</span></div></div>
+    <div class="card-foot"><span class="card-id">d</span><span class="card-title">pixel diurne</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/e" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-e"><span class="w">nelly's</span></div></div>
+    <div class="card-foot"><span class="card-id">e</span><span class="card-title">neon menu</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/f" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-f"><span class="w">collage</span></div></div>
+    <div class="card-foot"><span class="card-id">f</span><span class="card-title">sticker collage</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/g" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-g"><span class="num">issue 01</span><span class="w">cover.</span></div></div>
+    <div class="card-foot"><span class="card-id">g</span><span class="card-title">magazine cover</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/h" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-h"><span class="w">salty.</span></div></div>
+    <div class="card-foot"><span class="card-id">h</span><span class="card-title">risograph poster</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/i" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-i"><span class="w">salty <em>fingers.</em></span></div></div>
+    <div class="card-foot"><span class="card-id">i</span><span class="card-title">koppen calm</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/j" target="_blank" rel="noopener">
+    <div class="card-thumb">
+      <div class="thumb thumb-j">
+        <div class="row"><span class="n">01</span><span>cheeseburger</span><span class="p">9 €</span></div>
+        <div class="row"><span class="n">02</span><span>bacon</span><span class="p">10 €</span></div>
+        <div class="row"><span class="n">03</span><span>vg+</span><span class="p">9,5 €</span></div>
+      </div>
+    </div>
+    <div class="card-foot"><span class="card-id">j</span><span class="card-title">koppen index</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/k" target="_blank" rel="noopener">
+    <div class="card-thumb">
+      <div class="thumb thumb-k">
+        <div class="frame"><span class="n">i.</span><span>smash</span></div>
+        <div class="frame"><span class="n">ii.</span><span>croûte</span></div>
+        <div class="frame"><span class="n">iii.</span><span>sac kraft</span></div>
+      </div>
+    </div>
+    <div class="card-foot"><span class="card-id">k</span><span class="card-title">koppen sequence</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/l" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-l"><span class="stamp">nelly's</span></div></div>
+    <div class="card-foot"><span class="card-id">l</span><span class="card-title">dash stamp</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/m" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-m"><div class="b1">3</div><div class="b2">€</div><div class="b3">7j/7</div><div class="b4">€</div></div></div>
+    <div class="card-foot"><span class="card-id">m</span><span class="card-title">dash mosaic</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/n" target="_blank" rel="noopener">
+    <div class="card-thumb">
+      <div class="thumb thumb-n">
+        <div class="card-mini"><span>cheeseburger</span><span class="p">9 €</span></div>
+        <div class="card-mini alt"><span>bacon</span><span class="p">10 €</span></div>
+        <div class="card-mini"><span>vg+</span><span class="p">9,5 €</span></div>
+      </div>
+    </div>
+    <div class="card-foot"><span class="card-id">n</span><span class="card-title">dash diner card</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/o" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-o"><span class="w">salty.</span></div></div>
+    <div class="card-foot"><span class="card-id">o</span><span class="card-title">koppen v2</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/p" target="_blank" rel="noopener">
+    <div class="card-thumb">
+      <div class="thumb thumb-p">
+        <div class="scroll-bar">salty ◆ fingers ◆ salty</div>
+        <div class="center">nelly's</div>
+        <div class="scroll-bar">7j/7 ◆ 12h-22h ◆ 7j/7</div>
+      </div>
+    </div>
+    <div class="card-foot"><span class="card-id">p</span><span class="card-title">dash v2</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/q" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-q"><span class="w">nelly's</span></div></div>
+    <div class="card-foot"><span class="card-id">q</span><span class="card-title">manifeste mono</span><span class="card-arrow">↗</span></div>
+  </a>
+  <a class="card" href="/v3-preview/r" target="_blank" rel="noopener">
+    <div class="card-thumb"><div class="thumb thumb-r"><div class="col-l"><span>burgers</span><span class="active">slogan</span><span>ici</span></div><div class="col-r">salty.</div></div></div>
+    <div class="card-foot"><span class="card-id">r</span><span class="card-title">split asymétrique</span><span class="card-arrow">↗</span></div>
+  </a>
+</section>
+
+<footer class="bottom">
+  <span>nelly's · 21 av. du jardin public · biarritz</span>
+  <a href="/">site live →</a>
+</footer>
+</body>
+</html>

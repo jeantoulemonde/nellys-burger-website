@@ -9,6 +9,8 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #f0e7d2; color: #181410; font-family: 'General Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); transition: background 200ms ease; }
+  .back-dash:hover { background: #0a0a0a; }
   .label { position: fixed; top: 12px; right: 12px; background: #181410; color: #f0e7d2; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 99; letter-spacing: 0.04em; }
 
   /* paper grain — deux couches pour vraie sensation riso */
@@ -58,6 +60,7 @@
 </style>
 </head>
 <body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
 <div class="label">v3 · h · risograph poster</div>
 <header>
   <div class="logo" aria-label="nelly's"></div>

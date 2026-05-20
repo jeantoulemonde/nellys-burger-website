@@ -16,6 +16,8 @@
     --yellow-deep: #d99e0a;
   }
   html, body { background: var(--bg); color: var(--ink); font-family: 'General Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); transition: background 200ms ease; }
+  .back-dash:hover { background: #0a0a0a; }
   .label { position: fixed; top: 12px; right: 12px; background: var(--ink); color: var(--yellow); padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 999; letter-spacing: 0.04em; }
 
   /* HEADER: black bar, big logo, pill nav */
@@ -285,6 +287,7 @@
 </style>
 </head>
 <body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
 <div class="label">v3 · l · dash stamp</div>
 <header>
   <div class="logo" aria-label="nelly's"></div>
