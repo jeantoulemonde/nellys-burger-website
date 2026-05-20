@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-Y2 · y2k aqua OS</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --mono: ui-monospace, 'Lucida Console', monospace; }
+  html,body {
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(255,255,255,0.4), transparent 50%),
+      radial-gradient(ellipse at 85% 80%, rgba(108,155,216,0.5), transparent 60%),
+      linear-gradient(180deg, #bcd6f3 0%, #6c9bd8 50%, #2a4d8a 100%);
+    color: #0e1f3c;
+    font-family: 'General Sans', 'Lucida Sans', sans-serif;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M16 2 L19 13 L30 13 L21 20 L24 31 L16 24 L8 31 L11 20 L2 13 L13 13 Z' fill='%23ffeb6e' stroke='%23000' stroke-width='1.2' stroke-linejoin='round'/></svg>") 16 16, auto;
+  }
+  a, button, .window-bar { cursor: inherit; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); }
+  .back-dash:hover { background: #0a0a0a; }
+  .label { position: fixed; top: 12px; right: 12px; background: rgba(255,255,255,0.85); color: #0e1f3c; padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; z-index: 99; border-radius: 6px; font-weight: 600; box-shadow: 0 2px 8px rgba(14,31,60,0.2); }
+
+  /* fenêtres aqua */
+  main { padding: 12vh 4vw 6vh; max-width: 1300px; margin: 0 auto; }
+  .windows { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 768px) { .windows { grid-template-columns: 1.1fr 0.9fr; } }
+
+  .window {
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55));
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow:
+      0 6px 22px rgba(14,31,60,0.18),
+      inset 0 1px 0 rgba(255,255,255,1);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    transform: translateY(40px); opacity: 0;
+    transition: opacity 700ms cubic-bezier(0.65,0,0.35,1), transform 700ms cubic-bezier(0.65,0,0.35,1);
+  }
+  .window.in { opacity: 1; transform: translateY(0); }
+  .window-bar {
+    padding: 0.5rem 0.8rem;
+    background: linear-gradient(180deg, #e8eef8, #b9c8e3);
+    border-bottom: 1px solid rgba(14,31,60,0.15);
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 11px; color: #0e1f3c;
+  }
+  .window-buttons { display: flex; gap: 6px; }
+  .wb { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.18); }
+  .wb-r { background: radial-gradient(circle at 30% 30%, #ffbab0, #ff4d4d); }
+  .wb-y { background: radial-gradient(circle at 30% 30%, #ffe9a8, #ffba2b); }
+  .wb-g { background: radial-gradient(circle at 30% 30%, #aef5b0, #45bb55); }
+  .window-title { margin-left: auto; font-weight: 600; letter-spacing: 0.06em; text-transform: lowercase; }
+  .window-body { padding: 1.5rem 1.6rem; }
+
+  /* fenêtre HERO — logo + slogan */
+  .w-hero { grid-column: 1 / -1; }
+  .hero-logo {
+    width: min(48vw, 320px); aspect-ratio: 480/184; margin: 1rem auto;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 45%, rgba(108,155,216,0.6) 60%, rgba(14,31,60,0.7) 100%);
+    -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    filter: drop-shadow(0 6px 14px rgba(14,31,60,0.4));
+  }
+  .hero-slogan {
+    text-align: center;
+    font-weight: 600; font-size: clamp(1.6rem, 5vw, 3rem);
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: #0e1f3c;
+    text-transform: lowercase;
+    margin-top: 0.5rem;
+  }
+  .hero-sub { text-align: center; font-family: var(--mono); margin-top: 0.6rem; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(14,31,60,0.7); }
+
+  /* aqua button */
+  .aqua-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #ffffff 0%, #c2e0ff 50%, #6097e6 100%);
+    border: 1px solid rgba(14,31,60,0.3);
+    box-shadow:
+      0 2px 6px rgba(14,31,60,0.25),
+      inset 0 1px 0 rgba(255,255,255,1),
+      inset 0 -8px 14px rgba(14,31,60,0.12);
+    font-weight: 600; color: #0e1f3c; text-decoration: none;
+    font-size: 0.875rem; text-transform: lowercase;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .aqua-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(14,31,60,0.3), inset 0 1px 0 #fff; }
+  .center-row { text-align: center; margin-top: 1.5rem; }
+
+  /* fenêtres burgers */
+  .burger-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.5rem 0; border-bottom: 1px dotted rgba(14,31,60,0.2); }
+  .burger-row:last-child { border-bottom: 0; }
+  .burger-row .nm { font-weight: 600; text-transform: lowercase; font-size: 1.05rem; }
+  .burger-row .pr { font-family: var(--mono); color: rgba(14,31,60,0.7); font-size: 0.9rem; }
+  .burger-row .tg { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(14,31,60,0.55); margin-left: 0.5rem; }
+
+  /* about window content */
+  .about p { font-size: 0.95rem; line-height: 1.5; color: rgba(14,31,60,0.85); text-transform: lowercase; margin-bottom: 0.6rem; }
+
+  /* infos système */
+  .sys-list { font-family: var(--mono); font-size: 0.8125rem; line-height: 1.8; }
+  .sys-list b { font-weight: 600; }
+
+  footer { text-align: center; padding: 4vh 6vw; font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(14,31,60,0.7); }
+  footer a { color: #0e1f3c; text-decoration: none; }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
+<div class="label">v3 · Y2 · aqua OS</div>
+
+<main>
+  <div class="windows">
+    <article class="window w-hero" data-delay="0">
+      <div class="window-bar"><div class="window-buttons"><span class="wb wb-r"></span><span class="wb wb-y"></span><span class="wb wb-g"></span></div><span class="window-title">nelly's.app — accueil</span></div>
+      <div class="window-body">
+        <div class="hero-logo" aria-label="Nelly's"></div>
+        <h1 class="hero-slogan">come get your salty fingers.</h1>
+        <p class="hero-sub">ouvert 7j/7 · midi et soir</p>
+        <div class="center-row">
+          <a class="aqua-btn" href="#menu">voir le menu</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="window" id="menu" data-delay="160">
+      <div class="window-bar"><div class="window-buttons"><span class="wb wb-r"></span><span class="wb wb-y"></span><span class="wb wb-g"></span></div><span class="window-title">menu.txt</span></div>
+      <div class="window-body">
+        <div class="burger-row"><span class="nm">cheeseburger</span><span class="pr">9 €</span></div>
+        <div class="burger-row"><span class="nm">bacon</span><span class="pr">10 €</span></div>
+        <div class="burger-row"><span class="nm">vg+<span class="tg">fruits à coque</span></span><span class="pr">9,50 €</span></div>
+        <div class="burger-row"><span class="nm">frites · gras de boeuf</span><span class="pr">4 €</span></div>
+        <div class="burger-row"><span class="nm">coleslaw</span><span class="pr">3 €</span></div>
+      </div>
+    </article>
+
+    <article class="window" data-delay="320">
+      <div class="window-bar"><div class="window-buttons"><span class="wb wb-r"></span><span class="wb wb-y"></span><span class="wb wb-g"></span></div><span class="window-title">à propos</span></div>
+      <div class="window-body about">
+        <p>premier smash burger de biarritz.</p>
+        <p>depuis 2022. trois burgers, frites maison, à emporter uniquement.</p>
+        <p>21 avenue du jardin public, 64200 biarritz.</p>
+      </div>
+    </article>
+
+    <article class="window" data-delay="480">
+      <div class="window-bar"><div class="window-buttons"><span class="wb wb-r"></span><span class="wb wb-y"></span><span class="wb wb-g"></span></div><span class="window-title">infos.sys</span></div>
+      <div class="window-body">
+        <div class="sys-list">
+          <div><b>adresse</b> 21 av. jardin public, biarritz</div>
+          <div><b>horaires</b> 7j/7 · 12h — 22h</div>
+          <div><b>service</b> continu · midi + soir</div>
+          <div><b>paiement</b> cb ou espèces</div>
+          <div><b>réservation</b> non</div>
+          <div><b>livraison</b> non</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer><a href="/v3-preview/">← retour dashboard</a> · v3-Y2 · aqua OS</footer>
+
+<script>
+  // ouverture fenêtres en cascade au scroll
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var d = parseInt(e.target.dataset.delay || '0', 10);
+          setTimeout(function () { e.target.classList.add('in'); }, d);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.window').forEach(function (w) { io.observe(w); });
+  })();
+</script>
+</body>
+</html>

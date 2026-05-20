@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-B2 · brutalist arial wallpaper</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; color: #000; font-family: Arial Black, Helvetica Black, sans-serif; min-height: 100vh; overflow-x: hidden; transition: filter 150ms steps(1); }
+  body.invert { filter: invert(1); }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.85); color: #fff; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; }
+  .back-dash:hover { background: #000; }
+  .label { position: fixed; top: 12px; right: 12px; background: #000; color: #fff; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; z-index: 99; font-weight: 900; }
+
+  /* WALLPAPER LOGO en arrière-plan */
+  .wallpaper {
+    position: fixed; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 89px, rgba(0,0,0,0.06) 89px 90px),
+      url('/media/logo.png');
+    background-size: auto, 120px 46px;
+    background-repeat: repeat;
+    opacity: 0.18;
+    z-index: 0; pointer-events: none;
+    filter: contrast(2);
+  }
+
+  /* HERO XXL ASYMMETRIC */
+  .hero {
+    position: relative; z-index: 5;
+    min-height: 100vh; padding: 12vh 4vw 6vh;
+    overflow: hidden;
+  }
+  .hero-tag {
+    display: inline-block; padding: 4px 10px;
+    background: #000; color: #fff;
+    font-family: ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 4vh;
+  }
+  .hero-title {
+    font-weight: 900; font-size: clamp(4rem, 22vw, 20rem);
+    line-height: 0.78; letter-spacing: -0.05em;
+    text-transform: lowercase;
+    display: block;
+  }
+  .hero-title .salty { color: #000; }
+  .hero-title .fingers {
+    display: inline-block;
+    margin-left: 2vw;
+    transform: rotate(-3deg);
+    background: #000; color: #fff;
+    padding: 0 0.15em;
+  }
+
+  .hero-logo {
+    position: absolute; bottom: 6vh; right: 4vw;
+    width: clamp(160px, 28vw, 360px); aspect-ratio: 480/184;
+    background-color: #000;
+    -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    z-index: 6;
+  }
+
+  /* sub : typewriter */
+  .hero-sub {
+    margin-top: 4vh; font-family: ui-monospace, monospace;
+    font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase;
+    max-width: 60ch;
+    border-left: 6px solid #000; padding-left: 1rem;
+  }
+  .hero-sub .tt { overflow: hidden; white-space: nowrap; display: inline-block; border-right: 2px solid #000; animation: type 2.4s steps(45, end) 0.5s forwards, blink 0.8s steps(1) infinite; width: 0; vertical-align: bottom; }
+  @keyframes type { to { width: 100%; } }
+  @keyframes blink { 50% { border-color: transparent; } }
+
+  /* MENU SECTION — overlap chaos contrôlé */
+  .menu {
+    position: relative; z-index: 5;
+    padding: 10vh 4vw; border-top: 8px solid #000;
+  }
+  .menu-h2 {
+    font-weight: 900; font-size: clamp(2.5rem, 9vw, 7rem);
+    letter-spacing: -0.03em; text-transform: lowercase; line-height: 0.9;
+    margin-bottom: 3vh;
+  }
+  .menu-h2 em { font-style: normal; background: #000; color: #fff; padding: 0 0.15em; }
+  .menu-rows {
+    display: grid; gap: 0;
+    grid-template-columns: 1fr;
+    border-top: 4px solid #000;
+  }
+  .menu-row {
+    display: grid; grid-template-columns: 4rem 1fr auto; gap: 1.5rem;
+    align-items: baseline;
+    padding: 1.5rem 0.5rem;
+    border-bottom: 4px solid #000;
+    transition: background 100ms steps(1), color 100ms steps(1);
+    cursor: pointer;
+  }
+  .menu-row:hover { background: #000; color: #fff; }
+  .menu-row .ix { font-family: ui-monospace, monospace; font-size: 14px; font-weight: bold; letter-spacing: 0.08em; }
+  .menu-row .nm { font-weight: 900; font-size: clamp(1.5rem, 4vw, 2.6rem); letter-spacing: -0.02em; text-transform: lowercase; line-height: 1; }
+  .menu-row .pr { font-family: ui-monospace, monospace; font-size: 18px; font-weight: bold; }
+
+  /* INFO */
+  .info {
+    position: relative; z-index: 5;
+    padding: 8vh 4vw; border-top: 8px solid #000;
+  }
+  .info-grid { display: grid; gap: 0; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .info-grid { grid-template-columns: repeat(4, 1fr); } }
+  .info-grid > div {
+    padding: 2rem 1rem; border-left: 4px solid #000;
+    font-family: ui-monospace, monospace; font-size: 14px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    transition: background 100ms steps(1), color 100ms steps(1);
+  }
+  .info-grid > div:first-child { border-left: 0; }
+  @media (max-width: 767px) { .info-grid > div { border-left: 0; border-top: 4px solid #000; } .info-grid > div:first-child { border-top: 0; } }
+  .info-grid > div:hover { background: #000; color: #fff; }
+  .info-grid b { font-weight: 900; font-family: Arial Black, sans-serif; font-size: 18px; text-transform: lowercase; letter-spacing: -0.01em; display: block; margin-bottom: 0.3rem; }
+
+  footer { padding: 3vh 4vw; border-top: 8px solid #000; text-align: center; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; position: relative; z-index: 5; background: #fff; }
+  footer a { color: #000; text-decoration: underline; font-weight: bold; }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/v3-preview/">← dashboard</a>
+<div class="label">v3 · B2 · brutalist arial</div>
+
+<div class="wallpaper" aria-hidden="true"></div>
+
+<section class="hero">
+  <span class="hero-tag">nelly's · biarritz · est. 2022</span>
+  <h1 class="hero-title">
+    <span class="salty">salty</span><br/>
+    <span class="fingers">fingers.</span>
+  </h1>
+  <p class="hero-sub"><span class="tt">come get your salty fingers. ouvert 7j/7.</span></p>
+  <div class="hero-logo" aria-label="Nelly's"></div>
+</section>
+
+<section class="menu">
+  <h2 class="menu-h2">trois <em>burgers.</em></h2>
+  <div class="menu-rows">
+    <div class="menu-row" data-invert><span class="ix">01.</span><span class="nm">cheeseburger</span><span class="pr">9 €</span></div>
+    <div class="menu-row" data-invert><span class="ix">02.</span><span class="nm">bacon</span><span class="pr">10 €</span></div>
+    <div class="menu-row" data-invert><span class="ix">03.</span><span class="nm">vg+ · fruits à coque</span><span class="pr">9,50 €</span></div>
+  </div>
+</section>
+
+<section class="info">
+  <div class="info-grid">
+    <div data-invert><b>frites</b>gras de boeuf · 4 €</div>
+    <div data-invert><b>adresse</b>21 av. jardin public</div>
+    <div data-invert><b>horaires</b>7j/7 · 12h-22h</div>
+    <div data-invert><b>commande</b>comptoir · à emporter</div>
+  </div>
+</section>
+
+<footer><a href="/v3-preview/">← retour dashboard</a> · v3-B2 · brutalist arial</footer>
+
+<script>
+  // hover sur n'importe quel data-invert = inverse toute la page
+  (function () {
+    var b = document.body;
+    document.querySelectorAll('[data-invert]').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { b.classList.add('invert'); });
+      el.addEventListener('mouseleave', function () { b.classList.remove('invert'); });
+    });
+  })();
+</script>
+</body>
+</html>
