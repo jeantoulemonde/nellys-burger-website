@@ -80,7 +80,10 @@
     }
     .row { display: grid; gap: 1rem; grid-template-columns: 1fr; }
     @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1024px) { .row.cols-3 { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1024px) {
+      .row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+      .row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    }
 
     .card {
       display: block; padding: 2rem 1.6rem;
@@ -137,24 +140,30 @@
 
   <section class="block">
     <h2>versions</h2>
-    <div class="row cols-3">
+    <div class="row cols-4">
       <a class="card" href="/v1/">
         <p class="tag live">version en prod</p>
         <h3>v1 · seo optimisé</h3>
         <p>site complet bilingue, json-ld restaurant, sitemap, page menu, contact, pages seo, version de production.</p>
         <p class="arrow">/v1/ →</p>
       </a>
+      <a class="card" href="/v5/">
+        <p class="tag">variante</p>
+        <h3>v5 · y2k dark</h3>
+        <p>site complet multi-pages, globe wireframe qui tourne, frutiger aero, fond noir d'espace, étoiles scintillantes. noindex.</p>
+        <p class="arrow">/v5/ →</p>
+      </a>
+      <a class="card" href="/v4/">
+        <p class="tag">variante</p>
+        <h3>v4 · cyber-sigilism</h3>
+        <p>site complet multi-pages, noir et blanc strict, sparkles animés, micro-interaction souris. noindex.</p>
+        <p class="arrow">/v4/ →</p>
+      </a>
       <a class="card" href="/v2">
         <p class="tag">variante</p>
         <h3>v2 · pixel synthwave</h3>
         <p>variante visuelle, copie identique, ambiance néon ambré, scanlines crt, vt323. noindex.</p>
         <p class="arrow">/v2 →</p>
-      </a>
-      <a class="card" href="/v4/">
-        <p class="tag">variante</p>
-        <h3>v4 · cyber-sigilism</h3>
-        <p>site complet multi-pages, noir et blanc strict, sparkles animés, constellations par page, static html. noindex.</p>
-        <p class="arrow">/v4/ →</p>
       </a>
     </div>
   </section>

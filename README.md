@@ -29,7 +29,8 @@ site vitrine du restaurant **Nelly's** (smash burger à emporter, 21 avenue du j
 | `/`            | astro           | dashboard d'accueil (meta, noindex), liste les versions          |
 | `/v1/`         | astro + i18n    | **version prod** seo optimisée, bilingue fr/en, json-ld complet  |
 | `/v2`          | astro           | variante visuelle pixel synthwave, copie identique, noindex      |
-| `/v4/`         | static html     | variante cyber-sigilism, multi-pages, constellations, noindex    |
+| `/v4/`         | static html     | variante cyber-sigilism, multi-pages, sparkles + souris, noindex |
+| `/v5/`         | static html     | variante y2k dark, multi-pages, globe wireframe + frutiger aero  |
 | `/previews/`   | static html     | galerie d'explorations courtes (typo, layouts, motion), noindex  |
 
 301 redirects depuis les anciennes urls v1 racine (`/menu`, `/contact`,
@@ -64,7 +65,8 @@ public/
   media/                 # logo svg, photos partagées, hero.mp4
     nelly_s.svg          # logo vectoriel canonique (mask-image partout)
     photos/              # photos partagées entre v1 et v4
-  v4/                    # site /v4/ static html + assets propres
+  v4/                    # site /v4/ static html (cyber-sigilism)
+  v5/                    # site /v5/ static html (y2k dark / frutiger aero)
   previews/              # galerie static html des explorations
   robots.txt
 vercel.json              # cleanUrls + 301 redirects seo

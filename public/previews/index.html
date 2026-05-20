@@ -309,6 +309,51 @@
   .card.card-v4 { border: 1.5px solid #0a0a0a; }
   .card.card-v4 .card-id { color: #0a0a0a; font-weight: 700; }
 
+  /* card v5 — y2k dark site */
+  .card.card-v5 { border: 1.5px solid #2a4d8a; }
+  .card.card-v5 .card-id { color: #2a4d8a; font-weight: 700; }
+  .thumb-v5 {
+    background: radial-gradient(ellipse at 50% -20%, rgba(108,184,255,0.18) 0%, transparent 55%), #050814;
+    color: #f0f6ff; position: relative; overflow: hidden;
+    padding: 0.8rem; align-items: stretch; flex-direction: column; justify-content: space-between;
+  }
+  .thumb-v5 .globe-mini {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 64%; aspect-ratio: 1; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.55);
+    box-shadow: 0 0 22px rgba(108,184,255,0.25), 0 0 4px rgba(255,255,255,0.3) inset;
+  }
+  .thumb-v5 .globe-mini::before, .thumb-v5 .globe-mini::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .thumb-v5 .globe-mini::before { transform: scaleY(0.28); }
+  .thumb-v5 .globe-mini::after { transform: scaleX(0.28); }
+  .thumb-v5 .pin-mini {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 30%; height: 11%;
+    background: #fff;
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    filter: drop-shadow(0 0 6px rgba(143,217,255,0.8));
+    z-index: 3;
+  }
+  .thumb-v5 .star-mini {
+    position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%;
+    box-shadow: 0 0 6px #fff, 0 0 12px rgba(143,217,255,0.5);
+  }
+  .thumb-v5 .star-mini.s1 { top: 18%; left: 18%; }
+  .thumb-v5 .star-mini.s2 { top: 14%; right: 20%; }
+  .thumb-v5 .star-mini.s3 { bottom: 20%; left: 24%; }
+  .thumb-v5 .star-mini.s4 { bottom: 24%; right: 18%; }
+  .thumb-v5 .badge {
+    position: relative; z-index: 4;
+    font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(240,246,255,0.55); text-align: center;
+  }
+
   /* b2 — brutalist arial */
   .thumb-b2 { background: #fff; padding: 0.8rem; flex-direction: column; align-items: stretch; justify-content: center; position: relative; overflow: hidden; }
   .thumb-b2::before { content: ''; position: absolute; inset: 0; background-image: url('/media/nelly_s.svg'); background-size: 70px 27px; background-repeat: repeat; opacity: 0.15; filter: contrast(2); }
@@ -352,6 +397,19 @@
 </section>
 
 <section class="grid" aria-label="liste des previews">
+  <a class="card card-v5" href="/v5/" target="_blank" rel="noopener">
+    <div class="card-thumb">
+      <div class="thumb thumb-v5">
+        <span class="star-mini s1"></span><span class="star-mini s2"></span>
+        <span class="star-mini s3"></span><span class="star-mini s4"></span>
+        <div class="globe-mini"></div>
+        <div class="pin-mini" aria-hidden="true"></div>
+        <span class="badge">site · multi-pages</span>
+        <span class="badge" style="margin-top: auto;">v5 · y2k dark</span>
+      </div>
+    </div>
+    <div class="card-foot"><span class="card-id">v5</span><span class="card-title">site complet (y2k dark)</span><span class="card-arrow">↗</span></div>
+  </a>
   <a class="card card-v4" href="/v4/" target="_blank" rel="noopener">
     <div class="card-thumb">
       <div class="thumb thumb-v4">
