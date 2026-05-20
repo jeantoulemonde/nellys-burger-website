@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-C2 · cyber tribal sigil</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #0a0a0a; --bg: #ffffff; --mono: ui-monospace, monospace; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'General Sans', system-ui, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); }
+  .back-dash:hover { background: var(--ink); }
+  .label { position: fixed; top: 12px; right: 12px; background: var(--ink); color: var(--bg); padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; z-index: 99; }
+
+  /* hero — star géante + logo center */
+  .stage {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 12vh 6vw 8vh; text-align: center;
+  }
+  .star-wrap { position: relative; width: min(80vw, 620px); aspect-ratio: 1; margin: 0 auto; }
+  .star-svg { width: 100%; height: 100%; }
+  .star-svg path { fill: none; stroke: var(--ink); stroke-width: 0.9; stroke-linecap: round; stroke-linejoin: round; }
+  .logo-center {
+    position: absolute; top: 50%; left: 50%;
+    width: 38%; aspect-ratio: 480/184;
+    transform: translate(-50%, -50%);
+    background-color: var(--ink);
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    z-index: 3;
+  }
+  /* tribal lines anim */
+  .star-svg path { stroke-dasharray: 800; stroke-dashoffset: 800; animation: drawStar 2.8s ease-out 0.3s forwards; }
+  @keyframes drawStar { to { stroke-dashoffset: 0; } }
+
+  .eyebrow {
+    position: absolute; top: 6vh; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.32em;
+    text-transform: uppercase; color: rgba(10,10,10,0.6);
+  }
+  .slogan {
+    margin-top: 6vh; font-weight: 800; font-size: clamp(2rem, 6vw, 4.5rem);
+    line-height: 0.98; letter-spacing: -0.035em; text-transform: lowercase;
+  }
+  .slogan em { font-family: 'General Sans', serif; font-style: italic; font-weight: 400; }
+  .sub { margin-top: 2vh; font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(10,10,10,0.6); }
+
+  /* sections */
+  section.tribal { padding: 14vh 6vw; max-width: 1100px; margin: 0 auto; position: relative; }
+  .ornament {
+    width: 100%; height: 60px; margin: 4vh auto; opacity: 0; transition: opacity 1s ease;
+  }
+  .ornament.in { opacity: 1; }
+  .ornament path { stroke: var(--ink); stroke-width: 0.6; fill: none; stroke-dasharray: 800; stroke-dashoffset: 800; transition: stroke-dashoffset 2s ease-out; }
+  .ornament.in path { stroke-dashoffset: 0; }
+  section.tribal h2 { font-weight: 800; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.03em; text-transform: lowercase; line-height: 1; text-align: center; }
+  section.tribal .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(10,10,10,0.5); margin-bottom: 1.5rem; text-align: center; }
+  section.tribal h2 em { font-style: italic; font-weight: 400; }
+  .grid3 { margin-top: 4vh; display: grid; gap: 0; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .grid3 { grid-template-columns: repeat(3, 1fr); } }
+  .b-row {
+    padding: 1.5rem 0; border-top: 1px solid rgba(10,10,10,0.2);
+    text-align: center;
+  }
+  .b-row:last-child { border-bottom: 1px solid rgba(10,10,10,0.2); }
+  @media (min-width: 768px) { .b-row { border-top: 1px solid rgba(10,10,10,0.2); border-bottom: 0; } .b-row:last-child { border-bottom: 0; } }
+  .b-row .ix { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(10,10,10,0.5); }
+  .b-row .nm { font-size: 1.4rem; font-weight: 700; margin-top: 0.4rem; text-transform: lowercase; letter-spacing: -0.02em; }
+  .b-row .pr { font-family: var(--mono); margin-top: 0.4rem; color: rgba(10,10,10,0.7); font-size: 0.95rem; }
+  .meta { margin-top: 6vh; padding-top: 2rem; border-top: 1px solid rgba(10,10,10,0.18); display: grid; gap: 1rem; grid-template-columns: 1fr; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(10,10,10,0.6); text-align: left; }
+  @media (min-width: 768px) { .meta { grid-template-columns: repeat(4, 1fr); } }
+  .meta b { color: var(--ink); font-weight: 500; }
+  footer { padding: 4vh 6vw; text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(10,10,10,0.6); }
+  footer a { color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/previews/">← dashboard</a>
+<div class="label">v3 · C2 · tribal sigil</div>
+
+<section class="stage">
+  <p class="eyebrow">nelly's · sigil 01</p>
+  <div class="star-wrap">
+    <svg class="star-svg" viewBox="0 0 600 600" aria-hidden="true">
+      <!-- 8-pointed cyber star -->
+      <path d="M300,40 L320,260 L540,200 L370,340 L560,440 L340,360 L380,580 L300,400 L220,580 L260,360 L40,440 L230,340 L60,200 L280,260 Z" />
+      <!-- inner ornament -->
+      <circle cx="300" cy="300" r="180" fill="none" stroke="#0a0a0a" stroke-width="0.4" stroke-dasharray="4 4" />
+      <circle cx="300" cy="300" r="240" fill="none" stroke="#0a0a0a" stroke-width="0.4" stroke-dasharray="2 6" />
+      <!-- spikes around -->
+      <path d="M300,80 L300,40" /><path d="M300,560 L300,520" />
+      <path d="M40,300 L80,300" /><path d="M520,300 L560,300" />
+      <!-- thin arcs -->
+      <path d="M150,150 Q300,80 450,150" />
+      <path d="M150,450 Q300,520 450,450" />
+    </svg>
+    <div class="logo-center" aria-label="Nelly's"></div>
+  </div>
+  <h1 class="slogan">come get your <em>salty fingers.</em></h1>
+  <p class="sub">ouvert 7j/7 · midi et soir</p>
+</section>
+
+<section class="tribal">
+  <svg class="ornament" viewBox="0 0 1100 60" aria-hidden="true" preserveAspectRatio="none">
+    <path d="M0,30 L420,30 M440,30 L460,10 L480,30 L500,50 L520,30 L660,30 L680,10 L700,30 L720,50 L740,30 L1100,30" />
+  </svg>
+  <p class="num">/ trinity · 03</p>
+  <h2>trois <em>recettes.</em></h2>
+  <div class="grid3">
+    <div class="b-row"><span class="ix">01</span><div class="nm">cheeseburger</div><div class="pr">9 €</div></div>
+    <div class="b-row"><span class="ix">02</span><div class="nm">bacon</div><div class="pr">10 €</div></div>
+    <div class="b-row"><span class="ix">03</span><div class="nm">vg+ · fruits à coque</div><div class="pr">9,50 €</div></div>
+  </div>
+  <svg class="ornament" viewBox="0 0 1100 60" aria-hidden="true" preserveAspectRatio="none">
+    <path d="M0,30 L500,30 L520,10 L550,30 L580,50 L600,30 L1100,30" />
+  </svg>
+  <div class="meta">
+    <span><b>frites</b><br />gras de boeuf · 4 €</span>
+    <span><b>adresse</b><br />21 av. jardin public</span>
+    <span><b>horaires</b><br />7j/7 · 12h-22h</span>
+    <span><b>commande</b><br />comptoir · à emporter</span>
+  </div>
+</section>
+
+<footer><a href="/previews/">← retour dashboard</a> · v3-C2 · tribal sigil</footer>
+
+<script>
+  // ornements qui se dessinent au scroll
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.ornament').forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>

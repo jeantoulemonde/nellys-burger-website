@@ -1,4 +1,20 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/menu", "destination": "/v1/menu", "permanent": true },
+    { "source": "/contact", "destination": "/v1/contact", "permanent": true },
+    { "source": "/smash-burger-biarritz", "destination": "/v1/smash-burger-biarritz", "permanent": true },
+    { "source": "/burger-a-emporter-biarritz", "destination": "/v1/burger-a-emporter-biarritz", "permanent": true },
+    { "source": "/notre-histoire", "destination": "/v1/notre-histoire", "permanent": true },
+    { "source": "/biarritz/jardin-public", "destination": "/v1/biarritz/jardin-public", "permanent": true },
+    { "source": "/nos-valeurs", "destination": "/v1/nos-valeurs", "permanent": true },
+    { "source": "/en", "destination": "/v1/en", "permanent": true },
+    { "source": "/en/menu", "destination": "/v1/en/menu", "permanent": true },
+    { "source": "/en/contact", "destination": "/v1/en/contact", "permanent": true },
+    { "source": "/en/smash-burger-biarritz", "destination": "/v1/en/smash-burger-biarritz", "permanent": true },
+    { "source": "/en/best-burger-biarritz", "destination": "/v1/en/best-burger-biarritz", "permanent": true },
+    { "source": "/v3-preview", "destination": "/previews", "permanent": true },
+    { "source": "/v3-preview/:path*", "destination": "/previews/:path*", "permanent": true }
+  ]
 }

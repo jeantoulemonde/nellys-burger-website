@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-Q · manifeste mono</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap"
+/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0a0a0a;
+    --bg: #fafafa;
+    --line: rgba(10, 10, 10, 0.12);
+    --muted: #5a5a57;
+    --dim: #807a6e;
+    --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'General Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body { cursor: none; }
+  a, button, [data-link] { cursor: none; }
+
+  /* preview label */
+  .label {
+    position: fixed; top: 12px; right: 12px;
+    background: var(--ink); color: var(--bg);
+    padding: 6px 10px;
+    font-size: 11px; font-family: ui-monospace, monospace;
+    letter-spacing: 0.04em; z-index: 99;
+  }
+  .back {
+    position: fixed; top: 12px; left: 12px;
+    color: var(--ink); text-decoration: none;
+    padding: 6px 10px; font-size: 11px;
+    font-family: ui-monospace, monospace; letter-spacing: 0.04em;
+    border: 1px solid var(--line); background: var(--bg);
+    z-index: 99;
+  }
+  .back:hover { background: var(--ink); color: var(--bg); }
+
+  /* custom cursor */
+  .cursor {
+    position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+    background: var(--ink); border-radius: 50%; pointer-events: none;
+    transform: translate(-50%, -50%); z-index: 1000;
+    transition: width 200ms var(--ease), height 200ms var(--ease),
+                border-radius 200ms var(--ease), background 200ms var(--ease);
+    mix-blend-mode: difference; background: #fff;
+  }
+  .cursor[data-state='link'] {
+    width: 56px; height: 24px; border-radius: 2px;
+  }
+  @media (hover: none) { .cursor { display: none; } body, a { cursor: auto; } }
+
+  /* sticky stage : logo plein écran qui se contracte au scroll */
+  .stage {
+    position: sticky; top: 0;
+    height: 100vh; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 50; background: var(--bg);
+  }
+  .stage-mask { height: 200vh; }
+
+  .logo-wrap {
+    position: relative; width: min(72vw, 980px);
+    aspect-ratio: 480 / 184;
+    transform-origin: top left;
+    will-change: transform, width;
+  }
+  .logo {
+    position: absolute; inset: 0;
+    background-color: var(--ink);
+    -webkit-mask-image: url('/media/nelly_s.svg');
+            mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: left center; mask-position: left center;
+    clip-path: inset(0 100% 0 0);
+    animation: wipe 1.6s var(--ease) 0.2s forwards;
+  }
+  @keyframes wipe {
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  /* tagline sous le logo dans le hero */
+  .stage-meta {
+    position: absolute; bottom: 28px;
+    left: 50%; transform: translateX(-50%);
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--dim);
+    opacity: 0; animation: fade 800ms var(--ease) 1.6s forwards;
+  }
+  @keyframes fade { to { opacity: 1; } }
+
+  /* indicateur scroll */
+  .scroll-hint {
+    position: absolute; bottom: 28px;
+    right: 32px; font-size: 11px; font-family: ui-monospace, monospace;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+    opacity: 0; animation: fade 800ms var(--ease) 2s forwards;
+  }
+  .scroll-hint::after {
+    content: '↓'; display: inline-block; margin-left: 6px;
+    animation: bob 1.6s ease-in-out infinite;
+  }
+  @keyframes bob { 50% { transform: translateY(4px); } }
+
+  /* header logo qui apparaît après contraction */
+  .header-mark {
+    position: fixed; top: 18px; left: 32px;
+    width: 90px; height: 34px;
+    background-color: var(--ink);
+    -webkit-mask-image: url('/media/nelly_s.svg');
+            mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    opacity: 0; pointer-events: none;
+    transition: opacity 320ms var(--ease);
+    z-index: 60;
+  }
+  .header-mark[data-show='true'] { opacity: 1; pointer-events: auto; }
+
+  /* chapitres */
+  .chapter {
+    min-height: 100vh;
+    padding: 14vh 6vw 12vh;
+    position: relative; z-index: 51;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .chapter-num {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 2vh;
+  }
+  .chapter-num b { color: var(--ink); font-weight: 600; }
+  .chapter h2 {
+    font-weight: 800; font-size: clamp(3rem, 12vw, 11rem);
+    line-height: 0.92; letter-spacing: -0.045em;
+    text-transform: lowercase; max-width: 14ch;
+  }
+  .chapter .lead {
+    margin-top: 4vh;
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    line-height: 1.5; max-width: 48ch; color: var(--muted);
+    text-transform: lowercase; font-weight: 500;
+  }
+
+  /* chapter 01 : les trois */
+  .three { display: flex; flex-wrap: wrap; gap: 0.4em 0.6em; align-items: baseline; margin-top: 4vh; }
+  .three li {
+    list-style: none;
+    font-weight: 800; font-size: clamp(2.5rem, 8.5vw, 7rem);
+    line-height: 0.95; letter-spacing: -0.035em;
+    text-transform: lowercase;
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+    color: var(--ink);
+  }
+  .three li.in { opacity: 1; transform: translateY(0); }
+  .three li[data-tag] { position: relative; }
+  .three li[data-tag]::after {
+    content: attr(data-tag);
+    position: absolute; bottom: 0.65em; right: -0.1em;
+    transform: translateX(100%);
+    font-family: ui-monospace, monospace;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 400; color: var(--muted);
+    white-space: nowrap; padding-left: 0.5em;
+  }
+  .three .price {
+    font-size: 0.35em; vertical-align: baseline;
+    margin-left: 0.2em; font-weight: 500; color: var(--muted);
+    font-family: ui-monospace, monospace; letter-spacing: 0;
+  }
+
+  /* chapter 02 : frites */
+  .fries-row {
+    display: grid; grid-template-columns: 1fr; gap: 4vh;
+    margin-top: 4vh; align-items: end;
+  }
+  @media (min-width: 768px) {
+    .fries-row { grid-template-columns: 1.4fr 1fr; }
+  }
+  .fries-row aside {
+    border-top: 1px solid var(--line); padding-top: 1rem;
+    font-family: ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--dim);
+    line-height: 1.6;
+  }
+  .fries-row aside b { color: var(--ink); font-weight: 600; }
+
+  /* chapter 03 : ici */
+  .ici-grid {
+    display: grid; grid-template-columns: 1fr; gap: 6vh;
+    margin-top: 4vh;
+  }
+  @media (min-width: 768px) {
+    .ici-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .ici-block h3 {
+    font-family: ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+    margin-bottom: 1rem; font-weight: 500;
+  }
+  .ici-block address, .ici-block ul {
+    font-style: normal; font-size: 1.0625rem; line-height: 1.55;
+    font-weight: 500; text-transform: lowercase;
+    list-style: none;
+  }
+  .ici-block ul li { display: flex; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px solid var(--line); }
+  .ici-block ul li:last-child { border-bottom: 0; }
+  .ici-block ul span:last-child { font-family: ui-monospace, monospace; color: var(--muted); }
+
+  /* chapter 04 : salty — inversion blanc sur noir */
+  .salty {
+    background: var(--ink); color: var(--bg); border-top: 0;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 14vh 6vw;
+  }
+  .salty .chapter-num, .salty .chapter-num b { color: rgba(250, 250, 250, 0.6); }
+  .salty .chapter-num b { color: var(--bg); }
+  .salty h2 {
+    font-weight: 800; font-size: clamp(3rem, 14vw, 12rem);
+    line-height: 0.9; letter-spacing: -0.045em;
+    text-transform: lowercase; color: var(--bg);
+  }
+  .salty h2 em {
+    font-style: normal; display: block; opacity: 0.55;
+  }
+  .salty .lead { color: rgba(250, 250, 250, 0.7); }
+
+  /* footer */
+  footer {
+    background: var(--ink); color: var(--bg);
+    padding: 6vh 6vw 4vh; position: relative; z-index: 51;
+  }
+  footer .row {
+    display: flex; flex-wrap: wrap; justify-content: space-between;
+    gap: 2rem; font-family: ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(250, 250, 250, 0.55);
+  }
+  footer a { color: var(--bg); text-decoration: none; }
+  footer a:hover { opacity: 0.7; }
+
+  /* reveal au scroll : éléments avec .reveal */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 800ms var(--ease), transform 800ms var(--ease); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo, .stage-meta, .scroll-hint, .reveal, .three li {
+      animation: none !important; transition: none !important;
+      opacity: 1 !important; transform: none !important;
+      clip-path: inset(0 0 0 0) !important;
+    }
+    .cursor { display: none; }
+    body, a { cursor: auto !important; }
+  }
+</style>
+</head>
+<body>
+<div class="label">v3-Q · manifeste mono</div>
+<a href="/previews/" class="back" data-link>← dashboard</a>
+
+<!-- custom cursor -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- header logo (apparaît après contraction) -->
+<div class="header-mark" id="headerMark" aria-hidden="true"></div>
+
+<!-- HERO STAGE : logo plein écran pinned + scroll-driven scale -->
+<section class="stage-mask">
+  <div class="stage">
+    <div class="logo-wrap" id="logoWrap">
+      <div class="logo" aria-label="Nelly's"></div>
+    </div>
+    <p class="stage-meta">come get your salty fingers.</p>
+    <p class="scroll-hint">scroll</p>
+  </div>
+</section>
+
+<!-- CHAPITRE 01 : les trois burgers -->
+<section class="chapter" id="ch1">
+  <p class="chapter-num"><b>01</b> &nbsp;/&nbsp; les trois</p>
+  <h2 class="reveal">trois burgers, point.</h2>
+  <ul class="three" aria-label="liste des burgers">
+    <li>cheeseburger<span class="price">9 €</span></li>
+    <li>bacon<span class="price">10 €</span></li>
+    <li data-tag="fruits à coque">vg+<span class="price">9,50 €</span></li>
+  </ul>
+</section>
+
+<!-- CHAPITRE 02 : les frites -->
+<section class="chapter" id="ch2">
+  <p class="chapter-num"><b>02</b> &nbsp;/&nbsp; le côté</p>
+  <h2 class="reveal">frites au gras<br />de bœuf.</h2>
+  <div class="fries-row">
+    <p class="lead reveal">
+      pommes de terre fraîches, cuisson à la graisse de bœuf, fleur de sel. friteuse végétale sur demande.
+    </p>
+    <aside class="reveal">
+      <b>4 €</b><br />
+      coleslaw <b>3 €</b>
+    </aside>
+  </div>
+</section>
+
+<!-- CHAPITRE 03 : ici, horaires -->
+<section class="chapter" id="ch3">
+  <p class="chapter-num"><b>03</b> &nbsp;/&nbsp; ici</p>
+  <h2 class="reveal">au jardin public,<br />à biarritz.</h2>
+  <div class="ici-grid">
+    <div class="ici-block reveal">
+      <h3>adresse</h3>
+      <address>
+        nelly's<br />
+        21 avenue du jardin public<br />
+        64200 biarritz
+      </address>
+    </div>
+    <div class="ici-block reveal">
+      <h3>horaires</h3>
+      <ul>
+        <li><span>lun → dim</span><span>12h — 22h</span></li>
+        <li><span>service</span><span>continu</span></li>
+        <li><span>paiement</span><span>cb ou espèces</span></li>
+        <li><span>réservation</span><span>non</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPITRE 04 : salty (inversion) -->
+<section class="chapter salty" id="ch4">
+  <p class="chapter-num"><b>04</b> &nbsp;/&nbsp; salty</p>
+  <h2 class="reveal">
+    come get your
+    <em>salty fingers.</em>
+  </h2>
+  <p class="lead reveal">ouvert 7j/7, midi et soir. à emporter uniquement.</p>
+</section>
+
+<footer>
+  <div class="row">
+    <a href="/previews/" data-link>← retour dashboard</a>
+    <span>v3-Q · manifeste mono · 2026</span>
+  </div>
+</footer>
+
+<script>
+  // custom cursor
+  (function () {
+    var cursor = document.getElementById('cursor');
+    var x = 0, y = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', function (e) { x = e.clientX; y = e.clientY; });
+    function tick() {
+      cx += (x - cx) * 0.22; cy += (y - cy) * 0.22;
+      cursor.style.transform = 'translate(' + (cx - 6) + 'px,' + (cy - 6) + 'px)';
+      requestAnimationFrame(tick);
+    }
+    tick();
+    document.querySelectorAll('[data-link], a, button').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { cursor.setAttribute('data-state', 'link'); });
+      el.addEventListener('mouseleave', function () { cursor.removeAttribute('data-state'); });
+    });
+  })();
+
+  // scroll-driven logo contraction (sticky stage)
+  (function () {
+    var logoWrap = document.getElementById('logoWrap');
+    var headerMark = document.getElementById('headerMark');
+    var stageMask = document.querySelector('.stage-mask');
+    function update() {
+      var rect = stageMask.getBoundingClientRect();
+      var range = stageMask.offsetHeight - window.innerHeight;
+      var progress = Math.min(Math.max(-rect.top / range, 0), 1);
+      // scale from 1 -> 0.12 (logo becomes a corner mark)
+      var scale = 1 - progress * 0.88;
+      // translate toward top-left
+      var tx = -progress * 32; // toward left
+      var ty = -progress * 32; // toward top
+      logoWrap.style.transform = 'translate(' + tx + 'vw,' + ty + 'vh) scale(' + scale + ')';
+      headerMark.setAttribute('data-show', progress > 0.92 ? 'true' : 'false');
+    }
+    document.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // reveal au scroll
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    // stagger sur .three li
+    var threeIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var items = e.target.querySelectorAll('li');
+          items.forEach(function (li, i) { setTimeout(function () { li.classList.add('in'); }, 150 * i); });
+          threeIo.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.three').forEach(function (el) { threeIo.observe(el); });
+  })();
+</script>
+</body>
+</html>

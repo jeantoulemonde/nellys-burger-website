@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-C1 · cyber sparkles comet</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: #0a0a0a; --bg: #fafafa; --mono: ui-monospace, monospace; }
+  html, body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'General Sans', system-ui, sans-serif;
+    min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); }
+  .back-dash:hover { background: var(--ink); }
+  .label { position: fixed; top: 12px; right: 12px; background: var(--ink); color: var(--bg); padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; z-index: 99; }
+
+  /* sparkles layer */
+  .sparkles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  .sp {
+    position: absolute; width: 12px; height: 12px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: spIn 800ms cubic-bezier(0.65,0,0.35,1) forwards;
+  }
+  .sp::before, .sp::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    background: var(--ink); transform: translate(-50%, -50%);
+  }
+  .sp::before { width: 1px; height: 100%; }
+  .sp::after { width: 100%; height: 1px; }
+  @keyframes spIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) rotate(-45deg) scale(0); }
+    60% { opacity: 1; transform: translate(-50%, -50%) rotate(0) scale(1.2); }
+    100% { opacity: 0.7; transform: translate(-50%, -50%) rotate(0) scale(1); }
+  }
+  .sp.twinkle { animation: spTwinkle 3s ease-in-out infinite; }
+  @keyframes spTwinkle { 0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) rotate(0) scale(0.8); } 50% { opacity: 1; transform: translate(-50%, -50%) rotate(45deg) scale(1.3); } }
+
+  /* comet */
+  .comet {
+    position: fixed; top: -10%; left: -10%;
+    width: 220px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ink), transparent);
+    transform-origin: 100% 50%;
+    transform: rotate(35deg);
+    z-index: 2; pointer-events: none;
+    animation: cometRun 12s linear infinite;
+  }
+  .comet::after {
+    content: ''; position: absolute; right: 0; top: 50%;
+    width: 5px; height: 5px; background: var(--ink); border-radius: 50%;
+    transform: translate(50%, -50%);
+    box-shadow: 0 0 10px var(--ink);
+  }
+  @keyframes cometRun {
+    0% { top: -10%; left: -10%; opacity: 0; }
+    5% { opacity: 1; }
+    50% { top: 60%; left: 110%; opacity: 0.4; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* hero */
+  .stage {
+    position: relative; min-height: 100vh; padding: 14vh 6vw 8vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; z-index: 5;
+  }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(10,10,10,0.55); margin-bottom: 3vh; }
+
+  .logo-stage {
+    position: relative; width: min(72vw, 540px); aspect-ratio: 480/184;
+    margin: 0 auto 2vh;
+  }
+  .logo-stage .logo {
+    position: absolute; inset: 0; background-color: var(--ink);
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    z-index: 2;
+  }
+  /* sigil lines émanant du logo */
+  .logo-stage svg.sigils {
+    position: absolute; inset: -60%; width: 220%; height: 220%; z-index: 1;
+    pointer-events: none;
+  }
+  .logo-stage svg.sigils path {
+    stroke: var(--ink); stroke-width: 0.5; fill: none; opacity: 0.6;
+    stroke-dasharray: 200; stroke-dashoffset: 200;
+    animation: sigilDraw 2.4s ease-out 0.4s forwards;
+  }
+  @keyframes sigilDraw { to { stroke-dashoffset: 0; } }
+
+  .slogan {
+    margin-top: 4vh;
+    font-weight: 800; font-size: clamp(2.4rem, 8vw, 6rem);
+    line-height: 0.95; letter-spacing: -0.04em; text-transform: lowercase;
+  }
+  .slogan em { font-style: italic; font-weight: 400; }
+  .sub { margin-top: 2vh; font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(10,10,10,0.6); }
+
+  /* sections */
+  section.content { padding: 14vh 6vw; max-width: 1100px; margin: 0 auto; position: relative; z-index: 5; text-align: center; }
+  section.content h2 { font-weight: 800; font-size: clamp(2rem, 5.5vw, 4rem); letter-spacing: -0.03em; text-transform: lowercase; line-height: 1; }
+  section.content .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(10,10,10,0.5); margin-bottom: 2rem; }
+  .grid3 { margin-top: 5vh; display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .grid3 { grid-template-columns: repeat(3, 1fr); } }
+  .b-card {
+    padding: 1.5rem; border: 1px solid rgba(10,10,10,0.15);
+    text-align: left; position: relative; cursor: pointer;
+    transition: border-color 200ms ease;
+  }
+  .b-card:hover { border-color: var(--ink); }
+  .b-card .ix { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(10,10,10,0.5); }
+  .b-card .nm { font-size: 1.4rem; font-weight: 700; margin-top: 0.5rem; text-transform: lowercase; letter-spacing: -0.02em; }
+  .b-card .pr { font-family: var(--mono); margin-top: 0.4rem; color: rgba(10,10,10,0.7); font-size: 0.95rem; }
+
+  .meta { margin-top: 5vh; padding-top: 2rem; border-top: 1px solid rgba(10,10,10,0.15); display: grid; gap: 1rem; grid-template-columns: 1fr; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(10,10,10,0.6); text-align: left; }
+  @media (min-width: 768px) { .meta { grid-template-columns: repeat(4, 1fr); } }
+  .meta b { color: var(--ink); font-weight: 500; }
+  footer { padding: 4vh 6vw; text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(10,10,10,0.6); }
+  footer a { color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/previews/">← dashboard</a>
+<div class="label">v3 · C1 · sparkles comet</div>
+
+<div class="sparkles" id="sparkles" aria-hidden="true"></div>
+<div class="comet" aria-hidden="true"></div>
+
+<section class="stage">
+  <p class="eyebrow">nelly's · biarritz · constellation 64200</p>
+  <div class="logo-stage">
+    <svg class="sigils" viewBox="0 0 600 600" aria-hidden="true">
+      <path d="M300,300 L80,40" /><path d="M300,300 L520,60" />
+      <path d="M300,300 L40,280" /><path d="M300,300 L560,300" />
+      <path d="M300,300 L60,540" /><path d="M300,300 L540,560" />
+      <path d="M300,300 L180,80" /><path d="M300,300 L420,80" />
+      <path d="M300,300 L180,520" /><path d="M300,300 L420,520" />
+    </svg>
+    <div class="logo" aria-label="Nelly's"></div>
+  </div>
+  <h1 class="slogan">come get your <em>salty fingers.</em></h1>
+  <p class="sub">ouvert 7j/7 · midi et soir</p>
+</section>
+
+<section class="content">
+  <p class="num">/ menu · 03 items</p>
+  <h2>trois burgers.</h2>
+  <div class="grid3">
+    <div class="b-card" data-burger><span class="ix">01</span><div class="nm">cheeseburger</div><div class="pr">9 €</div></div>
+    <div class="b-card" data-burger><span class="ix">02</span><div class="nm">bacon</div><div class="pr">10 €</div></div>
+    <div class="b-card" data-burger><span class="ix">03</span><div class="nm">vg+ · fruits à coque</div><div class="pr">9,50 €</div></div>
+  </div>
+  <div class="meta">
+    <span><b>frites</b><br />gras de boeuf · 4 €</span>
+    <span><b>adresse</b><br />21 av. jardin public</span>
+    <span><b>horaires</b><br />7j/7 · 12h-22h</span>
+    <span><b>commande</b><br />comptoir · à emporter</span>
+  </div>
+</section>
+
+<footer><a href="/previews/">← retour dashboard</a> · v3-C1 · sparkles comet</footer>
+
+<script>
+  // sparkles s'allument un par un
+  (function () {
+    var sky = document.getElementById('sparkles');
+    function spawn(x, y, twinkle, delay) {
+      var s = document.createElement('div');
+      s.className = 'sp' + (twinkle ? ' twinkle' : '');
+      s.style.left = x + '%'; s.style.top = y + '%';
+      s.style.animationDelay = delay + 'ms';
+      s.style.width = (6 + Math.random() * 8) + 'px';
+      s.style.height = s.style.width;
+      sky.appendChild(s);
+    }
+    for (var i = 0; i < 50; i++) {
+      var x = Math.random() * 100, y = Math.random() * 100;
+      spawn(x, y, Math.random() > 0.5, i * 60);
+    }
+    // sparkles au hover sur les burgers
+    document.querySelectorAll('[data-burger]').forEach(function (card) {
+      card.addEventListener('mouseenter', function () {
+        var r = card.getBoundingClientRect();
+        for (var i = 0; i < 8; i++) {
+          var s = document.createElement('div');
+          s.className = 'sp';
+          s.style.position = 'fixed';
+          s.style.left = (r.left + Math.random() * r.width) + 'px';
+          s.style.top = (r.top + Math.random() * r.height) + 'px';
+          s.style.width = (6 + Math.random() * 6) + 'px';
+          s.style.height = s.style.width;
+          s.style.animationDelay = (i * 40) + 'ms';
+          document.body.appendChild(s);
+          setTimeout(function (el) { return function () { el.remove(); }; }(s), 1400 + i * 40);
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>

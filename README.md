@@ -22,41 +22,52 @@ site vitrine du restaurant **Nelly's** (smash burger à emporter, 21 avenue du j
 | `npm run preview`   | prévisualise le build local                     |
 | `npm run check`     | vérification typescript + astro                 |
 
-## structure
+## architecture & versions
+
+| route          | type            | description                                                      |
+| -------------- | --------------- | ---------------------------------------------------------------- |
+| `/`            | astro           | dashboard d'accueil (meta, noindex), liste les versions          |
+| `/v1/`         | astro + i18n    | **version prod** seo optimisée, bilingue fr/en, json-ld complet  |
+| `/v2`          | astro           | variante visuelle pixel synthwave, copie identique, noindex      |
+| `/v4/`         | static html     | variante cyber-sigilism, multi-pages, constellations, noindex    |
+| `/previews/`   | static html     | galerie d'explorations courtes (typo, layouts, motion), noindex  |
+
+301 redirects depuis les anciennes urls v1 racine (`/menu`, `/contact`,
+`/smash-burger-biarritz`, etc.) vers leurs équivalents `/v1/...` —
+voir `vercel.json`.
 
 ```
 src/
-  assets/photos/         # photos sources, processées par astro:assets
-    menu-lightbox.jpg    # signature visuelle, hero poster + og
-    kitchen-wide.jpg     # cuisine large
-    counter-plancha.jpg  # comptoir et plancha
-    ceiling-neons.jpg    # texture plafond
-    wooden-blinds.jpg    # ambiance contact
-    street-cigarettes.jpg # détail urbain
-  components/            # composants .astro
-    Header.astro
-    Footer.astro
-    Hero.astro           # vidéo + poster + gating mobile
-    MenuItem.astro
-    MenuSection.astro
-    InfoBlock.astro
-    SEOHead.astro
-  data/                  # données typées
-    site.ts              # infos restaurant
-    menu.ts              # menu structuré
-  layouts/
-    Layout.astro
+  components/            # composants .astro (Header, Footer, Hero, MenuItem…)
+  data/                  # site.ts, menu.ts, schema.ts (json-ld)
+  layouts/               # Layout.astro (v1), V2Layout.astro (v2)
   pages/
-    index.astro
-    menu.astro
-    nos-valeurs.astro
-    contact.astro
-  styles/
-    global.css
+    index.astro          # dashboard /
+    v2.astro             # variante /v2
+    v1/                  # site prod /v1/...
+      index.astro
+      menu.astro
+      contact.astro
+      smash-burger-biarritz.astro
+      burger-a-emporter-biarritz.astro
+      notre-histoire.astro
+      _nos-valeurs.astro
+      biarritz/jardin-public.astro
+      en/                # i18n en
+        index.astro
+        menu.astro
+        contact.astro
+        smash-burger-biarritz.astro
+        best-burger-biarritz.astro
+  styles/                # global.css (tokens + @utility)
 public/
-  media/
-    hero.mp4             # vidéo hero (6.1 MB — à compresser, cf. ci-dessous)
+  media/                 # logo svg, photos partagées, hero.mp4
+    nelly_s.svg          # logo vectoriel canonique (mask-image partout)
+    photos/              # photos partagées entre v1 et v4
+  v4/                    # site /v4/ static html + assets propres
+  previews/              # galerie static html des explorations
   robots.txt
+vercel.json              # cleanUrls + 301 redirects seo
 ```
 
 ## média — compression vidéo hero

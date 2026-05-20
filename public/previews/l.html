@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-L · dash stamp (badge jaune)</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #efe5cc;
+    --ink: #0f0d0b;
+    --muted: #5c554b;
+    --yellow: #f7c318;
+    --yellow-deep: #d99e0a;
+  }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'General Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #fafafa; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); transition: background 200ms ease; }
+  .back-dash:hover { background: #0a0a0a; }
+  .label { position: fixed; top: 12px; right: 12px; background: var(--ink); color: var(--yellow); padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; z-index: 999; letter-spacing: 0.04em; }
+
+  /* HEADER: black bar, big logo, pill nav */
+  header {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    width: 7.5rem; height: 2.75rem;
+    background-color: var(--yellow);
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  nav { display: flex; gap: 0.5rem; }
+  nav a {
+    color: var(--bg);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    transition: all 180ms ease;
+  }
+  nav a:hover { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+  nav a.cta { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 4rem 2rem 6rem;
+    max-width: 1320px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-weight: 800;
+    font-size: clamp(3.5rem, 12vw, 11rem);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    text-transform: lowercase;
+    color: var(--ink);
+    max-width: 11ch;
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 .y {
+    background: var(--yellow);
+    padding: 0 0.08em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .hero .sub {
+    margin-top: 1.75rem;
+    font-size: 1.1875rem;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 36ch;
+    text-transform: lowercase;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+  }
+  .hero .ctas {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    text-decoration: none;
+    transition: transform 160ms ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--ink); color: var(--yellow); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn .arrow {
+    display: inline-flex;
+    width: 1.25rem; height: 1.25rem;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--ink);
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .btn.primary .arrow { background: var(--yellow); color: var(--ink); }
+  .btn.ghost .arrow { background: var(--ink); color: var(--yellow); }
+
+  /* STAMP — rotating yellow badge */
+  .stamp {
+    position: absolute;
+    top: 3rem;
+    right: 2rem;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transform: rotate(-8deg);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    z-index: 3;
+  }
+  .stamp::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1.5px dashed var(--ink);
+    border-radius: 50%;
+  }
+  .stamp .stamp-inner {
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    padding: 1rem;
+  }
+  .stamp .stamp-inner .big {
+    display: block;
+    font-size: 2.25rem;
+    line-height: 1;
+    margin: 0.25rem 0;
+  }
+  .stamp .stamp-inner .small {
+    display: block;
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* MARQUEE */
+  .marquee {
+    background: var(--ink);
+    color: var(--yellow);
+    padding: 1.25rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: scroll 26s linear infinite;
+  }
+  .marquee span { padding: 0 1.5rem; }
+  .marquee span::after {
+    content: '✦';
+    margin-left: 1.5rem;
+    color: var(--bg);
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SHOWCASE — image + sticker */
+  .showcase {
+    max-width: 1320px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .showcase-img {
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #8c7048, #2e2415);
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+  .showcase-img::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='150' height='150' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+  .sticker-tag {
+    position: absolute;
+    top: 1.5rem; left: 1.5rem;
+    background: var(--yellow);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.625rem 0.875rem;
+    border-radius: 999px;
+  }
+  .showcase-text h2 {
+    font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+    max-width: 14ch;
+  }
+  .showcase-text h2 em {
+    font-style: normal;
+    color: var(--yellow-deep);
+  }
+  .showcase-text p {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--muted);
+    margin-top: 1.25rem;
+    max-width: 36ch;
+    text-transform: lowercase;
+  }
+  .price-list {
+    margin-top: 2rem;
+    display: grid;
+    gap: 0.625rem;
+  }
+  .price-list .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.625rem 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.18);
+    font-size: 1rem;
+    text-transform: lowercase;
+  }
+  .price-list .row b { font-weight: 700; }
+  .price-list .row .price {
+    font-weight: 800;
+    font-family: ui-monospace, monospace;
+  }
+
+  @media (max-width: 900px) {
+    nav a:not(.cta) { display: none; }
+    .logo { width: 6rem; height: 2.2rem; }
+    .stamp { width: 7.5rem; height: 7.5rem; top: 1rem; right: 1rem; }
+    .stamp .stamp-inner { font-size: 0.75rem; padding: 0.5rem; }
+    .stamp .stamp-inner .big { font-size: 1.25rem; }
+    .stamp .stamp-inner .small { font-size: 0.5rem; }
+    .hero { padding: 3rem 1.25rem 4rem; }
+    .showcase { grid-template-columns: 1fr; padding: 0 1.25rem; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/previews/">← dashboard</a>
+<div class="label">v3 · l · dash stamp</div>
+<header>
+  <div class="logo" aria-label="nelly's"></div>
+  <nav>
+    <a href="#">menu</a>
+    <a href="#">contact</a>
+    <a href="#" class="cta">commander →</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="stamp" aria-hidden="true">
+    <div class="stamp-inner">
+      <span class="small">★ depuis ★</span>
+      <span class="big">2021</span>
+      <span class="small">biarritz</span>
+    </div>
+  </div>
+  <h1>smash, <span class="y">salty</span>, c'est tout.</h1>
+  <p class="sub">trois recettes, deux sides, six boissons. à emporter, douze heures à vingt-deux. on ferme jamais.</p>
+  <div class="ctas">
+    <a href="#" class="btn primary">voir le menu <span class="arrow">→</span></a>
+    <a href="#" class="btn ghost">venir nous voir <span class="arrow">↗</span></a>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>get your fingers salty</span><span>smash burger biarritz</span><span>since 2021</span><span>21 av. du jardin public</span><span>12h → 22h</span><span>get your fingers salty</span><span>smash burger biarritz</span><span>since 2021</span><span>21 av. du jardin public</span><span>12h → 22h</span>
+  </div>
+</div>
+
+<section class="showcase">
+  <div class="showcase-img">
+    <span class="sticker-tag">★ best-seller</span>
+  </div>
+  <div class="showcase-text">
+    <h2>le <em>classique</em>, et puis voilà.</h2>
+    <p>double smash, cheddar affiné, oignons confits, sauce moutarde maison. le burger que tout le monde commande, parce qu'il marche.</p>
+    <div class="price-list">
+      <div class="row"><b>le classique</b> <span class="price">9 €</span></div>
+      <div class="row"><b>le bacon</b> <span class="price">10 €</span></div>
+      <div class="row"><b>le vg+</b> <span class="price">9,50 €</span></div>
+      <div class="row"><b>frites maison</b> <span class="price">4 €</span></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

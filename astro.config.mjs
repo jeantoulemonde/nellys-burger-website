@@ -19,8 +19,8 @@ export default defineConfig({
     sitemap({
       changefreq: 'monthly',
       priority: 0.8,
-      // exclure la variante A/B (noindex) du sitemap
-      filter: (page) => !/\/v2(\/|$)/.test(page),
+      // exclure la racine (dashboard meta, noindex) et la variante A/B (noindex)
+      filter: (page) => page !== 'https://nellys.fr/' && !/\/v2(\/|$)/.test(page),
       i18n: {
         defaultLocale: 'fr',
         locales: {

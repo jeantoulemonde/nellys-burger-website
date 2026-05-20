@@ -61,7 +61,7 @@ Nouveau : la comète diagonale est remplacée par la **constellation par page**
 
 ## Images
 
-5 photos copiées dans `/v4/img/` depuis `src/assets/photos/` :
+5 photos copiées dans `/media/photos/` depuis `src/assets/photos/` :
 
 - `burger.jpg` — cheeseburger sur assiette (menu)
 - `counter-plancha.jpg` — comptoir + plancha (menu)

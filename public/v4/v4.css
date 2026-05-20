@@ -109,7 +109,7 @@ img { display: block; max-width: 100%; height: auto; }
 .brand-logo {
   width: 92px; height: 35px;
   background-color: var(--ink);
-  -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+  -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
   -webkit-mask-size: contain; mask-size: contain;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: left center; mask-position: left center;
@@ -194,7 +194,7 @@ p { font-size: 1.0625rem; line-height: 1.55; }
 .hero-logo {
   position: absolute; inset: 0;
   background-color: var(--ink);
-  -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+  -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
   -webkit-mask-size: contain; mask-size: contain;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
@@ -373,7 +373,7 @@ p { font-size: 1.0625rem; line-height: 1.55; }
 .site-footer-mark {
   width: 100px; height: 38px;
   background-color: var(--ink);
-  -webkit-mask-image: url('/media/logo.png'); mask-image: url('/media/logo.png');
+  -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
   -webkit-mask-size: contain; mask-size: contain;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: left center; mask-position: left center;

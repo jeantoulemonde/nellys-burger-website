@@ -1,0 +1,148 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '~/layouts/Layout.astro';
+import { restaurantSchema, breadcrumbSchema } from '~/data/schema';
+import { menu } from '~/data/menu';
+
+import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
+import burgerPlate from '~/assets/photos/burger.jpg';
+import storefront from '~/assets/photos/storefront.jpg';
+
+const jsonLd = [
+  restaurantSchema,
+  breadcrumbSchema([{ name: 'Home', path: '/v1/en' }]),
+];
+
+const fmt = (n: number) =>
+  Number.isInteger(n) ? `€${n}` : `€${n.toFixed(2).replace('.', '.')}`;
+
+const previewItems = menu[0].items;
+---
+
+<Layout
+  title="Smash burger Biarritz — Nelly's, takeaway 7 days a week"
+  description="The first smash burger in Biarritz. Three burgers, house fries, takeaway across from the public garden. Open every day, lunch and dinner."
+  path="/v1/en"
+  image="/og-image.jpg"
+  type="restaurant"
+  locale="en"
+  alternates={{ fr: '/v1/', en: '/v1/en' }}
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-5 md:px-8 pt-16 md:pt-24 pb-12">
+    <p class="lc meta mb-4">nelly's · biarritz</p>
+    <h1 class="lc hero-title max-w-4xl">come and get your fingers salty.</h1>
+    <h2 class="lc mt-4 max-w-3xl text-base md:text-lg font-medium text-[var(--color-text-soft)]">
+      Smash burger takeaway in Biarritz, since 2022.
+    </h2>
+    <p class="lc lead mt-5 max-w-2xl text-[var(--color-text-soft)]">
+      Open every day, lunch and dinner. 21 avenue du jardin public.
+    </p>
+  </section>
+
+  <Picture
+    src={menuLightbox}
+    alt="smash burger Biarritz Nelly's, illuminated menu sign at night"
+    formats={['avif', 'webp']}
+    widths={[768, 1280, 1600]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    class="w-full h-[50vh] md:h-[65vh] object-cover"
+  />
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 py-10 md:py-14 lc prose-body">
+    <p class="text-[var(--color-text-soft)] text-[0.95rem] leading-relaxed">
+      Nelly's is the first smash burger in Biarritz. Counter, kraft bag,
+      public garden right across the street. Three burgers on the menu,
+      house fries cooked in beef tallow, six drinks. Patties smashed on the
+      flat top, caramelised crust, brioche buns toasted in butter. Takeaway
+      only, every day, lunch and dinner.
+      <a href="/v1/en/smash-burger-biarritz" class="underline underline-offset-4 hover:text-[var(--color-ink)]">what is a smash burger</a>,
+      <a href="/v1/en/best-burger-biarritz" class="underline underline-offset-4 hover:text-[var(--color-ink)]">the best burger in Biarritz</a>.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3 border-y border-[var(--color-line)] lc">
+    <div class="px-5 py-6 md:px-8 md:py-8 border-b md:border-b-0 md:border-r border-[var(--color-line)]">
+      <p class="meta">where</p>
+      <p class="font-bold mt-1">21 avenue du jardin public</p>
+      <p class="meta">64200 Biarritz</p>
+    </div>
+    <div class="px-5 py-6 md:px-8 md:py-8 border-b md:border-b-0 md:border-r border-[var(--color-line)]">
+      <p class="meta">when</p>
+      <p class="font-bold mt-1">every day · 12pm to 10pm</p>
+      <p class="meta">continuous service</p>
+    </div>
+    <div class="px-5 py-6 md:px-8 md:py-8">
+      <p class="meta">how</p>
+      <p class="font-bold mt-1">takeaway only</p>
+      <p class="meta">counter, cash or card</p>
+    </div>
+  </section>
+
+  <section class="bg-[var(--color-ink)] text-[var(--color-bg)] mt-20">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <p class="lc meta text-white/60 mb-3">the menu</p>
+        <h2 class="lc page-title mb-6">simple menu, three burgers.</h2>
+        <a
+          href="/v1/en/menu"
+          class="lc inline-block text-sm font-bold border-b border-white pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+        >
+          view the full menu
+        </a>
+      </div>
+      <div class="bg-[var(--color-bg)] text-[var(--color-ink)] p-6 md:p-10">
+        <ul class="space-y-4">
+          {previewItems.map((item) => (
+            <li class="flex items-baseline justify-between gap-3 lc">
+              <span class="font-bold">{item.name}</span>
+              <span class="font-bold tabular-nums">{fmt(item.price)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <Picture
+      src={storefront}
+      alt="Nelly's smash burger Biarritz, yellow awning storefront on avenue du jardin public"
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      loading="lazy"
+      class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)]"
+    />
+    <div>
+      <p class="lc meta mb-4">in biarritz</p>
+      <h2 class="lc section-title mb-6">21 avenue du jardin public.</h2>
+      <div class="prose-body lc space-y-4">
+        <p>
+          A few steps from the public garden, ten minutes on foot from the
+          Grande Plage. Open kitchen, flat top running lunch and dinner.
+        </p>
+      </div>
+      <a
+        href="/v1/en/smash-burger-biarritz"
+        class="lc inline-block mt-6 text-sm font-bold border-b border-[var(--color-ink)] pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+      >
+        the smash burger, explained
+      </a>
+    </div>
+  </section>
+
+  <section class="relative">
+    <Picture
+      src={burgerPlate}
+      alt="Nelly's Biarritz cheeseburger on a plate, smash burger takeaway"
+      formats={['avif', 'webp']}
+      widths={[768, 1280, 1600]}
+      sizes="100vw"
+      loading="lazy"
+      class="w-full h-[40vh] md:h-[55vh] object-cover"
+    />
+  </section>
+</Layout>

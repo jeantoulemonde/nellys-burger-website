@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-B1 · brutalist times</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; color: #000; font-family: 'Times New Roman', Times, serif; min-height: 100vh; overflow-x: hidden; }
+  body { cursor: crosshair; }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.85); color: #fff; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; text-decoration: none; z-index: 99; }
+  .back-dash:hover { background: #000; }
+  .label { position: fixed; top: 12px; right: 12px; background: #000; color: #fff; padding: 6px 10px; font-size: 11px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; z-index: 99; font-weight: bold; }
+
+  /* coord readout */
+  .coord {
+    position: fixed; bottom: 12px; right: 12px;
+    background: #000; color: #fff; padding: 6px 10px;
+    font-family: ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.04em; z-index: 99;
+  }
+
+  /* HEADER MARK qui apparaît après le hero */
+  .header-mark {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 32px;
+    background-color: #000;
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    z-index: 98;
+    transition: width 600ms cubic-bezier(0.77, 0, 0.175, 1) 0.3s, opacity 200ms ease;
+    opacity: 0;
+  }
+  .header-mark[data-show='true'] { width: 84px; opacity: 1; }
+
+  /* HERO XXL */
+  .hero {
+    min-height: 100vh; padding: 8vh 4vw;
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    border-bottom: 6px solid #000;
+  }
+  .hero-tag { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3vh; padding: 4px 8px; border: 1.5px solid #000; }
+  .hero-title {
+    font-weight: bold;
+    font-size: clamp(4rem, 18vw, 16rem);
+    line-height: 0.82;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+    width: 100%;
+    transform-origin: top left;
+    animation: titleSlam 800ms cubic-bezier(0.65,0,0.35,1) forwards;
+  }
+  @keyframes titleSlam {
+    0% { transform: scale(1.05); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  .hero-sub {
+    margin-top: 3vh; font-family: ui-monospace, monospace;
+    font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase;
+    border-top: 3px solid #000; padding-top: 1rem; max-width: 50ch;
+  }
+
+  /* LOGO BLOCK noir épais */
+  .logo-block {
+    margin-top: 6vh; padding: 2.5rem;
+    background: #000;
+    width: fit-content;
+  }
+  .logo-block .logo {
+    width: clamp(180px, 24vw, 320px); aspect-ratio: 480/184;
+    background-color: #fff;
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+  }
+
+  /* journal columns */
+  .news { padding: 4vh 4vw; border-bottom: 4px solid #000; }
+  .news-head {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 2rem;
+    border-bottom: 2px solid #000; padding-bottom: 1rem; margin-bottom: 2rem;
+  }
+  .news-h2 { font-weight: bold; font-size: clamp(1.8rem, 5vw, 3.5rem); letter-spacing: -0.02em; line-height: 1; text-transform: lowercase; }
+  .news-issue { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .cols { display: grid; gap: 0; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .cols { grid-template-columns: 1fr 1fr 1fr; gap: 0 2rem; } }
+  .col {
+    padding: 0 1rem;
+    border-left: 2px solid #000;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 300ms steps(2), transform 300ms steps(2);
+  }
+  .col.in { opacity: 1; transform: translateX(0); }
+  .col:first-child { border-left: 0; padding-left: 0; }
+  .col h3 { font-weight: bold; font-size: 1.8rem; line-height: 1; letter-spacing: -0.02em; text-transform: lowercase; margin-bottom: 0.4rem; padding-bottom: 0.5rem; border-bottom: 2px solid #000; }
+  .col .price { font-family: ui-monospace, monospace; font-size: 14px; margin-bottom: 0.6rem; }
+  .col .body { font-size: 1rem; line-height: 1.45; text-transform: lowercase; }
+
+  /* infos block */
+  .info { padding: 4vh 4vw; }
+  .info-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: 0.04em; }
+  @media (min-width: 768px) { .info-grid { grid-template-columns: repeat(4, 1fr); } }
+  .info-grid > div { padding: 1rem; border: 2px solid #000; text-transform: uppercase; }
+  .info-grid b { font-weight: bold; }
+  footer { padding: 3vh 4vw; border-top: 2px solid #000; text-align: center; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  footer a { color: #000; text-decoration: underline; }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/previews/">← dashboard</a>
+<div class="label">v3 · B1 · brutalist times</div>
+<div class="coord" id="coord">x:0 / y:0</div>
+<div class="header-mark" id="hMark" aria-hidden="true"></div>
+
+<section class="hero">
+  <span class="hero-tag">nelly's · biarritz · est. 2022</span>
+  <h1 class="hero-title">salty<br />fingers.</h1>
+  <p class="hero-sub">come get your salty fingers. ouvert 7j/7, midi et soir. à emporter uniquement.</p>
+  <div class="logo-block"><div class="logo" aria-label="Nelly's"></div></div>
+</section>
+
+<section class="news">
+  <div class="news-head">
+    <h2 class="news-h2">le menu.</h2>
+    <span class="news-issue">vol. i · n°1 · 2026</span>
+  </div>
+  <div class="cols">
+    <div class="col"><h3>cheeseburger</h3><div class="price">€9.00</div><p class="body">boeuf, american cheese, pickles, oignons, laitue, ketchup, moutarde.</p></div>
+    <div class="col"><h3>bacon</h3><div class="price">€10.00</div><p class="body">boeuf, american cheese, oignons confits, bacon, laitue, sauce nelly's.</p></div>
+    <div class="col"><h3>vg+</h3><div class="price">€9.50</div><p class="body">falafel, aubergine, american cheese, laitue, sauce fromage blanc. fruits à coque.</p></div>
+  </div>
+</section>
+
+<section class="info">
+  <div class="info-grid">
+    <div><b>frites</b><br />gras de boeuf · 4 €</div>
+    <div><b>adresse</b><br />21 av. jardin public · biarritz</div>
+    <div><b>horaires</b><br />7j/7 · 12h-22h</div>
+    <div><b>commande</b><br />comptoir · à emporter</div>
+  </div>
+</section>
+
+<footer><a href="/previews/">← retour dashboard</a> · v3-B1 · brutalist times</footer>
+
+<script>
+  // coord readout
+  document.addEventListener('mousemove', function (e) {
+    document.getElementById('coord').textContent = 'x:' + e.clientX + ' / y:' + e.clientY;
+  });
+
+  // header mark apparait après le hero
+  (function () {
+    var hero = document.querySelector('.hero');
+    var mark = document.getElementById('hMark');
+    function update() {
+      var r = hero.getBoundingClientRect();
+      mark.setAttribute('data-show', r.bottom < 60 ? 'true' : 'false');
+    }
+    document.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // cols slam in
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e, i) {
+        if (e.isIntersecting) {
+          setTimeout(function () { e.target.classList.add('in'); }, i * 80);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.col').forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>

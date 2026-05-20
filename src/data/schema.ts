@@ -51,14 +51,14 @@ export const restaurantSchema = {
   },
   openingHoursSpecification,
   acceptsReservations: false,
-  hasMenu: abs('/menu'),
+  hasMenu: abs('/v1/menu'),
   sameAs: [site.instagram],
 };
 
 export const menuSchema = {
   '@context': 'https://schema.org',
   '@type': 'Menu',
-  '@id': `${site.url}/menu#menu`,
+  '@id': `${site.url}/v1/menu#menu`,
   name: `Menu ${site.name}`,
   inLanguage: 'fr',
   hasMenuSection: menuData.map((section) => ({

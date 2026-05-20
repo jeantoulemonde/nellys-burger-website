@@ -1,0 +1,58 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { site } from '~/data/site';
+
+const valuesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `nos valeurs, ${site.name}`,
+  inLanguage: 'fr',
+  url: `${site.url}/nos-valeurs`,
+  description:
+    'carte courte, produits préparés chaque matin, fournisseurs locaux, prix justes.',
+  mainEntity: {
+    '@type': 'Restaurant',
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<Layout
+  title="nos valeurs, smash burger à biarritz"
+  description="nos valeurs chez nelly's : carte courte, produits préparés chaque matin, fournisseurs locaux, prix justes. smash burger à biarritz."
+  path="/v1/nos-valeurs"
+  type="article"
+  jsonLd={valuesSchema}
+>
+  <section class="mx-auto max-w-3xl px-5 md:px-8 pt-16 md:pt-24 pb-8">
+    <p class="lc meta mb-4">nos valeurs</p>
+    <h1 class="lc page-title mb-6">faire peu de choses, et les faire bien.</h1>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 pb-24">
+    <div class="prose-body lc space-y-6">
+      <p>
+        chez nelly's, on fait peu de choses, et on les fait bien. pour le menu, c'est simple.
+        c'est tout, et c'est voulu. une carte courte, c'est moins de gâchis,
+        plus d'attention, et la promesse qu'on sait exactement ce qu'il y a dans votre
+        assiette.
+      </p>
+
+      <p>
+        chaque matin, la viande arrive du boucher du pays basque, le pain du boulanger d'à
+        côté. les pickles, les sauces, le coleslaw, la citronnade, le thé glacé : on les
+        prépare nous-mêmes, sur place, du jour. on bosse avec des gens qu'on connaît, sur
+        des produits qu'on aime, et on le préfère mille fois à des cartes de quinze burgers
+        qu'on ne maîtrise pas.
+      </p>
+
+      <p>
+        on a calibré les prix pour qu'on puisse y revenir souvent. un burger, ce n'est pas
+        un dîner d'anniversaire, c'est une bonne pause de midi, un dîner rapide après la
+        plage, le truc qu'on commande avant un film. on préfère vous voir dix fois qu'une
+        seule. poussez la porte, on vous attend.
+      </p>
+    </div>
+  </section>
+</Layout>

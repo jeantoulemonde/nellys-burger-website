@@ -9,19 +9,19 @@ const { locale = 'fr' } = Astro.props;
 
 const linksByLocale = {
   fr: [
-    { href: '/', label: 'accueil' },
-    { href: '/menu', label: 'menu' },
-    { href: '/contact', label: 'contact' },
+    { href: '/v1/', label: 'accueil' },
+    { href: '/v1/menu', label: 'menu' },
+    { href: '/v1/contact', label: 'contact' },
   ],
   en: [
-    { href: '/en', label: 'home' },
-    { href: '/en/menu', label: 'menu' },
-    { href: '/en/contact', label: 'contact' },
+    { href: '/v1/en', label: 'home' },
+    { href: '/v1/en/menu', label: 'menu' },
+    { href: '/v1/en/contact', label: 'contact' },
   ],
 } as const;
 
 const links = linksByLocale[locale];
-const homeHref = locale === 'en' ? '/en' : '/';
+const homeHref = locale === 'en' ? '/v1/en' : '/v1/';
 const ariaHome = locale === 'en' ? `Go to home, ${site.name}` : `Aller à l'accueil, ${site.name}`;
 
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -36,17 +36,14 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
       class="flex items-center"
       aria-label={ariaHome}
     >
-      <picture>
-        <source srcset="/media/logo.avif" type="image/avif" />
-        <img
-          src="/media/logo.png"
-          alt={site.name}
-          width="480"
-          height="184"
-          class="h-7 md:h-9 w-auto"
-          decoding="async"
-        />
-      </picture>
+      <img
+        src="/media/nelly_s.svg"
+        alt={site.name}
+        width="480"
+        height="184"
+        class="h-7 md:h-9 w-auto"
+        decoding="async"
+      />
     </a>
 
     <nav aria-label={locale === 'en' ? 'Main navigation' : 'Navigation principale'}>

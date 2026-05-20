@@ -1,0 +1,98 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '~/layouts/Layout.astro';
+import { restaurantSchema, breadcrumbSchema } from '~/data/schema';
+
+import neon from '~/assets/photos/neon.png';
+import stickers from '~/assets/photos/stickers.jpg';
+
+const jsonLd = [
+  restaurantSchema,
+  breadcrumbSchema([
+    { name: 'Accueil', path: '/v1/' },
+    { name: 'Notre histoire', path: '/v1/notre-histoire' },
+  ]),
+];
+---
+
+<Layout
+  title="Notre histoire — Nelly's, premier smash burger Biarritz"
+  description="Premier smash burger de Biarritz, ouvert en 2022 par Martin Debaere. Recette ramenée des US. Trois burgers, blonde d'Aquitaine, à emporter."
+  path="/v1/notre-histoire"
+  image="/og-image.jpg"
+  jsonLd={jsonLd}
+>
+  <article class="mx-auto max-w-3xl px-5 md:px-8 pt-12 md:pt-20 pb-20">
+    <p class="lc meta mb-3">notre histoire</p>
+    <h1 class="lc page-title mb-6">le premier smash burger de Biarritz.</h1>
+
+    <Picture
+      src={neon}
+      alt="enseigne néon jaune Nelly's à Biarritz, smash burger depuis 2022"
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 768px) 720px, 100vw"
+      loading="eager"
+      class="w-full aspect-[3/4] object-cover rounded-[var(--radius-lg)] mb-10"
+    />
+
+    <div class="prose-body lc space-y-5 text-[var(--color-ink)]">
+      <p class="lead">
+        Nelly's, c'est Martin Debaere. Une recette ramenée des États-Unis,
+        adaptée au pays basque. Premier smash burger de Biarritz, depuis 2022.
+      </p>
+
+      <h2 class="lc section-title mt-8 mb-3">2021, Anglet</h2>
+      <p>
+        Ouverture du premier comptoir à Anglet en 2021. Trois burgers, un
+        seul format à emporter, viande fraîche du jour. La carte n'a pas
+        bougé depuis.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">2022, Biarritz</h2>
+      <p>
+        Ouverture du second comptoir à Biarritz, 21 avenue du jardin public.
+        Premier smash burger de la ville. Le concept reste identique :
+        comptoir, pas de salle, pas de réservation, à emporter uniquement.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">la recette</h2>
+      <p>
+        Une boulette de boeuf frais, écrasée sur une plaque à plus de 250°C.
+        Croûte caramélisée en quelques secondes, intérieur tendre. Deux
+        steaks fins par burger. American cheese qui fond. Pain brioché
+        toasté au beurre. Sauce maison.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">la viande</h2>
+      <p>
+        Blonde d'Aquitaine. Boucher du pays basque. Viande hachée du jour,
+        jamais congelée. Le pain vient d'un boulanger local. Les pickles,
+        sauces, coleslaw et citronnade sont préparés sur place.
+      </p>
+
+      <h2 class="lc section-title mt-10 mb-3">les trois burgers</h2>
+      <p>
+        Cheeseburger, bacon, vg+. Trois recettes, trois prix entre 9 et 10 €.
+        La carte ne change pas. C'est volontaire : carte courte, attention
+        haute. Tout est préparé le jour même, en quantité limitée.
+      </p>
+
+      <Picture
+        src={stickers}
+        alt="stickers Nelly's burger Biarritz, identité du smash burger depuis 2022"
+        formats={['avif', 'webp']}
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 768px) 720px, 100vw"
+        loading="lazy"
+        class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)] mt-10"
+      />
+    </div>
+
+    <nav class="mt-12 pt-8 border-t border-[var(--color-line)] lc meta flex flex-col gap-2" aria-label="pages liées">
+      <a href="/v1/smash-burger-biarritz" class="hover:text-[var(--color-ink)]">→ le smash burger à Biarritz, expliqué</a>
+      <a href="/v1/menu" class="hover:text-[var(--color-ink)]">→ voir le menu (cheeseburger 9 €, bacon 10 €, vg+ 9,50 €)</a>
+      <a href="/v1/biarritz/jardin-public" class="hover:text-[var(--color-ink)]">→ au jardin public, Biarritz</a>
+    </nav>
+  </article>
+</Layout>

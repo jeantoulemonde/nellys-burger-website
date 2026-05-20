@@ -1,0 +1,154 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '~/layouts/Layout.astro';
+import Hero from '~/components/Hero.astro';
+import MobileHero from '~/components/MobileHero.astro';
+import IntroOverlay from '~/components/IntroOverlay.astro';
+import InfoBlock from '~/components/InfoBlock.astro';
+import MenuItem from '~/components/MenuItem.astro';
+import { site } from '~/data/site';
+import { menu } from '~/data/menu';
+import { restaurantSchema } from '~/data/schema';
+
+import menuLightbox from '~/assets/photos/menu-lightbox.jpg';
+import kitchenWide from '~/assets/photos/kitchen-wide.jpg';
+import burgerBottom from '~/assets/photos/burger.jpg';
+
+const heroVideo = '/media/hero.mp4';
+const heroVideoBytes = 6_399_320;
+
+const previewItems = menu[0].items;
+---
+
+<Layout
+  title="Smash burger Biarritz — Nelly's, à emporter 7j/7"
+  description="Le premier smash burger de Biarritz. Trois burgers, frites maison, à emporter face au jardin public. Ouvert 7j/7, midi et soir."
+  path="/v1/"
+  image="/og-image.jpg"
+  type="restaurant"
+  alternates={{ fr: '/v1/', en: '/v1/en' }}
+  jsonLd={restaurantSchema}
+>
+  <IntroOverlay />
+
+  <MobileHero />
+
+  <div class="hidden md:block">
+    <Hero
+      video={heroVideo}
+      videoBytes={heroVideoBytes}
+      posterImage={menuLightbox}
+      posterAlt="smash burger Biarritz Nelly's, panneau menu lumineux avenue du jardin public"
+      eyebrow="smash burger · à emporter · biarritz"
+      title="Come and get your fingers salty."
+      heading2="Smash burger à emporter à Biarritz, depuis 2022."
+      subtitle="ouvert 7j/7, midi et soir."
+    />
+  </div>
+
+  <section class="mx-auto max-w-3xl px-5 md:px-8 py-10 md:py-14 lc prose-body">
+    <p class="text-[var(--color-text-soft)] text-[0.95rem] leading-relaxed">
+      Nelly's, c'est le premier smash burger de Biarritz. Comptoir, sac kraft,
+      jardin public en face. Trois burgers à la carte, frites maison à la
+      graisse de boeuf, six boissons. Boulettes écrasées sur la plancha,
+      croûte caramélisée, pain brioché toasté au beurre. À emporter, 7j/7,
+      midi et soir. <a href="/v1/notre-histoire" class="underline underline-offset-4 hover:text-[var(--color-ink)]">notre histoire</a>,
+      <a href="/v1/smash-burger-biarritz" class="underline underline-offset-4 hover:text-[var(--color-ink)]">le smash burger expliqué</a>.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-3">
+    <InfoBlock label="où" title={`${site.street}, ${site.city}`} href="/v1/contact" cta="voir le plan">
+      {site.street}<br />{`${site.postalCode} ${site.city}`}
+    </InfoBlock>
+    <InfoBlock label="quand" title="7j/7 · 12h à 22h" href="/v1/contact" cta="voir le détail">
+      midi et soir, service continu<br />
+      premier arrivé, premier servi
+    </InfoBlock>
+    <InfoBlock label="comment" title="à emporter uniquement" href="/v1/menu" cta="voir le menu">
+      commande au comptoir<br />
+      cb et espèces
+    </InfoBlock>
+  </section>
+
+  <section class="bg-[var(--color-ink)] text-[var(--color-bg)] mt-20">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <p class="lc meta text-white/60 mb-3">le menu</p>
+        <h2 class="lc page-title mb-6">
+          pour le menu, c'est simple.
+        </h2>
+        <a
+          href="/v1/menu"
+          class="lc inline-block text-sm font-bold border-b border-white pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+        >
+          voir le menu complet
+        </a>
+      </div>
+
+      <div class="bg-[var(--color-bg)] text-[var(--color-ink)] p-6 md:p-10">
+        {previewItems.map((item) => <MenuItem {...item} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <Picture
+      src={kitchenWide}
+      alt="smash burger Biarritz Nelly's, cuisine ouverte avec plancha avenue du jardin public"
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      loading="lazy"
+      class="w-full aspect-[4/5] object-cover rounded-[var(--radius-lg)]"
+    />
+    <div>
+      <p class="lc meta mb-4">à biarritz</p>
+      <h2 class="lc section-title mb-6">21 avenue du jardin public.</h2>
+      <div class="prose-body lc space-y-4">
+        <p>
+          à deux pas du jardin public, dix minutes à pied de la grande plage. cuisine ouverte,
+          plancha en service midi et soir.
+        </p>
+      </div>
+      {/* CTA "nos valeurs" désactivé, réactiver quand la page _nos-valeurs.astro est repassée en nos-valeurs.astro
+      <a
+        href="/v1/nos-valeurs"
+        class="lc inline-block mt-6 text-sm font-bold border-b border-[var(--color-ink)] pb-1 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+      >
+        nos valeurs
+      </a>
+      */}
+    </div>
+  </section>
+
+  <section class="relative">
+    <Picture
+      src={burgerBottom}
+      alt="cheeseburger Nelly's Biarritz, smash burger à emporter, pain brioché et american cheese"
+      formats={['avif', 'webp']}
+      widths={[768, 1280, 1600]}
+      sizes="100vw"
+      loading="lazy"
+      class="w-full h-[40vh] md:h-[55vh] object-cover"
+    />
+  </section>
+
+  <section class="border-t border-[var(--color-line)]">
+    <div class="mx-auto max-w-6xl px-5 md:px-8 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="lc section-title">on est sur instagram.</h2>
+      </div>
+      <div class="flex md:justify-end">
+        <a
+          href={site.instagram}
+          rel="me noopener"
+          target="_blank"
+          class="lc inline-flex items-center gap-2 text-base font-bold border border-[var(--color-ink)] px-5 py-3 hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)] transition-colors"
+        >
+          {site.instagramHandle}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

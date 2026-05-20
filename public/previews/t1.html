@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3-T1 · techno grid horizon</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,700,800&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --cyan: #00e7ff; --cyan-dim: #00a3b8; --mono: ui-monospace, monospace; }
+  html,body {
+    background: #000418; color: #e8f8ff;
+    font-family: 'General Sans', system-ui, sans-serif;
+    min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  .back-dash { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,0.78); color: #e8f8ff; padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; text-decoration: none; z-index: 99; backdrop-filter: blur(4px); border: 1px solid rgba(0,231,255,0.4); }
+  .back-dash:hover { background: var(--cyan); color: #000418; }
+  .label { position: fixed; top: 12px; right: 12px; background: var(--cyan); color: #000418; padding: 6px 10px; font-size: 11px; font-family: var(--mono); letter-spacing: 0.04em; z-index: 99; font-weight: 600; }
+
+  /* scan lines overlay */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 100;
+    background: repeating-linear-gradient(0deg, rgba(0,231,255,0.02) 0 2px, transparent 2px 4px);
+    pointer-events: none; mix-blend-mode: screen;
+  }
+
+  /* hero stage */
+  .stage { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 12vh 6vw 0; overflow: hidden; }
+
+  /* perspective grid */
+  .grid-floor {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 200vw; height: 60vh;
+    perspective: 600px;
+    pointer-events: none;
+  }
+  .grid-floor::before, .grid-floor::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100%;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,231,255,0.5) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(0deg, rgba(0,231,255,0.5) 0 1px, transparent 1px 60px);
+    transform: rotateX(70deg) translateZ(0);
+    transform-origin: bottom;
+    animation: gridScroll 5s linear infinite;
+  }
+  .grid-floor::after {
+    background:
+      linear-gradient(0deg, transparent, #000418 80%);
+    animation: none;
+  }
+  @keyframes gridScroll { from { background-position: 0 0; } to { background-position: 0 60px; } }
+
+  /* horizon sun */
+  .horizon {
+    position: absolute; bottom: 38vh; left: 50%; transform: translateX(-50%);
+    width: min(56vw, 380px); aspect-ratio: 1; pointer-events: none; z-index: 1;
+  }
+  .horizon svg { width: 100%; height: 100%; }
+  .horizon::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 50%;
+    height: 50%; background: linear-gradient(180deg, transparent, #000418 70%);
+    z-index: 2;
+  }
+
+  /* hero text */
+  .center { position: relative; z-index: 5; text-align: center; padding-top: 4vh; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--cyan); margin-bottom: 2.5vh; }
+  .logo-hero {
+    width: min(70vw, 520px); aspect-ratio: 480/184; margin: 0 auto;
+    background: var(--cyan);
+    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    filter: drop-shadow(0 0 18px var(--cyan)) drop-shadow(0 0 40px rgba(0,231,255,0.5));
+    animation: pulseLogo 3s ease-in-out infinite;
+  }
+  @keyframes pulseLogo {
+    0%, 100% { filter: drop-shadow(0 0 18px var(--cyan)) drop-shadow(0 0 40px rgba(0,231,255,0.5)); }
+    50%      { filter: drop-shadow(0 0 28px var(--cyan)) drop-shadow(0 0 70px rgba(0,231,255,0.75)); }
+  }
+
+  .glitch {
+    margin-top: 5vh; font-weight: 800; font-size: clamp(2.4rem, 8vw, 6.5rem);
+    line-height: 0.95; letter-spacing: -0.04em; text-transform: lowercase;
+  }
+  .glitch span { display: inline-block; opacity: 0; transform: translateY(10px) skewX(-12deg); animation: gIn 600ms cubic-bezier(0.65,0,0.35,1) forwards; }
+  .glitch .word { display: inline-block; white-space: nowrap; }
+  .glitch .word:not(:last-child) { margin-right: 0.35em; }
+  @keyframes gIn { to { opacity: 1; transform: translateY(0) skewX(0); } }
+  .glitch .em { color: var(--cyan); text-shadow: 1px 0 0 #ff00aa, -1px 0 0 #00e7ff; animation: glitchTw 4s steps(20) infinite; }
+  @keyframes glitchTw { 0%, 92% { transform: translate(0,0); } 93% { transform: translate(2px,-1px); } 94% { transform: translate(-2px,1px); } 95% { transform: translate(0,0); } }
+
+  .sub { margin-top: 2vh; font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,248,255,0.7); }
+
+  /* sections */
+  .section { padding: 14vh 6vw 12vh; max-width: 1100px; margin: 0 auto; }
+  .section h2 { font-weight: 800; font-size: clamp(2rem, 6vw, 4.2rem); letter-spacing: -0.03em; text-transform: lowercase; line-height: 1; }
+  .section h2 em { color: var(--cyan); font-style: normal; text-shadow: 0 0 12px rgba(0,231,255,0.6); }
+  .section .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan-dim); margin-bottom: 2rem; }
+
+  .grid3 { margin-top: 5vh; display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .grid3 { grid-template-columns: repeat(3, 1fr); } }
+  .b-tile {
+    border: 1px solid rgba(0,231,255,0.35); padding: 1.25rem;
+    position: relative; transition: border-color 200ms ease, background 200ms ease;
+  }
+  .b-tile:hover { border-color: var(--cyan); background: rgba(0,231,255,0.05); }
+  .b-tile::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 12px; height: 12px;
+    border-top: 1px solid var(--cyan); border-left: 1px solid var(--cyan);
+  }
+  .b-tile::after {
+    content: ''; position: absolute; bottom: 0; right: 0; width: 12px; height: 12px;
+    border-bottom: 1px solid var(--cyan); border-right: 1px solid var(--cyan);
+  }
+  .b-tile .ix { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan-dim); }
+  .b-tile .nm { font-size: 1.4rem; font-weight: 700; margin-top: 0.5rem; text-transform: lowercase; letter-spacing: -0.02em; }
+  .b-tile .pr { font-family: var(--mono); margin-top: 0.4rem; color: var(--cyan); font-size: 0.95rem; }
+
+  .meta { margin-top: 5vh; padding-top: 2rem; border-top: 1px solid rgba(0,231,255,0.25); display: grid; gap: 1rem; grid-template-columns: 1fr; font-family: var(--mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(232,248,255,0.65); }
+  @media (min-width: 768px) { .meta { grid-template-columns: repeat(4, 1fr); } }
+  .meta b { color: var(--cyan); font-weight: 500; }
+  footer { padding: 4vh 6vw; text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cyan-dim); }
+  footer a { color: var(--cyan); text-decoration: none; }
+</style>
+</head>
+<body>
+<a class="back-dash" href="/previews/">← dashboard</a>
+<div class="label">v3 · T1 · grid horizon</div>
+
+<section class="stage">
+  <div class="grid-floor"></div>
+  <div class="horizon" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <radialGradient id="sun" cx="0.5" cy="0.5"><stop offset="0%" stop-color="rgba(0,231,255,0.6)" /><stop offset="100%" stop-color="rgba(0,231,255,0)" /></radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="80" fill="url(#sun)" />
+      <circle cx="100" cy="100" r="74" fill="none" stroke="#00e7ff" stroke-width="0.6" opacity="0.5" />
+      <ellipse cx="100" cy="100" rx="74" ry="20" fill="none" stroke="#00e7ff" stroke-width="0.6" opacity="0.5" />
+      <ellipse cx="100" cy="100" rx="74" ry="40" fill="none" stroke="#00e7ff" stroke-width="0.6" opacity="0.5" />
+      <ellipse cx="100" cy="100" rx="74" ry="60" fill="none" stroke="#00e7ff" stroke-width="0.6" opacity="0.5" />
+    </svg>
+  </div>
+
+  <div class="center">
+    <p class="eyebrow">system online · nelly's.exe</p>
+    <div class="logo-hero" aria-label="Nelly's"></div>
+    <h1 class="glitch" id="glitch">
+      <span class="word"><span>c</span><span>o</span><span>m</span><span>e</span></span>
+      <span class="word"><span>g</span><span>e</span><span>t</span></span>
+      <span class="word"><span>y</span><span>o</span><span>u</span><span>r</span></span><br/>
+      <span class="word em"><span>s</span><span>a</span><span>l</span><span>t</span><span>y</span></span>
+      <span class="word em"><span>f</span><span>i</span><span>n</span><span>g</span><span>e</span><span>r</span><span>s</span><span>.</span></span>
+    </h1>
+    <p class="sub">ouvert 7j/7 · midi et soir</p>
+  </div>
+</section>
+
+<section class="section">
+  <p class="num">/ menu · 03 items</p>
+  <h2>trois burgers, <em>chargés.</em></h2>
+  <div class="grid3">
+    <div class="b-tile"><span class="ix">01 / classic</span><div class="nm">cheeseburger</div><div class="pr">9 €</div></div>
+    <div class="b-tile"><span class="ix">02 / loaded</span><div class="nm">bacon</div><div class="pr">10 €</div></div>
+    <div class="b-tile"><span class="ix">03 / vg+</span><div class="nm">vg+ · fruits à coque</div><div class="pr">9,50 €</div></div>
+  </div>
+  <div class="meta">
+    <span><b>frites</b><br />gras de boeuf · 4 €</span>
+    <span><b>adresse</b><br />21 av. jardin public</span>
+    <span><b>uptime</b><br />7j/7 · 12h-22h</span>
+    <span><b>protocole</b><br />à emporter</span>
+  </div>
+</section>
+
+<footer><a href="/previews/">← retour dashboard</a> · v3-T1 · grid horizon</footer>
+
+<script>
+  // glitch reveal stagger
+  (function () {
+    var spans = document.querySelectorAll('#glitch span span');
+    spans.forEach(function (s, i) {
+      s.style.animationDelay = (200 + i * 45) + 'ms';
+    });
+  })();
+</script>
+</body>
+</html>
