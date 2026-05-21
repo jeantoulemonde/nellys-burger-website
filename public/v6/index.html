@@ -45,59 +45,62 @@
 <main>
   <section class="stage" data-sparkles>
     <p class="eyebrow">nelly's · biarritz · 43.48°n / 1.55°w</p>
-    <h1 class="slogan">come and get your fingers <em>salty.</em></h1>
 
-    <!-- globe wireframe gris clair en arrière-plan du burger -->
-    <div class="stage-globe" aria-hidden="true">
-      <svg viewBox="0 0 200 200">
-        <ellipse cx="100" cy="100" rx="92" ry="14" fill="none" stroke="var(--wire)" stroke-width="0.8" />
-        <ellipse cx="100" cy="100" rx="86" ry="40" fill="none" stroke="var(--wire)" stroke-width="0.7" />
-        <ellipse cx="100" cy="100" rx="74" ry="66" fill="none" stroke="var(--wire)" stroke-width="0.7" />
-        <ellipse cx="100" cy="100" rx="56" ry="84" fill="none" stroke="var(--wire)" stroke-width="0.6" />
-        <ellipse cx="100" cy="100" rx="30" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.6" />
-        <circle cx="100" cy="100" r="92" fill="none" stroke="var(--wire)" stroke-width="0.8" />
-        <ellipse cx="100" cy="100" rx="14" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.7" />
-        <ellipse cx="100" cy="100" rx="40" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.7" />
-        <ellipse cx="100" cy="100" rx="66" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.6" />
-      </svg>
-    </div>
+    <h1 class="sr-only">Come and get your fingers salty. Smash burger à emporter à Biarritz, depuis 2022.</h1>
+    <div class="hero-logo" role="img" aria-label="Nelly's"></div>
 
-    <!-- texte qui tourne autour du burger -->
-    <div class="orbit" aria-hidden="true">
-      <svg viewBox="0 0 400 400">
-        <defs>
-          <path id="orbit1" d="M 200,200 m -170,0 a 170,170 0 1,1 340,0 a 170,170 0 1,1 -340,0" />
-        </defs>
-        <text class="orbit-text"><textPath href="#orbit1" startOffset="0%">come and get your fingers salty · nelly's biarritz · ouvert midi et soir · </textPath></text>
-      </svg>
-    </div>
+    <!-- centre du hero : globe wireframe + texte rotatif + burger 3D
+         alignés sur le même point géométrique -->
+    <div class="hero-center">
+      <div class="stage-globe" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <ellipse cx="100" cy="100" rx="92" ry="14" fill="none" stroke="var(--wire)" stroke-width="0.8" />
+          <ellipse cx="100" cy="100" rx="86" ry="40" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+          <ellipse cx="100" cy="100" rx="74" ry="66" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+          <ellipse cx="100" cy="100" rx="56" ry="84" fill="none" stroke="var(--wire)" stroke-width="0.6" />
+          <ellipse cx="100" cy="100" rx="30" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.6" />
+          <circle cx="100" cy="100" r="92" fill="none" stroke="var(--wire)" stroke-width="0.8" />
+          <ellipse cx="100" cy="100" rx="14" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+          <ellipse cx="100" cy="100" rx="40" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+          <ellipse cx="100" cy="100" rx="66" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.6" />
+        </svg>
+      </div>
 
-    <!-- burger 3D avec halo + ombre -->
-    <div class="burger-stage">
-      <div class="burger-halo" aria-hidden="true"></div>
-      <div class="burger-shadow" aria-hidden="true"></div>
-      <div class="burger-wrap">
-        <model-viewer
-          class="burger-3d"
-          src="/v6/assets/3d/burger.glb"
-          data-fallback="/media/photos/burger.jpg"
-          alt="smash burger Nelly's, cheeseburger 3D, pain brioché et american cheese"
-          camera-orbit="0deg 75deg 8m"
-          field-of-view="20deg"
-          camera-controls
-          disable-zoom
-          disable-pan
-          interaction-prompt="none"
-          auto-rotate
-          rotation-per-second="18deg"
-          exposure="1.2"
-          shadow-intensity="1"
-        ></model-viewer>
+      <div class="orbit" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <defs>
+            <path id="orbit1" d="M 200,200 m -170,0 a 170,170 0 1,1 340,0 a 170,170 0 1,1 -340,0" />
+          </defs>
+          <text class="orbit-text"><textPath href="#orbit1" startOffset="0%">come and get your fingers salty · nelly's biarritz · ouvert midi et soir · </textPath></text>
+        </svg>
+      </div>
+
+      <div class="burger-stage">
+        <div class="burger-halo" aria-hidden="true"></div>
+        <div class="burger-shadow" aria-hidden="true"></div>
+        <div class="burger-wrap">
+          <model-viewer
+            class="burger-3d"
+            src="/v6/assets/3d/burger.glb"
+            data-fallback="/media/photos/burger.jpg"
+            alt="smash burger Nelly's, cheeseburger 3D, pain brioché et american cheese"
+            camera-orbit="0deg 75deg 8m"
+            field-of-view="20deg"
+            camera-controls
+            disable-zoom
+            disable-pan
+            interaction-prompt="none"
+            auto-rotate
+            rotation-per-second="18deg"
+            exposure="1.2"
+            shadow-intensity="1"
+          ></model-viewer>
+        </div>
       </div>
     </div>
 
     <p class="sub">ouvert 7j/7, midi et soir</p>
-    <p class="mt-4"><a class="btn" href="/v6/menu">voir le menu</a></p>
+    <p><a class="btn" href="/v6/menu">voir le menu</a></p>
   </section>
 
   <section class="section">
