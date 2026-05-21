@@ -67,7 +67,7 @@
     var IDLE_MS = 1500;
     var MAX_YAW = 35;        // degrés
     var MAX_PITCH = 15;      // degrés
-    var BASE_RADIUS = '2.2m';
+    var BASE_RADIUS = '8m';
     var LERP = 0.08;
 
     var targetYaw = 0, targetPitch = 0;
