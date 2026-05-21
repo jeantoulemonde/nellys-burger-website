@@ -30,3 +30,7 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# audits locaux (rapports internes, pas servis en prod)
+public/v6/AUDIT.md
+**/AUDIT.md
