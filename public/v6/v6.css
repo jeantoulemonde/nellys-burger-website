@@ -308,7 +308,9 @@ h3, .h3 { font-weight: 600; font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   50% { transform: translateY(12px); }
 }
 
-/* model-viewer : couvre le wrap, fond transparent */
+/* model-viewer : couvre le wrap, fond transparent.
+   état initial : invisible + légèrement réduit. la classe .revealed
+   sur .burger-stage déclenche la transition d'apparition. */
 model-viewer {
   width: 100%; height: 100%;
   background-color: transparent;
@@ -317,6 +319,143 @@ model-viewer {
   --progress-mask: transparent;
   outline: none;
   display: block;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  will-change: opacity, transform;
+}
+.burger-stage.revealed model-viewer {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========== PORTAIL MAGIQUE (apparition burger) ==========
+   Séquence : dot doré (0.3-1.0s) → ring expansion (0.8-2.2s) →
+   reveal burger (2.2s+) → fade portal + flash. */
+.portal {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.portal-dot,
+.portal-ring,
+.portal-halo,
+.portal-flash {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* point initial doré */
+.portal-dot {
+  width: 8px; height: 8px;
+  background: #fff7d6;
+  box-shadow:
+    0 0 14px rgba(245, 212, 66, 0.9),
+    0 0 32px rgba(245, 212, 66, 0.6),
+    0 0 60px rgba(245, 212, 66, 0.35);
+  opacity: 0;
+  z-index: 3;
+  animation: portalDot 0.85s ease-out 0.3s forwards;
+}
+@keyframes portalDot {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  55% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+  80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+}
+
+/* radial halo doré qui suit l'expansion */
+.portal-halo {
+  width: 0; height: 0;
+  background: radial-gradient(circle,
+    rgba(245, 212, 66, 0.35) 0%,
+    rgba(245, 212, 66, 0.14) 50%,
+    transparent 75%);
+  opacity: 0;
+  z-index: 1;
+  animation: portalHaloExpand 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+@keyframes portalHaloExpand {
+  0% { opacity: 0; width: 0; height: 0; }
+  20% { opacity: 0.55; }
+  100% { opacity: 0.6; width: 105%; height: 105%; }
+}
+
+/* ring qui s'expand depuis le centre */
+.portal-ring {
+  width: 0; height: 0;
+  border: 1.5px solid var(--gold);
+  box-shadow:
+    0 0 22px rgba(245, 212, 66, 0.55),
+    0 0 48px rgba(245, 212, 66, 0.28);
+  opacity: 0;
+  z-index: 2;
+  animation: portalRingExpand 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+@keyframes portalRingExpand {
+  0% { opacity: 0; width: 0; height: 0; }
+  10% { opacity: 1; }
+  100% { opacity: 1; width: 100%; height: 100%; }
+}
+
+/* flash subtil à la révélation, déclenché par .revealed */
+.portal-flash {
+  width: 100%; height: 100%;
+  background: radial-gradient(circle,
+    rgba(245, 212, 66, 0.55) 0%,
+    rgba(245, 212, 66, 0.22) 35%,
+    transparent 70%);
+  opacity: 0;
+  z-index: 4;
+}
+.burger-stage.revealed .portal-flash {
+  animation: portalFlash 400ms ease-out forwards;
+}
+@keyframes portalFlash {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  35% { opacity: 0.55; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+/* état waiting : glb pas encore prêt, ring et halo restent à pleine
+   taille avec un léger pulse pour exprimer l'attente */
+.portal.waiting .portal-ring {
+  width: 100%; height: 100%;
+  opacity: 1;
+  animation: portalRingWait 1.6s ease-in-out infinite alternate;
+}
+.portal.waiting .portal-halo {
+  width: 105%; height: 105%;
+  opacity: 0.55;
+  animation: portalHaloWait 1.6s ease-in-out infinite alternate;
+}
+@keyframes portalRingWait {
+  0% { box-shadow: 0 0 22px rgba(245, 212, 66, 0.55), 0 0 48px rgba(245, 212, 66, 0.28); }
+  100% { box-shadow: 0 0 36px rgba(245, 212, 66, 0.85), 0 0 80px rgba(245, 212, 66, 0.45); }
+}
+@keyframes portalHaloWait {
+  0% { opacity: 0.45; }
+  100% { opacity: 0.7; }
+}
+
+/* fade out du portail quand le burger est révélé */
+.burger-stage.revealed .portal-ring {
+  animation: portalRingFade 800ms ease-out forwards;
+}
+.burger-stage.revealed .portal-halo {
+  animation: portalHaloFade 900ms ease-out forwards;
+}
+@keyframes portalRingFade {
+  0% { opacity: 1; width: 100%; height: 100%; }
+  100% { opacity: 0; width: 112%; height: 112%; }
+}
+@keyframes portalHaloFade {
+  to { opacity: 0; }
 }
 /* fallback image (mobile / no-3D) */
 .burger-fallback {
@@ -807,4 +946,9 @@ model-viewer {
   .burger-wrap { animation: none !important; }
   .burger-stage::before { animation: none !important; }
   .burger-stage::after { animation: none !important; }
+  /* pas de portail magique en reduced-motion : le JS supprime le portal
+     et fade-in direct le model-viewer dès load */
+  .portal { display: none !important; }
+  model-viewer { transition: opacity 400ms ease-out !important; transform: none !important; }
+  .hero-logo { animation: none !important; }
 }

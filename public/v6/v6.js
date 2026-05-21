@@ -53,6 +53,77 @@
     }
   }
 
+  /* ---------------- portail magique d'apparition du burger ----------------
+     Séquence orchestrée :
+       - phase 1-2 (CSS seul) : naissance du dot doré (0.3→1.0s) + halo
+         qui s'expand (0.6→2.2s) + ring qui s'expand (0.8→2.2s)
+       - phase 3 done = ring atteint 100% (t = 2200ms après DOMContentLoaded)
+       - phase 4 (reveal) = si glb prêt → on ajoute .revealed sur
+         .burger-stage qui : fait fade-in / scale-up le model-viewer +
+         flash doré + fade-out portal
+       - waiting state : si phase 3 done mais glb pas prêt → on ajoute
+         .waiting sur .portal qui maintient ring + halo et pulse
+     Cleanup DOM 1.2s après reveal. Le callback onReady est appelé après
+     le cleanup pour que le mouse tracking ne consomme rien pendant
+     l'animation. */
+  function setupPortalReveal(onReady) {
+    var stage = document.querySelector('.burger-stage');
+    var portal = stage && stage.querySelector('.portal');
+    var mv = stage && stage.querySelector('model-viewer.burger-3d');
+
+    // pas de stage / model-viewer (cas reduced-motion → swap PNG, ou DOM cassé) :
+    // on dégage le portail si présent et on rappelle directement
+    if (!stage || !mv) {
+      if (portal && portal.parentNode) portal.parentNode.removeChild(portal);
+      if (onReady) onReady();
+      return;
+    }
+
+    // reduced-motion : pas d'animation, juste fade-in à load
+    if (prefersReducedMotion) {
+      if (portal && portal.parentNode) portal.parentNode.removeChild(portal);
+      mv.addEventListener('load', function () {
+        stage.classList.add('revealed');
+        if (onReady) onReady();
+      }, { once: true });
+      return;
+    }
+
+    var PHASE3_END_MS = 2200;
+    var phase3Done = false;
+    var glbReady = false;
+    var revealed = false;
+
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      portal.classList.remove('waiting');
+      stage.classList.add('revealed');
+      setTimeout(function () {
+        if (portal.parentNode) portal.parentNode.removeChild(portal);
+        if (onReady) onReady();
+      }, 1200);
+    }
+
+    function check() {
+      if (phase3Done && glbReady) reveal();
+      else if (phase3Done && !glbReady) portal.classList.add('waiting');
+    }
+
+    setTimeout(function () { phase3Done = true; check(); }, PHASE3_END_MS);
+
+    mv.addEventListener('load', function () {
+      glbReady = true;
+      check();
+    }, { once: true });
+
+    // garde-fou : si le glb met plus de 12s à charger, on lance la
+    // reveal quand même pour ne pas laisser un portal pulsant indéfiniment
+    setTimeout(function () {
+      if (!revealed) { glbReady = true; check(); }
+    }, 12000);
+  }
+
   /* ---------------- 3D burger : suivi souris ----------------
      desktop only. On lit la position de la souris dans le viewport,
      on convertit en orbite cible (theta yaw, phi pitch), et on lerp
@@ -149,7 +220,11 @@
   document.addEventListener('DOMContentLoaded', function () {
     spawnStars(document.querySelector('.stars'), 70);
     spawnSparkles(document.querySelector('[data-sparkles]'), 12);
-    swapToFallback();
-    attachBurgerMouse();
+    swapToFallback(); // reduced-motion : remplace model-viewer par <img>
+    setupPortalReveal(function () {
+      // mouse tracking attaché uniquement après reveal pour économiser
+      // les cycles pendant l'animation portail
+      attachBurgerMouse();
+    });
   });
 })();
