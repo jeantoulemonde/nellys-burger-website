@@ -122,15 +122,18 @@
     raf = requestAnimationFrame(tick);
   }
 
-  /* ---------------- swap 3D → PNG sur touch/mobile ---------------- */
+  /* ---------------- swap 3D → PNG si reduced-motion uniquement ----------------
+     Sur touch/mobile, on garde le model-viewer (auto-rotate + drag tactile
+     fonctionnent nativement). Seul prefers-reduced-motion bascule vers
+     l'image statique pour respecter le choix d'accessibilité. */
   function swapToFallback() {
-    if (!isCoarsePointer && !prefersReducedMotion) return;
+    if (!prefersReducedMotion) return;
 
     var mv = document.querySelector('model-viewer.burger-3d');
     if (!mv) return;
 
     var fallback = mv.dataset.fallback;
-    var alt = mv.getAttribute('alt') || "Nelly's burger 3D";
+    var alt = mv.getAttribute('alt') || "Nelly's burger";
     if (!fallback) return;
 
     var img = document.createElement('img');
