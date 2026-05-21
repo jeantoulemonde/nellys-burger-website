@@ -34,27 +34,59 @@
   <div class="site-header-inner">
     <a class="brand" href="/v6/" aria-label="Nelly's, accueil"><span class="brand-logo" aria-hidden="true"></span></a>
     <nav class="site-nav" aria-label="Navigation principale">
-      <a href="/v1/menu">menu</a>
-      <a href="/v1/contact">contact</a>
-      <a href="/previews/">previews</a>
+      <a href="/v6/menu">menu</a>
+      <a href="/v6/lieu">lieu</a>
+      <a href="/v6/a-propos">à propos</a>
+      <a href="/v6/contact">contact</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="stage">
+  <section class="stage" data-sparkles>
     <p class="eyebrow">nelly's · biarritz · 43.48°n / 1.55°w</p>
+    <h1 class="slogan">come and get your fingers <em>salty.</em></h1>
+
+    <!-- globe wireframe gris clair en arrière-plan du burger -->
+    <div class="stage-globe" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <ellipse cx="100" cy="100" rx="92" ry="14" fill="none" stroke="var(--wire)" stroke-width="0.8" />
+        <ellipse cx="100" cy="100" rx="86" ry="40" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+        <ellipse cx="100" cy="100" rx="74" ry="66" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+        <ellipse cx="100" cy="100" rx="56" ry="84" fill="none" stroke="var(--wire)" stroke-width="0.6" />
+        <ellipse cx="100" cy="100" rx="30" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.6" />
+        <circle cx="100" cy="100" r="92" fill="none" stroke="var(--wire)" stroke-width="0.8" />
+        <ellipse cx="100" cy="100" rx="14" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+        <ellipse cx="100" cy="100" rx="40" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.7" />
+        <ellipse cx="100" cy="100" rx="66" ry="92" fill="none" stroke="var(--wire)" stroke-width="0.6" />
+      </svg>
+    </div>
+
+    <!-- texte qui tourne autour du burger -->
+    <div class="orbit" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <path id="orbit1" d="M 200,200 m -170,0 a 170,170 0 1,1 340,0 a 170,170 0 1,1 -340,0" />
+        </defs>
+        <text class="orbit-text"><textPath href="#orbit1" startOffset="0%">come and get your fingers salty · nelly's biarritz · ouvert midi et soir · </textPath></text>
+      </svg>
+    </div>
+
+    <!-- burger 3D avec halo + ombre -->
     <div class="burger-stage">
+      <div class="burger-halo" aria-hidden="true"></div>
+      <div class="burger-shadow" aria-hidden="true"></div>
       <div class="burger-wrap">
         <model-viewer
           class="burger-3d"
           src="/v6/assets/3d/burger.glb"
           data-fallback="/media/photos/burger.jpg"
           alt="smash burger Nelly's, cheeseburger 3D, pain brioché et american cheese"
-          camera-orbit="0deg 90deg 2.2m"
-          field-of-view="28deg"
+          camera-orbit="0deg 78deg auto"
+          field-of-view="22deg"
           camera-controls
           disable-zoom
+          disable-pan
           interaction-prompt="none"
           auto-rotate
           rotation-per-second="18deg"
@@ -62,26 +94,10 @@
           shadow-intensity="0"
         ></model-viewer>
       </div>
-      <div class="orbit" aria-hidden="true">
-        <svg viewBox="0 0 400 400">
-          <defs>
-            <path id="orbit1" d="M 200,200 m -180,0 a 180,180 0 1,1 360,0 a 180,180 0 1,1 -360,0" />
-          </defs>
-          <text class="orbit-text"><textPath href="#orbit1" startOffset="0%">come and get your fingers salty · come and get your fingers salty · </textPath></text>
-        </svg>
-      </div>
-      <div class="orbit" aria-hidden="true">
-        <svg class="rev" viewBox="0 0 400 400">
-          <defs>
-            <path id="orbit2" d="M 200,200 m -150,0 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
-          </defs>
-          <text class="orbit-text" font-size="13"><textPath href="#orbit2" startOffset="0%">ouvert 7j/7 · midi et soir · 21 avenue du jardin public · </textPath></text>
-        </svg>
-      </div>
     </div>
-    <h1 class="slogan">come and get your fingers <em>salty.</em></h1>
-    <p class="sub">smash burger à emporter à biarritz, depuis 2022</p>
-    <p class="hint">bougez la souris ↑</p>
+
+    <p class="sub">ouvert 7j/7, midi et soir</p>
+    <p class="mt-4"><a class="btn" href="/v6/menu">voir le menu</a></p>
   </section>
 
   <section class="section">
@@ -104,19 +120,19 @@
           <span class="ix">où</span>
           <div class="nm">21 avenue du jardin public</div>
           <p class="desc">21 avenue du jardin public<br />64200 Biarritz</p>
-          <p class="mt-4"><a class="btn-ghost" href="/v1/contact">voir le plan</a></p>
+          <p class="mt-4"><a class="btn-ghost" href="/v6/lieu">voir le plan</a></p>
         </div>
         <div class="card">
           <span class="ix">quand</span>
           <div class="nm">7j/7 · 12h à 22h</div>
           <p class="desc">midi et soir, service continu<br />premier arrivé, premier servi</p>
-          <p class="mt-4"><a class="btn-ghost" href="/v1/contact">voir le détail</a></p>
+          <p class="mt-4"><a class="btn-ghost" href="/v6/lieu">voir le détail</a></p>
         </div>
         <div class="card">
           <span class="ix">comment</span>
           <div class="nm">à emporter uniquement</div>
           <p class="desc">commande au comptoir<br />cb et espèces</p>
-          <p class="mt-4"><a class="btn-ghost" href="/v1/menu">voir le menu</a></p>
+          <p class="mt-4"><a class="btn-ghost" href="/v6/menu">voir le menu</a></p>
         </div>
       </div>
     </div>
@@ -127,26 +143,26 @@
       <p class="eyebrow">/ menu · 03 items</p>
       <h2 class="mt-4">trois burgers, <em>une seule adresse.</em></h2>
       <div class="grid-3 mt-8">
-        <a class="card" href="/v1/menu#burgers">
+        <a class="card" href="/v6/menu#cheeseburger">
           <span class="ix">01</span>
           <div class="nm">cheeseburger</div>
           <p class="desc">boeuf · american cheese · pickles · oignons · laitue · ketchup · moutarde</p>
           <div class="pr">9 €</div>
         </a>
-        <a class="card" href="/v1/menu#burgers">
+        <a class="card" href="/v6/menu#bacon">
           <span class="ix">02</span>
           <div class="nm">bacon</div>
           <p class="desc">boeuf · american cheese · oignons confits · bacon · laitue · sauce nelly's</p>
           <div class="pr">10 €</div>
         </a>
-        <a class="card" href="/v1/menu#burgers">
+        <a class="card" href="/v6/menu#vg">
           <span class="ix">03</span>
           <div class="nm">vg+ <span class="tg">fruits à coque</span></div>
           <p class="desc">falafel · aubergine · american cheese · laitue · sauce fromage blanc</p>
           <div class="pr">9,50 €</div>
         </a>
       </div>
-      <p class="mt-8 text-center"><a class="btn" href="/v1/menu">voir le menu complet</a></p>
+      <p class="mt-8 text-center"><a class="btn" href="/v6/menu">voir le menu complet</a></p>
 
       <div class="meta-strip">
         <span><b>frites</b><br />gras de boeuf · 4 €</span>
@@ -170,7 +186,7 @@
             à deux pas du jardin public, dix minutes à pied de la grande plage. cuisine ouverte,
             plancha en service midi et soir.
           </p>
-          <p class="mt-8"><a class="btn-ghost" href="/v1/biarritz/jardin-public">au jardin public</a></p>
+          <p class="mt-8"><a class="btn-ghost" href="/v6/lieu">voir le lieu</a></p>
         </div>
       </div>
     </div>

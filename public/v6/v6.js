@@ -10,7 +10,7 @@
   var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isCoarsePointer = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  /* ---------------- stars ---------------- */
+  /* ---------------- stars dots (fond, layer fixed) ---------------- */
   function spawnStars(layer, count) {
     if (!layer) return;
     for (var i = 0; i < count; i++) {
@@ -24,6 +24,32 @@
       s.style.width = size + 'px';
       s.style.height = size + 'px';
       layer.appendChild(s);
+    }
+  }
+
+  /* ---------------- sparkles ✦ dorées dans le hero ---------------- */
+  function spawnSparkles(host, count) {
+    if (!host) return;
+    // positions précalées en zones (4 quadrants) pour éviter qu'elles se
+    // superposent au burger central. On évite la zone centrale 35-65 % x/y.
+    function rand(min, max) { return min + Math.random() * (max - min); }
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement('span');
+      s.className = 'sparkle-y';
+      // tirage en croix : on choisit une zone parmi haut/bas/gauche/droite
+      var zone = i % 4;
+      var x, y;
+      if (zone === 0) { x = rand(5, 95); y = rand(5, 28); }       // haut
+      else if (zone === 1) { x = rand(5, 95); y = rand(72, 95); } // bas
+      else if (zone === 2) { x = rand(2, 22); y = rand(20, 80); } // gauche
+      else { x = rand(78, 98); y = rand(20, 80); }                // droite
+      s.style.left = x + '%';
+      s.style.top = y + '%';
+      var size = 10 + Math.random() * 10;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.animationDelay = (Math.random() * 1.2) + 's, ' + (1 + Math.random() * 2) + 's';
+      host.appendChild(s);
     }
   }
 
@@ -118,7 +144,8 @@
 
   /* ---------------- init ---------------- */
   document.addEventListener('DOMContentLoaded', function () {
-    spawnStars(document.querySelector('.stars'), 80);
+    spawnStars(document.querySelector('.stars'), 70);
+    spawnSparkles(document.querySelector('[data-sparkles]'), 12);
     swapToFallback();
     attachBurgerMouse();
   });
