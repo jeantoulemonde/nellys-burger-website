@@ -3,736 +3,417 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Nelly's — Previews</title>
+<title>Nelly's — Previews v3 (explorations stylistiques)</title>
+<meta name="description" content="Vingt-huit one-pagers explorant les courants graphiques contemporains pour Nelly's." />
 <meta name="robots" content="noindex,nofollow" />
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-<link
-  rel="stylesheet"
-  href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap"
-/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;700&display=swap" />
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --ink: #0a0a0a;
-    --bg: #fafafa;
-    --line: rgba(10,10,10,0.12);
-    --muted: #5a5a57;
-    --dim: #807a6e;
+    --bg:        #f6f2e8;
+    --ink:       #0a0a08;
+    --ink-soft:  #2a2820;
+    --ink-muted: #5a5852;
+    --ink-faint: #908d83;
+    --line:        rgba(10, 10, 8, 0.12);
+    --line-strong: rgba(10, 10, 8, 0.28);
+    --yellow:    #f5d442;
+    --yellow-deep:#d9b81c;
+    --shadow:
+      0 1px 0 rgba(255, 255, 255, 0.6) inset,
+      0 1px 2px rgba(58, 50, 32, 0.06),
+      0 12px 28px -12px rgba(58, 50, 32, 0.14);
     --ease: cubic-bezier(0.65, 0, 0.35, 1);
+    --sans: 'Brandon Grotesque', 'Mulish', -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
   }
   html, body {
-    background: var(--bg); color: var(--ink);
-    font-family: 'General Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--yellow-deep); outline-offset: 3px; }
 
-  /* top */
   header.top {
-    padding: 4vh 5vw 3vh;
-    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(246, 242, 232, 0.85);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
     border-bottom: 1px solid var(--line);
+    padding: 1.2rem 5vw;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
   }
   .brand { display: flex; align-items: center; gap: 1rem; }
   .brand-mark {
-    width: 88px; height: 32px;
+    width: 92px; height: 30px;
     background-color: var(--ink);
-    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
+    -webkit-mask-image: url('/media/nelly_s.svg');
+            mask-image: url('/media/nelly_s.svg');
     -webkit-mask-size: contain; mask-size: contain;
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: left center; mask-position: left center;
   }
   .brand-tag {
-    font-family: ui-monospace, monospace; font-size: 10px;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-left: 1rem;
+    border-left: 1px solid var(--line);
   }
-  .count {
-    font-family: ui-monospace, monospace; font-size: 11px;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim);
+  .top-back {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    transition: color 220ms var(--ease);
   }
-  .count b { color: var(--ink); font-weight: 600; }
+  .top-back:hover { color: var(--ink); }
 
-  /* intro */
-  .intro { padding: 8vh 5vw 6vh; max-width: 1280px; margin: 0 auto; }
-  .intro p.eyebrow {
-    font-family: ui-monospace, monospace; font-size: 11px;
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--dim);
-    margin-bottom: 1rem;
+  section.intro {
+    padding: clamp(4rem, 8vw, 7rem) 5vw clamp(3rem, 5vw, 4rem);
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .kicker {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1.4rem;
   }
   .intro h1 {
-    font-weight: 800; font-size: clamp(2.5rem, 6.5vw, 5rem);
-    line-height: 1; letter-spacing: -0.035em;
-    text-transform: lowercase; max-width: 14ch;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 22ch;
   }
+  .intro h1 em { font-style: normal; color: var(--yellow-deep); }
   .intro p.lead {
-    margin-top: 1.5rem; max-width: 48ch;
-    font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.55; color: var(--muted);
-    text-transform: lowercase; font-weight: 500;
+    margin-top: 1.6rem;
+    max-width: 56ch;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(1.05rem, 1.3vw, 1.18rem);
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .count-pill {
+    display: inline-block;
+    margin-top: 1.8rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .count-pill strong { color: var(--ink); font-weight: 700; margin-right: 0.4em; }
+
+  section.block { padding: 0 5vw; max-width: 1280px; margin: 0 auto clamp(4rem, 7vw, 6rem); }
+  .block-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.6rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .block-head h2 {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
   }
 
-  /* grille */
-  .grid {
-    padding: 0 5vw 12vh; max-width: 1400px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr; gap: 1rem;
+  .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .chip {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 0.45rem 0.95rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 220ms var(--ease);
   }
-  @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
-  @media (min-width: 1400px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+  .chip:hover { color: var(--ink); border-color: var(--ink); }
+  .chip.is-active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-  .card {
-    position: relative; aspect-ratio: 4 / 5;
-    border: 1px solid var(--line); text-decoration: none; color: var(--ink);
-    background: var(--bg); overflow: hidden;
+  .previews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  @media (min-width: 640px)  { .previews-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px)  { .previews-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1200px) { .previews-grid { grid-template-columns: repeat(5, 1fr); } }
+
+  .p-card {
     display: flex; flex-direction: column;
-    transition: transform 320ms var(--ease), border-color 320ms var(--ease);
-  }
-  .card:hover { transform: translateY(-4px); border-color: var(--ink); }
-  .card-thumb {
-    flex: 1; border-bottom: 1px solid var(--line); position: relative;
-    overflow: hidden; display: flex; align-items: center; justify-content: center;
-    background: var(--bg);
-  }
-  .card-foot {
-    padding: 1rem 1.1rem;
-    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
-  }
-  .card-id {
-    font-family: ui-monospace, monospace; font-size: 11px;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
-  }
-  .card-title {
-    font-size: 1rem; font-weight: 600; text-transform: lowercase;
-    letter-spacing: -0.01em; line-height: 1.25; flex: 1;
-  }
-  .card-arrow {
-    font-family: ui-monospace, monospace; color: var(--dim);
-    transition: color 200ms var(--ease), transform 200ms var(--ease);
-  }
-  .card:hover .card-arrow { color: var(--ink); transform: translateX(3px); }
-
-  /* thumbs */
-  .thumb {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; text-transform: lowercase; font-weight: 800;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease);
+    overflow: hidden;
     position: relative;
   }
+  .p-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--line-strong); }
+  .p-card[data-hidden] { display: none; }
 
-  /* a — diner ambré */
-  .thumb-a { background: #f4ecd6; color: #0a0a0a; }
-  .thumb-a .w { font-size: clamp(1.6rem, 5vw, 2.8rem); letter-spacing: -0.04em; }
-  .thumb-a .w em { font-style: normal; color: #f0a830; }
-
-  /* b — jour / nuit */
-  .thumb-b { display: grid; grid-template-columns: 1fr 1fr; }
-  .thumb-b > div { display: flex; align-items: center; justify-content: center; padding: 1rem; font-size: clamp(1rem, 2.6vw, 1.5rem); }
-  .thumb-b .day { background: #fafafa; color: #0a0a0a; }
-  .thumb-b .night { background: #0a0a0a; color: #fafafa; }
-
-  /* c — éditorial chrome */
-  .thumb-c { background: linear-gradient(135deg, #e8e8e8 0%, #c4c4c4 100%); color: #0a0a0a; }
-  .thumb-c .w { font-size: clamp(1.6rem, 5vw, 2.6rem); letter-spacing: -0.05em; }
-
-  /* d — pixel diurne */
-  .thumb-d { background: #faf6ec; color: #0a0a0a; }
-  .thumb-d .w { font-family: 'Courier New', monospace; font-size: clamp(1.3rem, 4vw, 2.2rem); letter-spacing: 0; }
-
-  /* e — neon menu */
-  .thumb-e {
-    background: #0a0a0a; color: #ffd967;
-    text-shadow: 0 0 8px #ffd967, 0 0 18px rgba(255, 217, 103, 0.6);
-  }
-  .thumb-e .w { font-size: clamp(1.6rem, 5vw, 2.6rem); letter-spacing: -0.03em; font-style: italic; }
-
-  /* f — sticker collage */
-  .thumb-f { background: #fafafa; color: #0a0a0a; }
-  .thumb-f::before, .thumb-f::after {
-    content: ''; position: absolute; width: 38%; aspect-ratio: 1;
-    border-radius: 50%; border: 1.5px solid #0a0a0a;
-  }
-  .thumb-f::before { top: 12%; left: 8%; transform: rotate(-8deg); background: #0a0a0a; }
-  .thumb-f::after { bottom: 12%; right: 8%; transform: rotate(12deg); }
-  .thumb-f .w { font-size: clamp(1.2rem, 3.6vw, 1.8rem); position: relative; z-index: 2; }
-
-  /* g — magazine cover */
-  .thumb-g { background: #fafafa; color: #0a0a0a; border-top: 14px solid #0a0a0a; padding: 1rem; align-items: flex-start; justify-content: space-between; }
-  .thumb-g .w { font-size: clamp(1.5rem, 4.5vw, 2.2rem); letter-spacing: -0.04em; }
-  .thumb-g .num { font-family: ui-monospace, monospace; font-size: 9px; color: #5a5a57; letter-spacing: 0.18em; text-transform: uppercase; }
-
-  /* h — risograph poster */
-  .thumb-h {
-    background: #f4ecd6;
-    background-image:
-      repeating-linear-gradient(0deg, rgba(176, 50, 50, 0.08) 0 1px, transparent 1px 4px),
-      repeating-linear-gradient(90deg, rgba(50, 100, 176, 0.06) 0 1px, transparent 1px 4px);
-    color: #b03232; font-style: italic;
-  }
-  .thumb-h .w { font-size: clamp(1.5rem, 4.5vw, 2.2rem); letter-spacing: -0.02em; }
-
-  /* i — koppen calm (cream + yellow accent) */
-  .thumb-i { background: #f1ebdc; color: #141210; }
-  .thumb-i .w { font-size: clamp(1.5rem, 4.5vw, 2.3rem); letter-spacing: -0.04em; }
-  .thumb-i .w em { font-style: normal; color: #f3c530; -webkit-text-stroke: 0.5px #141210; }
-
-  /* j — koppen index (cream + monospace columns) */
-  .thumb-j { background: #ede5d2; color: #161311; padding: 1rem; flex-direction: column; align-items: stretch; gap: 0.3rem; justify-content: center; }
-  .thumb-j .row { display: grid; grid-template-columns: 1.5rem 1fr 1.5rem; gap: 0.6rem; align-items: baseline; font-size: clamp(0.7rem, 1.8vw, 0.95rem); font-weight: 600; padding: 0.25rem 0; border-bottom: 1px solid #cfc6b2; }
-  .thumb-j .row .n { font-family: ui-monospace, monospace; font-size: 0.55em; color: #6c635a; font-weight: 400; letter-spacing: 0.06em; }
-  .thumb-j .row .p { font-family: ui-monospace, monospace; font-size: 0.5em; color: #6c635a; font-weight: 400; text-align: right; }
-
-  /* k — koppen sequence (mini frames) */
-  .thumb-k { background: #f1ebdc; padding: 1rem; align-items: stretch; flex-direction: column; justify-content: center; gap: 0.4rem; }
-  .thumb-k .frame { background: #fff; border: 1px solid #cfc6b2; padding: 0.4rem 0.6rem; font-size: clamp(0.65rem, 1.6vw, 0.85rem); display: flex; justify-content: space-between; align-items: baseline; color: #161311; }
-  .thumb-k .frame .n { font-family: ui-monospace, monospace; font-size: 0.6em; color: #6c635a; }
-
-  /* l — dash stamp (yellow badge) */
-  .thumb-l { background: #1a1a1a; color: #0a0a0a; }
-  .thumb-l .stamp { background: #efc12b; padding: 0.4rem 0.8rem; transform: rotate(-6deg); border-radius: 2px; font-size: clamp(1.2rem, 3.5vw, 1.8rem); font-weight: 800; letter-spacing: -0.02em; }
-
-  /* m — dash mosaic (block punch) */
-  .thumb-m { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0; }
-  .thumb-m > div { display: flex; align-items: center; justify-content: center; font-size: clamp(0.8rem, 2.2vw, 1.15rem); font-weight: 800; }
-  .thumb-m .b1 { background: #efc12b; color: #0a0a0a; }
-  .thumb-m .b2 { background: #0a0a0a; color: #efc12b; }
-  .thumb-m .b3 { background: #0a0a0a; color: #fafafa; }
-  .thumb-m .b4 { background: #fafafa; color: #0a0a0a; border: 1px solid #cfc6b2; }
-
-  /* n — dash diner card (stacked cards) */
-  .thumb-n { background: #1f1c18; padding: 1rem; flex-direction: column; align-items: stretch; gap: 0.35rem; justify-content: center; }
-  .thumb-n .card-mini { background: #efc12b; color: #0a0a0a; padding: 0.4rem 0.7rem; font-size: clamp(0.65rem, 1.8vw, 0.95rem); font-weight: 800; display: flex; justify-content: space-between; }
-  .thumb-n .card-mini.alt { background: #fff5e8; }
-  .thumb-n .card-mini .p { font-family: ui-monospace, monospace; font-size: 0.65em; font-weight: 500; }
-
-  /* o — koppen v2 (serif massif) */
-  .thumb-o { background: #f4ecd6; color: #161311; }
-  .thumb-o .w { font-family: 'Times New Roman', Georgia, serif; font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: -0.04em; font-style: italic; font-weight: 400; }
-
-  /* p — dash v2 (chunky display + marquee) */
-  .thumb-p { background: #efc12b; color: #0a0a0a; padding: 0; align-items: stretch; flex-direction: column; justify-content: space-between; }
-  .thumb-p .scroll-bar { background: #0a0a0a; color: #efc12b; padding: 0.4rem 1rem; font-family: ui-monospace, monospace; font-size: clamp(0.65rem, 1.8vw, 0.85rem); letter-spacing: 0.18em; text-transform: uppercase; overflow: hidden; white-space: nowrap; }
-  .thumb-p .center { flex: 1; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: clamp(2rem, 6vw, 3rem); letter-spacing: -0.06em; }
-
-  /* q — manifeste mono */
-  .thumb-q { background: #fafafa; color: #0a0a0a; }
-  .thumb-q .w { font-size: clamp(2rem, 5.5vw, 3rem); letter-spacing: -0.05em; }
-  .thumb-q .w::after { content: ''; display: block; width: 28%; height: 1px; background: #0a0a0a; margin: 0.4rem auto 0; }
-
-  /* r — split asymétrique */
-  .thumb-r { display: grid; grid-template-columns: 1fr 1.4fr; }
-  .thumb-r .col-l { background: #fafafa; color: #0a0a0a; padding: 1rem; display: flex; flex-direction: column; justify-content: center; gap: 0.4rem; font-size: clamp(0.75rem, 1.8vw, 1rem); font-weight: 600; }
-  .thumb-r .col-l span { color: #5a5a57; }
-  .thumb-r .col-l span.active { color: #0a0a0a; }
-  .thumb-r .col-l span.active::before { content: '— '; }
-  .thumb-r .col-r { background: #0a0a0a; color: #fafafa; display: flex; align-items: center; justify-content: center; font-size: clamp(1.2rem, 3.5vw, 1.8rem); padding: 0.5rem; text-align: center; }
-
-  /* === 10 nouvelles (5 courants × 2) === */
-
-  /* a1 — acid blob */
-  .thumb-a1 { background: radial-gradient(ellipse at 50% 40%, #0d1023 0%, #06070d 70%); }
-  .thumb-a1 .blob { width: 60%; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(135deg, #e8dffa, #5b8fd4 50%, #8b6cb8); filter: drop-shadow(0 10px 30px rgba(140,108,200,0.5)); }
-
-  /* a2 — chrome multi */
-  .thumb-a2 { background: #08090f; position: relative; overflow: hidden; }
-  .thumb-a2::before, .thumb-a2::after { content: ''; position: absolute; border-radius: 50%; background: linear-gradient(135deg,#a8b8e0,#5b8fd4,#8b6cb8); }
-  .thumb-a2::before { width: 38%; aspect-ratio: 1; top: 12%; left: 8%; }
-  .thumb-a2::after { width: 28%; aspect-ratio: 1; bottom: 12%; right: 14%; filter: blur(2px); }
-  .thumb-a2 .w { position: relative; z-index: 2; color: #dcd1f8; font-weight: 700; font-size: clamp(1.4rem, 4vw, 2rem); letter-spacing: -0.04em; }
-
-  /* y1 — y2k globe */
-  .thumb-y1 { background: linear-gradient(180deg, #6c9bd8 0%, #2a4d8a 70%, #0e1f3c 100%); position: relative; }
-  .thumb-y1 .globe { width: 64%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(255,255,255,0.6); position: relative; box-shadow: 0 0 22px rgba(255,255,255,0.2); }
-  .thumb-y1 .globe::before, .thumb-y1 .globe::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(255,255,255,0.5); }
-  .thumb-y1 .globe::before { transform: scaleY(0.3); }
-  .thumb-y1 .globe::after { transform: scaleX(0.3); }
-  .thumb-y1 .pin { position: absolute; top: 38%; left: 42%; width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff; }
-
-  /* y2 — aqua OS */
-  .thumb-y2 {
-    background:
-      radial-gradient(ellipse at 15% 10%, rgba(255,255,255,0.5), transparent 50%),
-      linear-gradient(180deg, #bcd6f3 0%, #6c9bd8 50%, #2a4d8a 100%);
-    padding: 0.8rem; flex-direction: column; align-items: stretch; gap: 0.4rem; justify-content: center;
-  }
-  .thumb-y2 .win { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55)); border-radius: 8px; padding: 0.4rem 0.6rem; box-shadow: 0 4px 10px rgba(14,31,60,0.2); font-size: clamp(0.6rem, 1.5vw, 0.8rem); font-weight: 600; color: #0e1f3c; text-transform: lowercase; }
-  .thumb-y2 .win.center { transform: translateY(-3px); }
-
-  /* t1 — techno grid */
-  .thumb-t1 { background: #000418; color: #00e7ff; position: relative; overflow: hidden; }
-  .thumb-t1::before {
-    content: ''; position: absolute; inset: 50% 0 0 0;
-    background:
-      repeating-linear-gradient(90deg, rgba(0,231,255,0.5) 0 1px, transparent 1px 22px),
-      repeating-linear-gradient(0deg, rgba(0,231,255,0.5) 0 1px, transparent 1px 22px);
-    transform: perspective(200px) rotateX(50deg);
-    transform-origin: top;
-  }
-  .thumb-t1 .w { position: relative; z-index: 2; font-size: clamp(1.5rem, 4vw, 2.2rem); letter-spacing: -0.04em; text-shadow: 0 0 8px #00e7ff; }
-
-  /* t2 — wireframe burger */
-  .thumb-t2 { background: #000418; padding: 1rem; }
-  .thumb-t2 svg { width: 70%; height: 70%; }
-  .thumb-t2 svg path, .thumb-t2 svg ellipse { stroke: #00e7ff; stroke-width: 1.2; fill: none; filter: drop-shadow(0 0 4px rgba(0,231,255,0.6)); }
-
-  /* c1 — sparkles comet */
-  .thumb-c1 { background: #fafafa; color: #0a0a0a; position: relative; overflow: hidden; }
-  .thumb-c1 .w { font-size: clamp(1.4rem, 4vw, 2rem); letter-spacing: -0.04em; z-index: 2; position: relative; }
-  .thumb-c1 .sp { position: absolute; width: 8px; height: 8px; }
-  .thumb-c1 .sp::before, .thumb-c1 .sp::after { content: ''; position: absolute; left: 50%; top: 50%; background: #0a0a0a; transform: translate(-50%, -50%); }
-  .thumb-c1 .sp::before { width: 1px; height: 100%; }
-  .thumb-c1 .sp::after { width: 100%; height: 1px; }
-  .thumb-c1 .sp.s1 { top: 12%; left: 14%; transform: scale(1.2); }
-  .thumb-c1 .sp.s2 { top: 18%; right: 16%; transform: scale(0.8); }
-  .thumb-c1 .sp.s3 { bottom: 18%; left: 18%; transform: scale(1); }
-  .thumb-c1 .sp.s4 { bottom: 14%; right: 14%; transform: scale(1.3); }
-
-  /* c2 — tribal sigil */
-  .thumb-c2 { background: #fff; color: #0a0a0a; position: relative; }
-  .thumb-c2 svg { width: 78%; height: 78%; }
-  .thumb-c2 svg path { stroke: #0a0a0a; stroke-width: 0.8; fill: none; stroke-linejoin: round; }
-
-  /* b1 — brutalist times */
-  .thumb-b1 { background: #fff; color: #000; padding: 0.8rem; flex-direction: column; align-items: stretch; justify-content: space-between; border-top: 8px solid #000; }
-  .thumb-b1 .w { font-family: 'Times New Roman', serif; font-weight: bold; font-size: clamp(1.6rem, 5vw, 2.4rem); letter-spacing: -0.03em; line-height: 0.85; }
-  .thumb-b1 .meta-mini { font-family: ui-monospace, monospace; font-size: clamp(0.5rem, 1.2vw, 0.7rem); border-top: 2px solid #000; padding-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
-
-  /* v4 — site complet (cyber-sigilism) */
-  .thumb-v4 { background: #fff; color: #0a0a0a; position: relative; overflow: hidden; padding: 0.8rem; align-items: stretch; flex-direction: column; justify-content: space-between; }
-  .thumb-v4 svg.const { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5; }
-  .thumb-v4 svg.const line { stroke: #0a0a0a; stroke-width: 0.4; }
-  .thumb-v4 svg.const circle { fill: #0a0a0a; }
-  .thumb-v4 .sp { position: absolute; width: 6px; height: 6px; }
-  .thumb-v4 .sp::before, .thumb-v4 .sp::after { content: ''; position: absolute; left: 50%; top: 50%; background: #0a0a0a; transform: translate(-50%, -50%); }
-  .thumb-v4 .sp::before { width: 1px; height: 100%; } .thumb-v4 .sp::after { width: 100%; height: 1px; }
-  .thumb-v4 .sp.s1 { top: 14%; left: 12%; } .thumb-v4 .sp.s2 { top: 16%; right: 14%; transform: scale(0.8); } .thumb-v4 .sp.s3 { bottom: 18%; left: 14%; transform: scale(1.2); }
-  .thumb-v4 .w { position: relative; z-index: 2; font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800; letter-spacing: -0.04em; text-align: center; }
-  .thumb-v4 .badge { position: relative; z-index: 2; font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: #5a5a57; text-align: center; }
-
-  /* card v4 stand-out : span 2 cols on grid */
-  .card.card-v4 { border: 1.5px solid #0a0a0a; }
-  .card.card-v4 .card-id { color: #0a0a0a; font-weight: 700; }
-
-  /* card v8 — Paul & Bohne x carreaux écrus (home + vidéo hero) */
-  .card.card-v8 { border: 1.5px solid #0a0a08; }
-  .card.card-v8 .card-id { color: #0a0a08; font-weight: 700; }
-  .thumb-v8 {
-    background-color: #d8cdb8;
-    background-image: url('/v8/assets/tiles.svg');
-    background-size: 70%;
-    background-repeat: repeat;
-    color: #0a0a08; position: relative; overflow: hidden;
-    padding: 0.8rem; align-items: stretch; flex-direction: column; justify-content: space-between;
-  }
-  .thumb-v8::after {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 60%, transparent 30%, rgba(12,12,8,0.18) 100%);
-    pointer-events: none;
-  }
-  .thumb-v8 .play-mini {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 44%; aspect-ratio: 1; border-radius: 50%;
-    background: rgba(250, 247, 240, 0.92);
-    box-shadow: 0 8px 24px -8px rgba(12,12,8,0.4), 0 1px 0 rgba(255,255,255,0.6) inset;
+  .p-thumb {
+    aspect-ratio: 4 / 3;
+    position: relative;
     display: flex; align-items: center; justify-content: center;
-    z-index: 3;
+    overflow: hidden;
   }
-  .thumb-v8 .play-mini::before {
-    content: ''; width: 0; height: 0;
-    border-left: 16px solid #0a0a08;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    margin-left: 5px;
-  }
-  .thumb-v8 .yellow-dot {
-    position: absolute; top: 14%; right: 16%;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #f5d442;
-    box-shadow: 0 0 10px rgba(245, 212, 66, 0.6);
-    z-index: 3;
-  }
-  .thumb-v8 .badge {
-    position: relative; z-index: 4;
-    font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: rgba(12,12,8,0.65); text-align: center;
+  .p-id {
+    position: absolute; bottom: 0.5rem; left: 0.7rem;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: inherit;
+    z-index: 5;
+    text-transform: uppercase;
   }
 
-  /* card v6 — y2k lumineux (home + burger 3D) */
-  .card.card-v6 { border: 1.5px solid #d9a82a; }
-  .card.card-v6 .card-id { color: #d9a82a; font-weight: 700; }
-  .thumb-v6 {
-    background: radial-gradient(ellipse at 50% -10%, rgba(255,217,103,0.55) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 110%, rgba(184,227,243,0.35) 0%, transparent 55%),
-                #faf7f0;
-    color: #15181d; position: relative; overflow: hidden;
-    padding: 0.8rem; align-items: stretch; flex-direction: column; justify-content: space-between;
+  .p-thumb[data-courant="acid"]      { background: linear-gradient(135deg, #cfd5e0 0%, #8a9bb8 50%, #d8def0 100%); color: #0a0a08; }
+  .p-thumb[data-courant="acid"]::after {
+    content: ''; width: 44%; aspect-ratio: 1; border-radius: 50%;
+    background: linear-gradient(135deg, #ffffff 0%, #6f7d9c 60%, #1a2940 100%);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 4px 10px rgba(255, 255, 255, 0.5);
   }
-  .thumb-v6 .burger-icon {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 56%; aspect-ratio: 1;
-    background: radial-gradient(circle at 35% 30%, #f7b86a, #c87a2a 55%, #5c3812);
+  .p-thumb[data-courant="brutalist"] { background: #fafafa; color: #0a0a08; }
+  .p-thumb[data-courant="brutalist"]::after {
+    content: 'NELLY\27S'; font-family: 'Times New Roman', serif;
+    font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em;
+  }
+  .p-thumb[data-courant="brutalist"]::before {
+    content: ''; position: absolute; inset: 12% 12% auto 12%; height: 3px; background: #0a0a08;
+  }
+  .p-thumb[data-courant="cybersigil"]{ background: #fafafa; color: #0a0a08; }
+  .p-thumb[data-courant="cybersigil"]::after {
+    content: '★'; font-size: 2.8rem; line-height: 1; color: #0a0a08;
+  }
+  .p-thumb[data-courant="cybersigil"]::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 18% 24%, #0a0a08 1.2px, transparent 1.2px),
+      radial-gradient(circle at 82% 76%, #0a0a08 1.5px, transparent 1.5px),
+      radial-gradient(circle at 75% 22%, #0a0a08 1px, transparent 1px),
+      radial-gradient(circle at 22% 78%, #0a0a08 1px, transparent 1px);
+  }
+  .p-thumb[data-courant="diner"]     { background: #14110a; color: #ffb648; }
+  .p-thumb[data-courant="diner"]::after {
+    content: 'OPEN'; font-family: var(--sans); font-weight: 700;
+    font-size: 1.6rem; letter-spacing: 0.16em; color: #ffb648;
+    text-shadow: 0 0 8px rgba(255, 182, 72, 0.65), 0 0 16px rgba(255, 182, 72, 0.4);
+  }
+  .p-thumb[data-courant="editorial"] { background: linear-gradient(135deg, #fafaf7 0%, #f0eadc 100%); color: #0a0a08; }
+  .p-thumb[data-courant="editorial"]::after {
+    content: 'nelly\27s'; font-family: 'Times New Roman', serif;
+    font-style: italic; font-size: 1.8rem; font-weight: 400; letter-spacing: -0.02em;
+  }
+  .p-thumb[data-courant="pixel"]     { background: #1a1a1a; color: #fff; }
+  .p-thumb[data-courant="pixel"]::after {
+    content: ''; width: 60%; height: 60%;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.1) 5px 6px),
+      repeating-linear-gradient(90deg, #f5d442 0 8px, #d9b81c 8px 16px);
+    border: 2px solid #0a0a08;
+  }
+  .p-thumb[data-courant="riso"]      { background: #f5e1c8; color: #c83b3b; }
+  .p-thumb[data-courant="riso"]::after {
+    content: 'RISO'; font-family: var(--sans); font-weight: 700;
+    font-size: 1.7rem; letter-spacing: 0.06em; color: #c83b3b;
+    mix-blend-mode: multiply;
+  }
+  .p-thumb[data-courant="riso"]::before {
+    content: ''; position: absolute; right: 14%; top: 18%;
+    width: 36%; aspect-ratio: 1; background: #f5d442; border-radius: 50%;
+    mix-blend-mode: multiply; opacity: 0.7;
+  }
+  .p-thumb[data-courant="techno"]    { background: #0a0a0a; color: #5af278; }
+  .p-thumb[data-courant="techno"]::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg,  rgba(90, 242, 120, 0.12) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(90deg, rgba(90, 242, 120, 0.12) 0 1px, transparent 1px 18px);
+  }
+  .p-thumb[data-courant="techno"]::after {
+    content: '◢'; font-size: 2.4rem; line-height: 1; color: #5af278;
+  }
+  .p-thumb[data-courant="y2k"]       { background: radial-gradient(circle at 50% 30%, #b8e3f3 0%, #5b94be 100%); color: #fff; }
+  .p-thumb[data-courant="y2k"]::after {
+    content: ''; width: 56%; aspect-ratio: 1; border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.4) inset, 0 0 22px rgba(184, 227, 243, 0.5);
+  }
+  .p-thumb[data-courant="y2k"]::before {
+    content: ''; position: absolute; inset: 34%;
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 50%;
-    box-shadow:
-      inset 0 6px 14px rgba(255,255,255,0.45),
-      inset 0 -10px 20px rgba(60,30,5,0.55),
-      0 12px 26px -8px rgba(217,168,42,0.6);
-    animation: tv6Float 3s ease-in-out infinite;
+    transform: scaleY(0.35);
   }
-  @keyframes tv6Float {
-    0%, 100% { transform: translate(-50%, calc(-50% - 4px)); }
-    50% { transform: translate(-50%, calc(-50% + 4px)); }
+  .p-thumb[data-courant="pixel"] .p-id,
+  .p-thumb[data-courant="diner"] .p-id,
+  .p-thumb[data-courant="techno"] .p-id,
+  .p-thumb[data-courant="y2k"] .p-id { color: #fafafa; }
+
+  .p-body {
+    padding: 0.7rem 0.85rem 0.85rem;
+    border-top: 1px solid var(--line);
   }
-  .thumb-v6 .burger-icon::before {
-    content: ''; position: absolute; inset: 12% 6% 18% 6%;
-    background: linear-gradient(180deg, #f5d442 0%, #b88820 100%);
-    border-radius: 6px;
-    box-shadow: 0 2px 0 rgba(0,0,0,0.18);
+  .p-tag {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.3rem;
   }
-  .thumb-v6 .star-mini {
-    position: absolute; width: 2px; height: 2px; background: #d9a82a; border-radius: 50%;
-    box-shadow: 0 0 6px #d9a82a, 0 0 12px rgba(255,217,103,0.6);
-  }
-  .thumb-v6 .star-mini.s1 { top: 16%; left: 20%; }
-  .thumb-v6 .star-mini.s2 { top: 18%; right: 16%; }
-  .thumb-v6 .star-mini.s3 { bottom: 18%; left: 18%; }
-  .thumb-v6 .star-mini.s4 { bottom: 22%; right: 20%; }
-  .thumb-v6 .badge {
-    position: relative; z-index: 4;
-    font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: rgba(21,24,29,0.5); text-align: center;
+  .p-title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.88rem;
+    line-height: 1.3;
+    color: var(--ink);
   }
 
-  /* card v5 — y2k dark site */
-  .card.card-v5 { border: 1.5px solid #2a4d8a; }
-  .card.card-v5 .card-id { color: #2a4d8a; font-weight: 700; }
-  .thumb-v5 {
-    background: radial-gradient(ellipse at 50% -20%, rgba(108,184,255,0.18) 0%, transparent 55%), #050814;
-    color: #f0f6ff; position: relative; overflow: hidden;
-    padding: 0.8rem; align-items: stretch; flex-direction: column; justify-content: space-between;
-  }
-  .thumb-v5 .globe-mini {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 64%; aspect-ratio: 1; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.55);
-    box-shadow: 0 0 22px rgba(108,184,255,0.25), 0 0 4px rgba(255,255,255,0.3) inset;
-  }
-  .thumb-v5 .globe-mini::before, .thumb-v5 .globe-mini::after {
-    content: ''; position: absolute; inset: 0; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.4);
-  }
-  .thumb-v5 .globe-mini::before { transform: scaleY(0.28); }
-  .thumb-v5 .globe-mini::after { transform: scaleX(0.28); }
-  .thumb-v5 .pin-mini {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 30%; height: 11%;
-    background: #fff;
-    -webkit-mask-image: url('/media/nelly_s.svg'); mask-image: url('/media/nelly_s.svg');
-    -webkit-mask-size: contain; mask-size: contain;
-    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-    -webkit-mask-position: center; mask-position: center;
-    filter: drop-shadow(0 0 6px rgba(143,217,255,0.8));
-    z-index: 3;
-  }
-  .thumb-v5 .star-mini {
-    position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%;
-    box-shadow: 0 0 6px #fff, 0 0 12px rgba(143,217,255,0.5);
-  }
-  .thumb-v5 .star-mini.s1 { top: 18%; left: 18%; }
-  .thumb-v5 .star-mini.s2 { top: 14%; right: 20%; }
-  .thumb-v5 .star-mini.s3 { bottom: 20%; left: 24%; }
-  .thumb-v5 .star-mini.s4 { bottom: 24%; right: 18%; }
-  .thumb-v5 .badge {
-    position: relative; z-index: 4;
-    font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: rgba(240,246,255,0.55); text-align: center;
-  }
-
-  /* b2 — brutalist arial */
-  .thumb-b2 { background: #fff; padding: 0.8rem; flex-direction: column; align-items: stretch; justify-content: center; position: relative; overflow: hidden; }
-  .thumb-b2::before { content: ''; position: absolute; inset: 0; background-image: url('/media/nelly_s.svg'); background-size: 70px 27px; background-repeat: repeat; opacity: 0.15; filter: contrast(2); }
-  .thumb-b2 .w {
-    position: relative; z-index: 2;
-    font-family: Arial Black, sans-serif; font-weight: 900;
-    font-size: clamp(1.8rem, 5.5vw, 2.8rem); letter-spacing: -0.05em; line-height: 0.85;
-  }
-  .thumb-b2 .w .blk { background: #000; color: #fff; padding: 0 0.1em; display: inline-block; transform: rotate(-2deg); }
-
-  /* footer */
   footer.bottom {
     border-top: 1px solid var(--line);
-    padding: 3vh 5vw;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 1rem;
-    font-family: ui-monospace, monospace; font-size: 10px;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim);
+    padding: 2.4rem 5vw;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    max-width: 1280px;
+    margin: 0 auto;
   }
-  footer.bottom a { color: var(--ink); text-decoration: none; }
-  footer.bottom a:hover { opacity: 0.6; }
 </style>
 </head>
 <body>
+
 <header class="top">
-  <div class="brand">
-    <div class="brand-mark" aria-label="Nelly's"></div>
-    <span class="brand-tag">previews · biarritz</span>
-  </div>
-  <span class="count"><b>29</b> directions</span>
+  <a class="brand" href="/" aria-label="Nelly's — dashboard">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-tag">previews v3</span>
+  </a>
+  <a class="top-back" href="/">← retour au dashboard</a>
 </header>
 
 <section class="intro">
-  <p class="eyebrow">dashboard · v3</p>
-  <h1>vingt-neuf directions, une marque.</h1>
+  <p class="kicker">Galerie · explorations stylistiques</p>
+  <h1>Vingt-huit one-pagers, <em>neuf courants</em>.</h1>
   <p class="lead">
-    chaque carte ouvre une preview indépendante de la homepage. cliquez pour
-    naviguer, revenez ici via le lien « dashboard » en haut à gauche de chaque
-    preview.
+    Explorations rapides des principaux courants graphiques contemporains, conçues
+    avant l'aboutissement en versions complètes. Filtre par courant pour resserrer
+    la sélection ; « Tous » affiche les 28.
   </p>
+  <span class="count-pill"><strong>28</strong> previews · v3</span>
 </section>
 
-<section class="grid" aria-label="liste des previews">
-  <a class="card card-v8" href="/v8" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-v8">
-        <span class="badge">home · vidéo hero</span>
-        <span class="yellow-dot" aria-hidden="true"></span>
-        <div class="play-mini" aria-hidden="true"></div>
-        <span class="badge" style="margin-top: auto;">v8 · paul & bohne x carreaux</span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">v8</span><span class="card-title">home (paul & bohne x carreaux écrus)</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card card-v6" href="/v6/" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-v6">
-        <span class="star-mini s1"></span><span class="star-mini s2"></span>
-        <span class="star-mini s3"></span><span class="star-mini s4"></span>
-        <div class="burger-icon" aria-hidden="true"></div>
-        <span class="badge">home · burger 3d</span>
-        <span class="badge" style="margin-top: auto;">v6 · y2k lumineux</span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">v6</span><span class="card-title">home exploration (y2k lumineux)</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card card-v5" href="/v5/" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-v5">
-        <span class="star-mini s1"></span><span class="star-mini s2"></span>
-        <span class="star-mini s3"></span><span class="star-mini s4"></span>
-        <div class="globe-mini"></div>
-        <div class="pin-mini" aria-hidden="true"></div>
-        <span class="badge">site · multi-pages</span>
-        <span class="badge" style="margin-top: auto;">v5 · y2k dark</span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">v5</span><span class="card-title">site complet (y2k dark)</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card card-v4" href="/v4/" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-v4">
-        <span class="sp s1"></span><span class="sp s2"></span><span class="sp s3"></span>
-        <svg class="const" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          <line x1="50" y1="18" x2="82" y2="28" /><line x1="82" y1="28" x2="86" y2="50" />
-          <line x1="86" y1="50" x2="82" y2="72" /><line x1="82" y1="72" x2="50" y2="82" />
-          <line x1="50" y1="82" x2="18" y2="72" /><line x1="18" y1="72" x2="14" y2="50" />
-          <line x1="14" y1="50" x2="18" y2="28" /><line x1="18" y1="28" x2="50" y2="18" />
-          <line x1="50" y1="18" x2="50" y2="50" /><line x1="86" y1="50" x2="50" y2="50" />
-          <line x1="50" y1="82" x2="50" y2="50" /><line x1="14" y1="50" x2="50" y2="50" />
-          <circle cx="50" cy="18" r="1.2" /><circle cx="82" cy="28" r="1.2" />
-          <circle cx="86" cy="50" r="1.2" /><circle cx="82" cy="72" r="1.2" />
-          <circle cx="50" cy="82" r="1.2" /><circle cx="18" cy="72" r="1.2" />
-          <circle cx="14" cy="50" r="1.2" /><circle cx="18" cy="28" r="1.2" />
-          <circle cx="50" cy="50" r="1.5" />
-        </svg>
-        <span class="badge">site · multi-pages</span>
-        <span class="w">come and get your fingers <em style="font-family: serif; font-weight: 400;">salty.</em></span>
-        <span class="badge">v4 · cyber-sigilism</span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">v4</span><span class="card-title">site complet (cyber-sigilism)</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/a" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-a"><span class="w">salty <em>fingers.</em></span></div></div>
-    <div class="card-foot"><span class="card-id">a</span><span class="card-title">diner ambré</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/b" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-b"><div class="day">jour</div><div class="night">nuit</div></div></div>
-    <div class="card-foot"><span class="card-id">b</span><span class="card-title">jour / nuit</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/c" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-c"><span class="w">éditorial</span></div></div>
-    <div class="card-foot"><span class="card-id">c</span><span class="card-title">éditorial chrome</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/d" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-d"><span class="w">nelly's</span></div></div>
-    <div class="card-foot"><span class="card-id">d</span><span class="card-title">pixel diurne</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/e" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-e"><span class="w">nelly's</span></div></div>
-    <div class="card-foot"><span class="card-id">e</span><span class="card-title">neon menu</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/f" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-f"><span class="w">collage</span></div></div>
-    <div class="card-foot"><span class="card-id">f</span><span class="card-title">sticker collage</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/g" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-g"><span class="num">issue 01</span><span class="w">cover.</span></div></div>
-    <div class="card-foot"><span class="card-id">g</span><span class="card-title">magazine cover</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/h" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-h"><span class="w">salty.</span></div></div>
-    <div class="card-foot"><span class="card-id">h</span><span class="card-title">risograph poster</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/i" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-i"><span class="w">salty <em>fingers.</em></span></div></div>
-    <div class="card-foot"><span class="card-id">i</span><span class="card-title">koppen calm</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/j" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-j">
-        <div class="row"><span class="n">01</span><span>cheeseburger</span><span class="p">9 €</span></div>
-        <div class="row"><span class="n">02</span><span>bacon</span><span class="p">10 €</span></div>
-        <div class="row"><span class="n">03</span><span>vg+</span><span class="p">9,5 €</span></div>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">j</span><span class="card-title">koppen index</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/k" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-k">
-        <div class="frame"><span class="n">i.</span><span>smash</span></div>
-        <div class="frame"><span class="n">ii.</span><span>croûte</span></div>
-        <div class="frame"><span class="n">iii.</span><span>sac kraft</span></div>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">k</span><span class="card-title">koppen sequence</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/l" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-l"><span class="stamp">nelly's</span></div></div>
-    <div class="card-foot"><span class="card-id">l</span><span class="card-title">dash stamp</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/m" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-m"><div class="b1">3</div><div class="b2">€</div><div class="b3">7j/7</div><div class="b4">€</div></div></div>
-    <div class="card-foot"><span class="card-id">m</span><span class="card-title">dash mosaic</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/n" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-n">
-        <div class="card-mini"><span>cheeseburger</span><span class="p">9 €</span></div>
-        <div class="card-mini alt"><span>bacon</span><span class="p">10 €</span></div>
-        <div class="card-mini"><span>vg+</span><span class="p">9,5 €</span></div>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">n</span><span class="card-title">dash diner card</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/o" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-o"><span class="w">salty.</span></div></div>
-    <div class="card-foot"><span class="card-id">o</span><span class="card-title">koppen v2</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/p" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-p">
-        <div class="scroll-bar">salty ◆ fingers ◆ salty</div>
-        <div class="center">nelly's</div>
-        <div class="scroll-bar">7j/7 ◆ 12h-22h ◆ 7j/7</div>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">p</span><span class="card-title">dash v2</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/q" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-q"><span class="w">nelly's</span></div></div>
-    <div class="card-foot"><span class="card-id">q</span><span class="card-title">manifeste mono</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/r" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-r"><div class="col-l"><span>burgers</span><span class="active">slogan</span><span>ici</span></div><div class="col-r">salty.</div></div></div>
-    <div class="card-foot"><span class="card-id">r</span><span class="card-title">split asymétrique</span><span class="card-arrow">↗</span></div>
-  </a>
+<section class="block">
+  <div class="block-head">
+    <h2>Toutes les previews</h2>
+  </div>
 
-  <!-- ACID GRAPHICS -->
-  <a class="card" href="/previews/a1" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-a1"><div class="blob"></div></div></div>
-    <div class="card-foot"><span class="card-id">A1</span><span class="card-title">acid chrome blob</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/a2" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-a2"><span class="w">liquid chrome.</span></div></div>
-    <div class="card-foot"><span class="card-id">A2</span><span class="card-title">liquid chrome multi</span><span class="card-arrow">↗</span></div>
-  </a>
+  <div class="chips" role="tablist" aria-label="Filtrer par courant graphique">
+    <button class="chip is-active" data-chip="all" type="button">Tous</button>
+    <button class="chip" data-chip="acid" type="button">Acid</button>
+    <button class="chip" data-chip="y2k" type="button">Y2K</button>
+    <button class="chip" data-chip="techno" type="button">Techno</button>
+    <button class="chip" data-chip="cybersigil" type="button">Cyber-sigil</button>
+    <button class="chip" data-chip="brutalist" type="button">Brutalist</button>
+  </div>
 
-  <!-- Y2K -->
-  <a class="card" href="/previews/y1" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-y1"><div class="globe"></div><div class="pin"></div></div></div>
-    <div class="card-foot"><span class="card-id">Y1</span><span class="card-title">y2k wireframe globe</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/y2" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-y2">
-        <div class="win">nelly's.app</div>
-        <div class="win center">menu.txt</div>
-        <div class="win">à propos</div>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">Y2</span><span class="card-title">y2k aqua OS</span><span class="card-arrow">↗</span></div>
-  </a>
-
-  <!-- TECHNO-FUTURISME -->
-  <a class="card" href="/previews/t1" target="_blank" rel="noopener">
-    <div class="card-thumb"><div class="thumb thumb-t1"><span class="w">nelly's</span></div></div>
-    <div class="card-foot"><span class="card-id">T1</span><span class="card-title">techno grid horizon</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/t2" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-t2">
-        <svg viewBox="0 0 200 160">
-          <path d="M30,90 C30,60 70,40 100,40 C130,40 170,60 170,90 L30,90 Z" />
-          <path d="M35,100 L165,100 L160,110 L40,110 Z" />
-          <ellipse cx="100" cy="120" rx="70" ry="10" />
-          <path d="M30,130 L170,130 C170,150 140,160 100,160 C60,160 30,150 30,130 Z" />
-        </svg>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">T2</span><span class="card-title">techno wireframe burger</span><span class="card-arrow">↗</span></div>
-  </a>
-
-  <!-- CYBER-SIGILISM -->
-  <a class="card" href="/previews/c1" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-c1">
-        <span class="sp s1"></span><span class="sp s2"></span><span class="sp s3"></span><span class="sp s4"></span>
-        <span class="w">salty fingers.</span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">C1</span><span class="card-title">sparkles + comet</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/c2" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-c2">
-        <svg viewBox="0 0 200 200">
-          <path d="M100,20 L107,90 L177,70 L120,113 L184,150 L113,121 L125,193 L100,135 L75,193 L87,121 L16,150 L80,113 L23,70 L93,90 Z" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="#0a0a0a" stroke-width="0.4" stroke-dasharray="3 3" />
-        </svg>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">C2</span><span class="card-title">cyber tribal sigil</span><span class="card-arrow">↗</span></div>
-  </a>
-
-  <!-- BRUTALIST WEB -->
-  <a class="card" href="/previews/b1" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-b1">
-        <span class="w">salty<br/>fingers.</span>
-        <span class="meta-mini">vol. i · n°1 · 2026</span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">B1</span><span class="card-title">brutalist times</span><span class="card-arrow">↗</span></div>
-  </a>
-  <a class="card" href="/previews/b2" target="_blank" rel="noopener">
-    <div class="card-thumb">
-      <div class="thumb thumb-b2">
-        <span class="w">salty<br/><span class="blk">fingers.</span></span>
-      </div>
-    </div>
-    <div class="card-foot"><span class="card-id">B2</span><span class="card-title">brutalist arial</span><span class="card-arrow">↗</span></div>
-  </a>
+  <div class="previews-grid">
+    <a class="p-card" href="/previews/a.html"  target="_blank" rel="noopener" data-courant="diner">      <div class="p-thumb" data-courant="diner">      <span class="p-id">a</span></div> <div class="p-body"><p class="p-tag">Diner</p><p class="p-title">diner ambré</p></div></a>
+    <a class="p-card" href="/previews/a1.html" target="_blank" rel="noopener" data-courant="acid">       <div class="p-thumb" data-courant="acid">       <span class="p-id">a1</span></div><div class="p-body"><p class="p-tag">Acid</p><p class="p-title">acid chrome blob</p></div></a>
+    <a class="p-card" href="/previews/a2.html" target="_blank" rel="noopener" data-courant="acid">       <div class="p-thumb" data-courant="acid">       <span class="p-id">a2</span></div><div class="p-body"><p class="p-tag">Acid</p><p class="p-title">liquid chrome multi</p></div></a>
+    <a class="p-card" href="/previews/b.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">b</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">jour / nuit</p></div></a>
+    <a class="p-card" href="/previews/b1.html" target="_blank" rel="noopener" data-courant="brutalist">  <div class="p-thumb" data-courant="brutalist">  <span class="p-id">b1</span></div><div class="p-body"><p class="p-tag">Brutalist</p><p class="p-title">brutalist times</p></div></a>
+    <a class="p-card" href="/previews/b2.html" target="_blank" rel="noopener" data-courant="brutalist">  <div class="p-thumb" data-courant="brutalist">  <span class="p-id">b2</span></div><div class="p-body"><p class="p-tag">Brutalist</p><p class="p-title">brutalist arial wallpaper</p></div></a>
+    <a class="p-card" href="/previews/c.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">c</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">éditorial chrome</p></div></a>
+    <a class="p-card" href="/previews/c1.html" target="_blank" rel="noopener" data-courant="cybersigil"> <div class="p-thumb" data-courant="cybersigil"> <span class="p-id">c1</span></div><div class="p-body"><p class="p-tag">Cyber-sigil</p><p class="p-title">cyber sparkles comet</p></div></a>
+    <a class="p-card" href="/previews/c2.html" target="_blank" rel="noopener" data-courant="cybersigil"> <div class="p-thumb" data-courant="cybersigil"> <span class="p-id">c2</span></div><div class="p-body"><p class="p-tag">Cyber-sigil</p><p class="p-title">cyber tribal sigil</p></div></a>
+    <a class="p-card" href="/previews/d.html"  target="_blank" rel="noopener" data-courant="pixel">      <div class="p-thumb" data-courant="pixel">      <span class="p-id">d</span></div> <div class="p-body"><p class="p-tag">Pixel</p><p class="p-title">pixel diurne</p></div></a>
+    <a class="p-card" href="/previews/e.html"  target="_blank" rel="noopener" data-courant="diner">      <div class="p-thumb" data-courant="diner">      <span class="p-id">e</span></div> <div class="p-body"><p class="p-tag">Diner</p><p class="p-title">neon menu board</p></div></a>
+    <a class="p-card" href="/previews/f.html"  target="_blank" rel="noopener" data-courant="riso">       <div class="p-thumb" data-courant="riso">       <span class="p-id">f</span></div> <div class="p-body"><p class="p-tag">Riso</p><p class="p-title">sticker collage</p></div></a>
+    <a class="p-card" href="/previews/g.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">g</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">magazine cover</p></div></a>
+    <a class="p-card" href="/previews/h.html"  target="_blank" rel="noopener" data-courant="riso">       <div class="p-thumb" data-courant="riso">       <span class="p-id">h</span></div> <div class="p-body"><p class="p-tag">Riso</p><p class="p-title">risograph poster</p></div></a>
+    <a class="p-card" href="/previews/i.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">i</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">koppen calm (scandinave)</p></div></a>
+    <a class="p-card" href="/previews/j.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">j</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">koppen index (taxonomie)</p></div></a>
+    <a class="p-card" href="/previews/k.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">k</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">koppen sequence (storyboard)</p></div></a>
+    <a class="p-card" href="/previews/l.html"  target="_blank" rel="noopener" data-courant="diner">      <div class="p-thumb" data-courant="diner">      <span class="p-id">l</span></div> <div class="p-body"><p class="p-tag">Diner</p><p class="p-title">dash stamp (badge jaune)</p></div></a>
+    <a class="p-card" href="/previews/m.html"  target="_blank" rel="noopener" data-courant="diner">      <div class="p-thumb" data-courant="diner">      <span class="p-id">m</span></div> <div class="p-body"><p class="p-tag">Diner</p><p class="p-title">dash mosaic</p></div></a>
+    <a class="p-card" href="/previews/n.html"  target="_blank" rel="noopener" data-courant="diner">      <div class="p-thumb" data-courant="diner">      <span class="p-id">n</span></div> <div class="p-body"><p class="p-tag">Diner</p><p class="p-title">dash diner card</p></div></a>
+    <a class="p-card" href="/previews/o.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">o</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">koppen v2 (serif éditorial)</p></div></a>
+    <a class="p-card" href="/previews/p.html"  target="_blank" rel="noopener" data-courant="diner">      <div class="p-thumb" data-courant="diner">      <span class="p-id">p</span></div> <div class="p-body"><p class="p-tag">Diner</p><p class="p-title">dash v2 (chunky + marquees)</p></div></a>
+    <a class="p-card" href="/previews/q.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">q</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">manifeste mono</p></div></a>
+    <a class="p-card" href="/previews/r.html"  target="_blank" rel="noopener" data-courant="editorial">  <div class="p-thumb" data-courant="editorial">  <span class="p-id">r</span></div> <div class="p-body"><p class="p-tag">Éditorial</p><p class="p-title">split asymétrique</p></div></a>
+    <a class="p-card" href="/previews/t1.html" target="_blank" rel="noopener" data-courant="techno">     <div class="p-thumb" data-courant="techno">     <span class="p-id">t1</span></div><div class="p-body"><p class="p-tag">Techno</p><p class="p-title">techno grid horizon</p></div></a>
+    <a class="p-card" href="/previews/t2.html" target="_blank" rel="noopener" data-courant="techno">     <div class="p-thumb" data-courant="techno">     <span class="p-id">t2</span></div><div class="p-body"><p class="p-tag">Techno</p><p class="p-title">techno wireframe burger</p></div></a>
+    <a class="p-card" href="/previews/y1.html" target="_blank" rel="noopener" data-courant="y2k">        <div class="p-thumb" data-courant="y2k">        <span class="p-id">y1</span></div><div class="p-body"><p class="p-tag">Y2K</p><p class="p-title">y2k wireframe globe</p></div></a>
+    <a class="p-card" href="/previews/y2.html" target="_blank" rel="noopener" data-courant="y2k">        <div class="p-thumb" data-courant="y2k">        <span class="p-id">y2</span></div><div class="p-body"><p class="p-tag">Y2K</p><p class="p-title">y2k aqua OS</p></div></a>
+  </div>
 </section>
 
 <footer class="bottom">
-  <span>nelly's · 21 av. du jardin public · biarritz</span>
-  <a href="/">site live →</a>
+  <span>© 2026 Nelly's burger biarritz</span>
+  <span>previews · noindex</span>
 </footer>
+
+<script>
+  (function () {
+    var chips = document.querySelectorAll('.chip');
+    var cards = document.querySelectorAll('.p-card');
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        var key = chip.getAttribute('data-chip');
+        cards.forEach(function (card) {
+          var courant = card.getAttribute('data-courant');
+          if (key === 'all' || courant === key) {
+            card.removeAttribute('data-hidden');
+          } else {
+            card.setAttribute('data-hidden', '');
+          }
+        });
+      });
+    });
+  })();
+</script>
+
 </body>
 </html>
