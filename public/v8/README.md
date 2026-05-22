@@ -1,13 +1,13 @@
 # Nelly's — v8 · "Cuisine ouverte"
 
-Homepage seule. Direction artistique : **Paul & Bohne × carreaux écrus du restaurant Nelly's**.
+Homepage seule. Direction artistique : **Paul & Bohne × dalles Paris Beige** (pierre calcaire claire, architecture contemporaine épurée — esprit Tadao Ando soft, galerie d'art, coffee shop Tokyo / Copenhague).
 
 URL : `/v8` (route Astro via `src/pages/v8.html`, assets statiques dans `public/v8/`).
 
 ## Parti pris
 
 - **Vidéo hero plein cadre** réutilisée de la v1 (`/media/hero.mp4`).
-- **Arrière-plan général** : mur de carreaux écrus bistrot vintage généré en SVG (`/v8/assets/tiles.svg`), 4 hues qui alternent, joints fins ton sur ton, patines locales subtiles, grain papier en overlay multiply. < 3 KB, repeat performant au scroll.
+- **Arrière-plan général** : grandes dalles pierre/béton clair façon Paris Beige générées en SVG (`/v8/assets/tiles.svg`), tuile de **400×200 px** (rapport 2:1), fond `#e2dac8`, granulation `feTurbulence` opacity 0.7 en mix de tons gris-beige, 4 micro-cavités sombres `#585348` opacity 0.35-0.4, deux joints `#9b9382` (croix verticale + horizontale) opacity 0.55 séparant la grille en sous-rectangles de 200×100. Aucune variation de couleur entre dalles — c'est le côté contemporain épuré. < 1.5 KB, repeat performant au scroll.
 - **Header sticky en glassmorphism** qui se compresse au scroll (72 → 56 px), translucide sombre au-dessus du hero, translucide clair ensuite.
 - **Pas de burger 3D** sur cette version. La vidéo est le seul élément visuel central.
 
@@ -42,13 +42,15 @@ Aucune trace de Brandon Grotesque dans le projet (pas de kit Adobe Fonts, pas de
 
 ## Palette
 
-| token             | usage                          |
-| ----------------- | ------------------------------ |
-| `#e8e0d2` / `#ddd4c4` / `#d8cdb8` / `#e3dac9` | carreaux écrus du mur |
-| `#cdc3b0`         | joints                         |
-| `#faf7f0`         | fond crème uni des bandes lisibles |
-| `#0c0c08`         | encre principale               |
-| `#f5d442`         | signature jaune Nelly's, accent unique |
+| token       | valeur     | usage                                |
+| ----------- | ---------- | ------------------------------------ |
+| `--stone`        | `#e2dac8` | fond beige pierre (background principal) |
+| `--stone-joint`  | `#9b9382` | joints visibles des dalles           |
+| `--stone-grain`  | `#8a8275` | granulation interne (feTurbulence)   |
+| `--stone-cavity` | `#585348` | micro-cavités sombres de la pierre   |
+| `--cream`        | `#faf7f0` | fond uni des bandes lisibles posées sur la pierre |
+| `--ink`          | `#0c0c08` | encre principale                     |
+| `--yellow`       | `#f5d442` | signature jaune Nelly's, accent unique |
 
 ## Sections
 

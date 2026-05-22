@@ -11,12 +11,13 @@
 
 /* ---------- design tokens ---------- */
 :root {
-  /* murs : carreaux écrus du restaurant */
-  --tile-1: #e8e0d2;
-  --tile-2: #ddd4c4;
-  --tile-3: #d8cdb8;
-  --tile-4: #e3dac9;
-  --grout:  #cdc3b0;
+  /* dalles Paris Beige : pierre calcaire claire, architecture contemporaine
+     (Tadao Ando soft, galerie d'art, coffee shop Tokyo / Copenhague) */
+  --stone:        #e2dac8;
+  --stone-deep:   #d5cab4;
+  --stone-joint:  #9b9382;
+  --stone-grain:  #8a8275;
+  --stone-cavity: #585348;
 
   /* fonds unis (sections lisibles posées sur les carreaux) */
   --cream:      #faf7f0;
@@ -65,7 +66,7 @@
 /* ---------- base ---------- */
 html {
   scroll-behavior: smooth;
-  background: var(--tile-3);
+  background: var(--stone);
 }
 
 body {
@@ -75,10 +76,10 @@ body {
   font-size: 16px;
   line-height: 1.65;
   color: var(--ink);
-  background-color: var(--tile-3);
+  background-color: var(--stone);
   background-image: url('/v8/assets/tiles.svg');
   background-repeat: repeat;
-  background-size: clamp(280px, 36vw, 560px);
+  background-size: clamp(280px, 36vw, 400px) clamp(140px, 18vw, 200px);
   background-position: top left;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
