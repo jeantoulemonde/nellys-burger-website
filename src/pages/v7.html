@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nelly's — Édition du soir · smash burger à emporter, Biarritz</title>
+<meta name="description" content="Le premier smash burger de Biarritz. Trois éditions à la carte, frites maison à la graisse de boeuf. À emporter, 7j/7, midi et soir, face au jardin public." />
+<link rel="canonical" href="https://nellys.fr/v7/" />
+<meta name="robots" content="noindex,nofollow" />
+<meta property="og:type" content="restaurant" />
+<meta property="og:title" content="Nelly's — Édition du soir · smash burger Biarritz" />
+<meta property="og:description" content="Le premier smash burger de Biarritz. Trois éditions, frites maison, ouvert 7j/7." />
+<meta property="og:image" content="/og-image.jpg" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:url" content="https://nellys.fr/v7/" />
+<meta name="theme-color" content="#ece3cf" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://ajax.googleapis.com" crossorigin />
+<link rel="preload" href="/v6/assets/3d/burger-v3.glb" as="fetch" type="model/gltf-binary" crossorigin />
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="/v7/v7.css" />
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","@id":"https://nellys.fr#restaurant","name":"Nelly's","image":"https://nellys.fr/og-image.jpg","url":"https://nellys.fr","telephone":"+33614579762","priceRange":"€","servesCuisine":["American","Burgers","Smash Burger"],"address":{"@type":"PostalAddress","streetAddress":"21 avenue du jardin public","addressLocality":"Biarritz","postalCode":"64200","addressCountry":"FR","addressRegion":"Nouvelle-Aquitaine"},"geo":{"@type":"GeoCoordinates","latitude":43.4853,"longitude":-1.5588},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"12:00","closes":"22:00"}],"acceptsReservations":false,"sameAs":["https://www.instagram.com/nellysburgerz/"]}
+</script>
+</head>
+<body data-page="home" class="paper">
+
+<svg class="grain" aria-hidden="true" focusable="false">
+  <filter id="paperGrain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.92" numOctaves="2" stitchTiles="stitch"/>
+    <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.42 0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#paperGrain)"/>
+</svg>
+
+<a class="skip" href="#contenu">aller au contenu</a>
+
+<!-- ========================  MASTHEAD  ======================== -->
+<header class="masthead" role="banner">
+  <div class="rule rule--hair"></div>
+  <div class="masthead-row masthead-row--meta">
+    <span class="meta-cell meta-cell--left">vol.&nbsp;ix &middot; n°&nbsp;47</span>
+    <span class="meta-cell meta-cell--center">édition du soir</span>
+    <span class="meta-cell meta-cell--right">biarritz &middot; 43°48′ n</span>
+  </div>
+  <div class="rule rule--thick"></div>
+
+  <h1 class="masthead-title">
+    <span class="masthead-logo" role="img" aria-label="Nelly's"></span>
+    <span class="visually-hidden">Nelly's — smash burger à emporter à Biarritz, depuis 2022.</span>
+  </h1>
+
+  <div class="rule rule--thick"></div>
+  <div class="masthead-row masthead-row--meta">
+    <span class="meta-cell meta-cell--left">le quotidien du smash burger</span>
+    <span class="meta-cell meta-cell--center">tirage non limité</span>
+    <span class="meta-cell meta-cell--right">prix libre &middot; service continu</span>
+  </div>
+  <div class="rule rule--hair"></div>
+
+  <nav class="rubric-nav" aria-label="Rubriques">
+    <a class="rubric-link is-current" href="/v7/" aria-current="page">à&nbsp;la&nbsp;une</a>
+    <span class="rubric-sep" aria-hidden="true">·</span>
+    <a class="rubric-link" href="/v6/menu">la&nbsp;carte</a>
+    <span class="rubric-sep" aria-hidden="true">·</span>
+    <a class="rubric-link" href="/v6/lieu">le&nbsp;lieu</a>
+    <span class="rubric-sep" aria-hidden="true">·</span>
+    <a class="rubric-link" href="/v6/a-propos">la&nbsp;maison</a>
+    <span class="rubric-sep" aria-hidden="true">·</span>
+    <a class="rubric-link" href="/v6/contact">courrier</a>
+  </nav>
+  <div class="rule rule--hair"></div>
+</header>
+
+<!-- ========================  TICKER  ======================== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>plancha à 280°c</span><span class="ticker-dot">●</span>
+    <span>cheeseburger 9&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>bacon 10&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>vg+ 9,50&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>frites graisse de boeuf 4&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>21 av. jardin public, biarritz</span><span class="ticker-dot">●</span>
+    <span>ouvert tous les jours · 12h&ndash;22h</span><span class="ticker-dot">●</span>
+    <span>come and get your fingers salty</span><span class="ticker-dot">●</span>
+    <span>plancha à 280°c</span><span class="ticker-dot">●</span>
+    <span>cheeseburger 9&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>bacon 10&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>vg+ 9,50&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>frites graisse de boeuf 4&nbsp;€</span><span class="ticker-dot">●</span>
+    <span>21 av. jardin public, biarritz</span><span class="ticker-dot">●</span>
+    <span>ouvert tous les jours · 12h&ndash;22h</span><span class="ticker-dot">●</span>
+    <span>come and get your fingers salty</span><span class="ticker-dot">●</span>
+  </div>
+</div>
+
+<main id="contenu">
+
+  <!-- ========================  CENTERFOLD : LA UNE  ======================== -->
+  <section class="centerfold" aria-labelledby="cover-headline">
+
+    <div class="centerfold-text">
+      <p class="kicker"><span class="kicker-num">N°&nbsp;01</span> <span class="kicker-label">à la une</span></p>
+      <h2 id="cover-headline" class="headline">
+        la nuit,<br/>
+        <em>on smashe.</em>
+      </h2>
+      <p class="dek">
+        Premier smash burger de Biarritz. Boulettes écrasées sur la plancha,
+        croûte caramélisée, pain brioché toasté au beurre. Trois éditions à la
+        carte, servies sans répit, midi et soir, comptoir face au jardin public.
+      </p>
+      <p class="byline">
+        <span class="byline-pen">¶</span>
+        par la maison · ouvert depuis 2022
+      </p>
+      <p class="cta-line">
+        <a class="link-arrow" href="/v6/menu">
+          <span class="link-arrow-text">lire la suite dans la carte</span>
+          <span class="link-arrow-mark" aria-hidden="true">→</span>
+        </a>
+      </p>
+    </div>
+
+    <figure class="centerfold-figure">
+
+      <!-- légendes de la planche -->
+      <ul class="annotations" aria-hidden="true">
+        <li class="annot annot--tl">
+          <span class="annot-num">a.</span>
+          <span class="annot-text">pain brioché<br/>toasté au beurre</span>
+        </li>
+        <li class="annot annot--tr">
+          <span class="annot-num">b.</span>
+          <span class="annot-text">american cheese<br/>fondu sur la plancha</span>
+        </li>
+        <li class="annot annot--bl">
+          <span class="annot-num">c.</span>
+          <span class="annot-text">oignons crus<br/>&amp; pickles maison</span>
+        </li>
+        <li class="annot annot--br">
+          <span class="annot-num">d.</span>
+          <span class="annot-text">boulette boeuf<br/>smashée &middot; croûte</span>
+        </li>
+      </ul>
+
+      <!-- traits de cotation -->
+      <svg class="annot-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <g class="annot-lines-group" fill="none" stroke="currentColor" stroke-width="0.18" stroke-linecap="round">
+          <!-- a. TL → upper-left bun -->
+          <line x1="17" y1="14" x2="40" y2="40"/>
+          <circle cx="40" cy="40" r="0.7" fill="currentColor"/>
+          <!-- b. TR → upper-right bun -->
+          <line x1="83" y1="14" x2="60" y2="40"/>
+          <circle cx="60" cy="40" r="0.7" fill="currentColor"/>
+          <!-- c. BL → lower-left base -->
+          <line x1="17" y1="86" x2="40" y2="62"/>
+          <circle cx="40" cy="62" r="0.7" fill="currentColor"/>
+          <!-- d. BR → lower-right base -->
+          <line x1="83" y1="86" x2="60" y2="62"/>
+          <circle cx="60" cy="62" r="0.7" fill="currentColor"/>
+        </g>
+      </svg>
+
+      <!-- burger 3D + portail (cloné de la v6) -->
+      <div class="burger-stage">
+        <div class="burger-halo" aria-hidden="true"></div>
+        <div class="burger-shadow" aria-hidden="true"></div>
+
+        <div class="portal" data-portal aria-hidden="true">
+          <div class="portal-halo"></div>
+          <div class="portal-dot"></div>
+          <div class="portal-ring"></div>
+          <div class="portal-flash"></div>
+        </div>
+
+        <div class="burger-wrap">
+          <model-viewer
+            class="burger-3d"
+            src="/v6/assets/3d/burger-v3.glb"
+            data-fallback="/media/photos/burger.jpg"
+            alt="smash burger Nelly's, cheeseburger 3D, pain brioché et american cheese"
+            camera-orbit="0deg 75deg 8m"
+            field-of-view="20deg"
+            camera-controls
+            disable-zoom
+            disable-pan
+            interaction-prompt="none"
+            auto-rotate
+            rotation-per-second="18deg"
+            exposure="1.0"
+            shadow-intensity="1"
+            tone-mapping="neutral"
+          ></model-viewer>
+        </div>
+      </div>
+
+      <figcaption class="figure-caption">
+        <span class="figure-caption-num">fig.&nbsp;01</span>
+        <span class="figure-caption-sep" aria-hidden="true">—</span>
+        <span class="figure-caption-text"><em>coupe schématique</em> du cheeseburger nelly's, légendée a–d.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ========================  RUBRIQUE : LA CARTE  ======================== -->
+  <section class="rubric-section rubric-three" aria-labelledby="carte-h">
+    <div class="rubric-section-head">
+      <p class="kicker"><span class="kicker-num">N°&nbsp;02</span> <span class="kicker-label">la carte · trois éditions</span></p>
+      <h3 id="carte-h" class="headline headline--mid">
+        trois burgers,<br/><em>une seule adresse.</em>
+      </h3>
+    </div>
+
+    <div class="three-cols">
+      <article class="article">
+        <p class="article-num">i.</p>
+        <h4 class="article-title">cheeseburger</h4>
+        <p class="article-lede">
+          boeuf, american cheese, pickles, oignons, laitue, ketchup, moutarde.
+          la version originale, sans détour, telle qu'on l'a servie le premier
+          jour.
+        </p>
+        <p class="article-foot">
+          <span class="article-price">9&nbsp;€</span>
+          <a class="article-link" href="/v6/menu#cheeseburger">lire la fiche →</a>
+        </p>
+      </article>
+
+      <article class="article">
+        <p class="article-num">ii.</p>
+        <h4 class="article-title">bacon</h4>
+        <p class="article-lede">
+          boeuf, american cheese, oignons confits, bacon grillé, laitue,
+          sauce nelly's. plus dense, plus long en bouche. l'édition de
+          dimanche.
+        </p>
+        <p class="article-foot">
+          <span class="article-price">10&nbsp;€</span>
+          <a class="article-link" href="/v6/menu#bacon">lire la fiche →</a>
+        </p>
+      </article>
+
+      <article class="article">
+        <p class="article-num">iii.</p>
+        <h4 class="article-title">vg+ <span class="article-caveat">fruits à coque</span></h4>
+        <p class="article-lede">
+          falafel maison, aubergine grillée, american cheese, laitue,
+          sauce fromage blanc. l'alternative qui tient la route, sans
+          excuses.
+        </p>
+        <p class="article-foot">
+          <span class="article-price">9,50&nbsp;€</span>
+          <a class="article-link" href="/v6/menu#vg">lire la fiche →</a>
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========================  RUBRIQUE : PRATIQUE + FAITS DIVERS  ======================== -->
+  <section class="rubric-section pratique" aria-labelledby="pratique-h">
+    <div class="pratique-grid">
+      <div class="pratique-main">
+        <p class="kicker"><span class="kicker-num">N°&nbsp;03</span> <span class="kicker-label">pratique</span></p>
+        <h3 id="pratique-h" class="headline headline--mid">
+          comptoir, sac kraft,<br/><em>jardin public en face.</em>
+        </h3>
+
+        <dl class="pratique-dl">
+          <div>
+            <dt>où</dt>
+            <dd>21 avenue du jardin public<br/>64200 biarritz</dd>
+          </div>
+          <div>
+            <dt>quand</dt>
+            <dd>tous les jours<br/>de 12h à 22h, service continu</dd>
+          </div>
+          <div>
+            <dt>comment</dt>
+            <dd>à emporter uniquement<br/>commande au comptoir &middot; cb / espèces</dd>
+          </div>
+          <div>
+            <dt>frites</dt>
+            <dd>graisse de boeuf, deux cuissons<br/>4&nbsp;€</dd>
+          </div>
+        </dl>
+      </div>
+
+      <aside class="pratique-aside" aria-labelledby="faits-h">
+        <p class="kicker kicker--alt"><span class="kicker-label">faits divers &middot; en bref</span></p>
+        <h4 id="faits-h" class="aside-title">la maison, vue d'ici.</h4>
+        <ol class="faits-list">
+          <li>plancha tenue à <strong>280&nbsp;°c</strong> tout le service.</li>
+          <li>pain livré chaque matin par la <strong>boulangerie d'à côté</strong>.</li>
+          <li>record actuel&nbsp;: <strong>142 burgers</strong> un samedi de juillet.</li>
+          <li>aucun écran. on entend la plancha grésiller depuis la rue.</li>
+          <li>frites cuites <strong>deux fois</strong>, jamais à l'huile.</li>
+        </ol>
+        <p class="aside-sig">— les cuisines</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========================  RUBRIQUE : LE LIEU  ======================== -->
+  <section class="rubric-section lieu-section" aria-labelledby="lieu-h">
+    <figure class="lieu-figure">
+      <div class="lieu-photo-frame">
+        <img src="/media/photos/storefront.jpg" alt="devanture jaune de Nelly's sur l'avenue du jardin public à Biarritz, en fin d'après-midi" loading="lazy" />
+      </div>
+      <figcaption class="figure-caption">
+        <span class="figure-caption-num">fig.&nbsp;02</span>
+        <span class="figure-caption-sep" aria-hidden="true">—</span>
+        <span class="figure-caption-text"><em>la devanture</em>, vue depuis l'avenue, fin d'après-midi.</span>
+      </figcaption>
+    </figure>
+
+    <div class="lieu-text">
+      <p class="kicker"><span class="kicker-num">N°&nbsp;04</span> <span class="kicker-label">le lieu</span></p>
+      <h3 id="lieu-h" class="headline headline--mid">
+        21 avenue du<br/><em>jardin public</em>.
+      </h3>
+      <p class="dek">
+        à deux pas du jardin public, dix minutes à pied de la grande plage.
+        cuisine ouverte, plancha en service midi et soir. l'adresse n'a pas
+        bougé&nbsp;: c'est nous qui faisons les allers-retours.
+      </p>
+      <p class="cta-line">
+        <a class="link-arrow" href="/v6/lieu">
+          <span class="link-arrow-text">voir le plan, les horaires, les accès</span>
+          <span class="link-arrow-mark" aria-hidden="true">→</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================  RUBRIQUE : INSTAGRAM  ======================== -->
+  <section class="rubric-section correspondance" aria-labelledby="ig-h">
+    <p class="kicker"><span class="kicker-num">N°&nbsp;05</span> <span class="kicker-label">correspondance</span></p>
+    <h3 id="ig-h" class="headline headline--big">
+      on publie<br/><em>sur instagram.</em>
+    </h3>
+    <p class="dek dek--center">
+      les nouvelles éditions, les ruptures de stock, le service du soir,
+      les essais du dimanche. tout y passe, à l'envers comme à l'endroit.
+    </p>
+    <p class="cta-line cta-line--center">
+      <a class="big-link" href="https://www.instagram.com/nellysburgerz/" rel="me noopener" target="_blank">
+        @nellysburgerz <span aria-hidden="true">↗</span>
+      </a>
+    </p>
+  </section>
+
+</main>
+
+<!-- ========================  SCEAU DE CIRE (signature)  ======================== -->
+<div class="wax-seal" aria-hidden="true">
+  <svg viewBox="0 0 200 200">
+    <defs>
+      <path id="seal-curve" d="M 100,100 m -76,0 a 76,76 0 1,1 152,0 a 76,76 0 1,1 -152,0" />
+    </defs>
+    <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.6"/>
+    <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <circle cx="100" cy="100" r="56" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.6"/>
+    <text class="seal-text">
+      <textPath href="#seal-curve" startOffset="0%">approuvé pour la nuit · nelly's · vol.ix · n°47 · biarritz · approuvé pour la nuit · </textPath>
+    </text>
+    <text x="100" y="92" class="seal-mark seal-mark--top" text-anchor="middle">est.</text>
+    <text x="100" y="116" class="seal-mark seal-mark--big" text-anchor="middle">2022</text>
+    <text x="100" y="130" class="seal-mark seal-mark--bot" text-anchor="middle">★</text>
+  </svg>
+</div>
+
+<!-- ========================  FOOTER / COLOPHON  ======================== -->
+<footer class="colophon" role="contentinfo">
+  <div class="rule rule--thick"></div>
+  <div class="colophon-row">
+    <div class="colophon-col">
+      <p class="kicker kicker--alt"><span class="kicker-label">colophon</span></p>
+      <p>composé à biarritz, à la plancha. tirage non limité, papier déjà gras.</p>
+    </div>
+    <div class="colophon-col">
+      <p class="kicker kicker--alt"><span class="kicker-label">adresse</span></p>
+      <address>21 avenue du jardin public<br/>64200 biarritz</address>
+    </div>
+    <div class="colophon-col">
+      <p class="kicker kicker--alt"><span class="kicker-label">horaires</span></p>
+      <p>tous les jours<br/>12h à 22h</p>
+    </div>
+    <div class="colophon-col">
+      <p class="kicker kicker--alt"><span class="kicker-label">en ligne</span></p>
+      <p><a href="https://www.instagram.com/nellysburgerz/" rel="me noopener" target="_blank">@nellysburgerz ↗</a></p>
+    </div>
+  </div>
+  <div class="rule rule--hair"></div>
+  <p class="colophon-foot">
+    <span>© 2026 nelly's</span>
+    <span class="colophon-foot-sep" aria-hidden="true">·</span>
+    <span><em>come and get your fingers salty.</em></span>
+    <span class="colophon-foot-sep" aria-hidden="true">·</span>
+    <span><a href="/mentions-legales">mentions légales</a></span>
+  </p>
+</footer>
+
+<script src="/v7/v7.js" defer></script>
+</body>
+</html>
