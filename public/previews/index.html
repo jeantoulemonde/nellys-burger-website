@@ -309,6 +309,50 @@
   .card.card-v4 { border: 1.5px solid #0a0a0a; }
   .card.card-v4 .card-id { color: #0a0a0a; font-weight: 700; }
 
+  /* card v8 — Paul & Bohne x carreaux écrus (home + vidéo hero) */
+  .card.card-v8 { border: 1.5px solid #0a0a08; }
+  .card.card-v8 .card-id { color: #0a0a08; font-weight: 700; }
+  .thumb-v8 {
+    background-color: #d8cdb8;
+    background-image: url('/v8/assets/tiles.svg');
+    background-size: 70%;
+    background-repeat: repeat;
+    color: #0a0a08; position: relative; overflow: hidden;
+    padding: 0.8rem; align-items: stretch; flex-direction: column; justify-content: space-between;
+  }
+  .thumb-v8::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, transparent 30%, rgba(12,12,8,0.18) 100%);
+    pointer-events: none;
+  }
+  .thumb-v8 .play-mini {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 44%; aspect-ratio: 1; border-radius: 50%;
+    background: rgba(250, 247, 240, 0.92);
+    box-shadow: 0 8px 24px -8px rgba(12,12,8,0.4), 0 1px 0 rgba(255,255,255,0.6) inset;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 3;
+  }
+  .thumb-v8 .play-mini::before {
+    content: ''; width: 0; height: 0;
+    border-left: 16px solid #0a0a08;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 5px;
+  }
+  .thumb-v8 .yellow-dot {
+    position: absolute; top: 14%; right: 16%;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #f5d442;
+    box-shadow: 0 0 10px rgba(245, 212, 66, 0.6);
+    z-index: 3;
+  }
+  .thumb-v8 .badge {
+    position: relative; z-index: 4;
+    font-family: ui-monospace, monospace; font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(12,12,8,0.65); text-align: center;
+  }
+
   /* card v6 — y2k lumineux (home + burger 3D) */
   .card.card-v6 { border: 1.5px solid #d9a82a; }
   .card.card-v6 .card-id { color: #d9a82a; font-weight: 700; }
@@ -442,6 +486,17 @@
 </section>
 
 <section class="grid" aria-label="liste des previews">
+  <a class="card card-v8" href="/v8" target="_blank" rel="noopener">
+    <div class="card-thumb">
+      <div class="thumb thumb-v8">
+        <span class="badge">home · vidéo hero</span>
+        <span class="yellow-dot" aria-hidden="true"></span>
+        <div class="play-mini" aria-hidden="true"></div>
+        <span class="badge" style="margin-top: auto;">v8 · paul & bohne x carreaux</span>
+      </div>
+    </div>
+    <div class="card-foot"><span class="card-id">v8</span><span class="card-title">home (paul & bohne x carreaux écrus)</span><span class="card-arrow">↗</span></div>
+  </a>
   <a class="card card-v6" href="/v6/" target="_blank" rel="noopener">
     <div class="card-thumb">
       <div class="thumb thumb-v6">

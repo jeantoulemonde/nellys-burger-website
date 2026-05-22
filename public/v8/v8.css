@@ -1,0 +1,950 @@
+/* ============================================================
+   Nelly's v8 — "Cuisine ouverte"
+   Direction : Paul & Bohne × carreaux écrus du restaurant.
+   Vidéo hero plein cadre + mur de carrelage bistrot vintage
+   en arrière-plan général, contenu posé en lévitation douce.
+   ============================================================ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- design tokens ---------- */
+:root {
+  /* murs : carreaux écrus du restaurant */
+  --tile-1: #e8e0d2;
+  --tile-2: #ddd4c4;
+  --tile-3: #d8cdb8;
+  --tile-4: #e3dac9;
+  --grout:  #cdc3b0;
+
+  /* fonds unis (sections lisibles posées sur les carreaux) */
+  --cream:      #faf7f0;
+  --cream-warm: #f3ece0;
+
+  /* encre */
+  --ink:        #0c0c08;
+  --ink-soft:   #2a2820;
+  --ink-muted:  rgba(12, 12, 8, 0.62);
+  --ink-faint:  rgba(12, 12, 8, 0.40);
+  --ink-line:   rgba(12, 12, 8, 0.14);
+
+  /* signature nelly's */
+  --yellow:     #f5d442;
+  --yellow-deep:#d9b81c;
+
+  /* shadows douces pour faire flotter les cartes */
+  --shadow-card:
+    0 1px 0 rgba(255, 255, 255, 0.4) inset,
+    0 1px 2px rgba(58, 50, 32, 0.08),
+    0 12px 28px -12px rgba(58, 50, 32, 0.18),
+    0 32px 64px -24px rgba(58, 50, 32, 0.12);
+  --shadow-card-hover:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 2px 4px rgba(58, 50, 32, 0.10),
+    0 18px 36px -14px rgba(58, 50, 32, 0.22),
+    0 40px 80px -28px rgba(58, 50, 32, 0.16);
+
+  --container: 1240px;
+  --container-narrow: 880px;
+  --gutter: clamp(1.2rem, 3.5vw, 2.4rem);
+
+  --ease:     cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* une seule famille — Brandon Grotesque si disponible (Adobe Fonts kit ou
+     fichiers locaux), sinon Mulish (Google Fonts) qui en est la plus proche
+     alternative gratuite. Toute la hiérarchie typo se fait via les weights
+     et les letter-spacings, jamais via une seconde famille. */
+  --sans: 'Brandon Grotesque', 'Mulish', -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, 'Helvetica Neue', sans-serif;
+
+  --header-h:        72px;
+  --header-h-scrolled: 56px;
+}
+
+/* ---------- base ---------- */
+html {
+  scroll-behavior: smooth;
+  background: var(--tile-3);
+}
+
+body {
+  position: relative;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background-color: var(--tile-3);
+  background-image: url('/v8/assets/tiles.svg');
+  background-repeat: repeat;
+  background-size: clamp(280px, 36vw, 560px);
+  background-position: top left;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* grain papier très subtil sur le carrelage */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+em { font-style: normal; /* Brandon-only : pas d'italique, l'emphase se fait par le poids ou la couleur */ }
+strong { font-weight: 600; }
+
+/* ---------- accessibilité ---------- */
+.skip {
+  position: absolute; top: -100px; left: 1rem;
+  background: var(--ink); color: var(--cream);
+  padding: 0.6rem 1rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 1000;
+}
+.skip:focus { top: 1rem; }
+:focus-visible {
+  outline: 2px solid var(--yellow-deep);
+  outline-offset: 3px;
+}
+
+/* ---------- curseur custom (desktop seulement) ---------- */
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 12px rgba(245, 212, 66, 0.5);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate3d(-100px, -100px, 0);
+  opacity: 0;
+  transition: opacity 240ms var(--ease), width 200ms var(--ease), height 200ms var(--ease);
+  mix-blend-mode: multiply;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot.is-active { opacity: 1; }
+  .cursor-dot.is-hovering {
+    width: 28px; height: 28px;
+    background: rgba(245, 212, 66, 0.45);
+  }
+}
+@media (hover: none) { .cursor-dot { display: none; } }
+
+/* ============================================================
+   HEADER STICKY
+   ============================================================ */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: rgba(250, 247, 240, 0.55);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid transparent;
+  transition:
+    height 320ms var(--ease),
+    background 320ms var(--ease),
+    backdrop-filter 320ms var(--ease),
+    border-color 320ms var(--ease);
+}
+.site-header.is-scrolled {
+  height: var(--header-h-scrolled);
+  background: rgba(250, 247, 240, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: var(--ink-line);
+}
+/* mode "sur la vidéo" : translucide sombre */
+.site-header.is-on-hero {
+  background: rgba(12, 12, 8, 0.16);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  color: #faf7f0;
+}
+.site-header.is-on-hero .brand-mark { background-color: #faf7f0; }
+.site-header.is-on-hero .nav-link   { color: #faf7f0; }
+.site-header.is-on-hero .status     { color: #faf7f0; }
+.site-header.is-on-hero .status-dot { background: var(--yellow); box-shadow: 0 0 12px rgba(245, 212, 66, 0.7); }
+
+.site-header-inner {
+  height: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* brand */
+.brand { display: inline-flex; align-items: center; }
+.brand-mark {
+  display: block;
+  width: clamp(72px, 6vw, 92px);
+  height: 28px;
+  background-color: var(--ink);
+  -webkit-mask-image: url('/media/nelly_s.svg');
+          mask-image: url('/media/nelly_s.svg');
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+          mask-position: left center;
+  transition: background-color 320ms var(--ease);
+}
+
+/* nav centrale — Brandon Bold ALL CAPS, l'usage iconique de la famille */
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.4rem, 2.8vw, 2.4rem);
+}
+.nav-link {
+  position: relative;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  padding: 0.4rem 0.1rem 0.5rem;
+  transition: color 220ms var(--ease);
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--yellow);
+  transition: right 320ms var(--ease);
+}
+.nav-link:hover,
+.nav-link:focus-visible { color: var(--yellow-deep); }
+.nav-link:hover::after,
+.nav-link:focus-visible::after { right: 0; }
+
+/* status pill */
+.status {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4ea75b;
+  box-shadow: 0 0 8px rgba(78, 167, 91, 0.55);
+  animation: statusPulse 2.4s ease-in-out infinite;
+}
+.status[data-status="closed"] .status-dot {
+  background: var(--ink-muted);
+  box-shadow: none;
+  animation: none;
+}
+@keyframes statusPulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.55;transform: scale(0.85); }
+}
+@media (max-width: 720px) {
+  .status-text { display: none; }
+  .site-header-inner { grid-template-columns: auto 1fr auto; gap: 0.6rem; }
+  .site-nav { gap: 1.1rem; }
+  .nav-link { font-size: 1rem; }
+}
+@media (max-width: 480px) {
+  .nav-link:nth-child(4),
+  .nav-link:nth-child(3) { display: none; }
+}
+
+/* ============================================================
+   HERO VIDÉO
+   ============================================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0c0c08;
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.92) contrast(1.04);
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(12, 12, 8, 0.18) 0%, rgba(12, 12, 8, 0.02) 30%, rgba(12, 12, 8, 0.05) 65%, rgba(12, 12, 8, 0.55) 100%),
+    radial-gradient(ellipse at 50% 60%, transparent 0%, rgba(12, 12, 8, 0.18) 100%);
+}
+
+.hero-content {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: clamp(7rem, 14vh, 11rem);
+  padding: 0 var(--gutter);
+  color: #faf7f0;
+  z-index: 2;
+  max-width: var(--container);
+  margin: 0 auto;
+  text-align: left;
+  animation: heroIn 1200ms var(--ease-out) 200ms both;
+}
+.hero-eyebrow {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 240, 0.82);
+  margin-bottom: 1.4rem;
+}
+/* hero principal — Brandon Light, minuscules, accent jaune sur la signature */
+.hero-title {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: #faf7f0;
+  text-shadow: 0 2px 24px rgba(12, 12, 8, 0.25);
+  margin-bottom: 1.4rem;
+}
+.hero-title-line { display: block; }
+.hero-title em {
+  font-style: normal;
+  color: var(--yellow);
+}
+.hero-sub {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  line-height: 1.6;
+  color: rgba(250, 247, 240, 0.92);
+  letter-spacing: 0.005em;
+  max-width: 38ch;
+}
+
+/* Scroll & Enjoy cue (en bas du hero) — Brandon Medium ALL CAPS */
+.scroll-cue {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(1.6rem, 3vh, 2.4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  color: rgba(250, 247, 240, 0.86);
+  z-index: 3;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  animation: heroIn 1200ms var(--ease-out) 800ms both;
+}
+.scroll-cue-line {
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(250, 247, 240, 0.1) 0%, rgba(250, 247, 240, 0.85) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: -40%;
+  height: 40%;
+  background: linear-gradient(180deg, transparent 0%, var(--yellow) 100%);
+  animation: scrollCue 2.4s ease-in-out infinite;
+}
+.scroll-cue-text em {
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 700;
+  color: var(--yellow);
+}
+@keyframes scrollCue {
+  0%   { transform: translateY(0);    opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(220%); opacity: 0; }
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 640px) {
+  .scroll-cue { left: 50%; transform: translateX(-50%); }
+}
+
+/* ============================================================
+   CONTAINERS / TYPO PARTAGÉE
+   ============================================================ */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+  z-index: 2;
+}
+.container--narrow { max-width: var(--container-narrow); }
+
+.section {
+  position: relative;
+  padding: clamp(5rem, 10vw, 9rem) 0;
+  z-index: 2;
+}
+.section--tight { padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(4rem, 7vw, 6rem); }
+
+.section-head {
+  margin-bottom: clamp(2.4rem, 5vw, 4rem);
+}
+
+/* kicker — petit label de section, Medium ALL CAPS espacé */
+.kicker {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 1.6rem;
+  padding-left: 1.8rem;
+  position: relative;
+}
+.kicker::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  width: 1.2rem;
+  height: 1px;
+  background: var(--ink-soft);
+  transform: translateY(-50%);
+}
+
+/* titres de sections — Brandon Light en minuscules, gros et aérés */
+.display {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 6.5vw, 4.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.display em {
+  font-style: normal;
+  font-weight: 300;
+  /* hérite la couleur du parent : permet l'override en blanc sur le storefront */
+}
+
+.lead {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.08rem, 1.3vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--ink);
+  letter-spacing: 0.005em;
+  max-width: 56ch;
+}
+.lead--center { text-align: center; margin: 0 auto; }
+
+.prose {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 60ch;
+}
+.prose p {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.02rem, 1.2vw, 1.14rem);
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.005em;
+}
+
+/* ============================================================
+   CONCEPT (large texte sur carreaux)
+   ============================================================ */
+.concept {
+  /* zone partiellement claire posée sur les carreaux */
+  background:
+    linear-gradient(180deg, rgba(250, 247, 240, 0.55) 0%, rgba(250, 247, 240, 0.85) 30%, rgba(250, 247, 240, 0.85) 70%, rgba(250, 247, 240, 0.55) 100%);
+}
+
+/* ============================================================
+   INFOS PRATIQUES (cartes flottantes)
+   ============================================================ */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.2rem, 2.4vw, 2rem);
+}
+@media (min-width: 760px) {
+  .info-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.info-card {
+  background: var(--cream);
+  padding: clamp(1.8rem, 3vw, 2.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-card);
+  transition: transform 360ms var(--ease), box-shadow 360ms var(--ease);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+}
+.info-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 30% 0%, rgba(245, 212, 66, 0.10) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 360ms var(--ease);
+}
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+.info-card:hover::before { opacity: 1; }
+
+.info-num {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 1.6rem;
+}
+.info-title {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 2.4vw, 1.95rem);
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.info-body {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+  flex: 1;
+}
+.info-link {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  align-self: flex-start;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.25em;
+  transition: gap 240ms var(--ease), color 240ms var(--ease), border-color 240ms var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.info-link:hover { gap: 0.85rem; color: var(--yellow-deep); border-color: var(--yellow-deep); }
+
+/* ============================================================
+   MENU (3 cartes éditoriales avec photo)
+   ============================================================ */
+.menu {
+  /* large bande claire pour lisibilité */
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(250, 247, 240, 0.88) 8%, rgba(250, 247, 240, 0.88) 92%, transparent 100%);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+@media (min-width: 760px) {
+  .menu-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.menu-photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--cream-warm);
+  border-radius: 2px;
+  box-shadow: var(--shadow-card);
+}
+.menu-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1200ms var(--ease-out), filter 600ms var(--ease);
+  will-change: transform;
+}
+.menu-item:hover .menu-photo img {
+  transform: scale(1.04);
+  filter: brightness(1.04);
+}
+.menu-body {
+  padding: 0 0.2rem;
+}
+.menu-num {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.8rem;
+}
+.menu-name {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.018em;
+}
+.menu-caveat {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.46em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-left: 0.5em;
+  vertical-align: 0.35em;
+}
+.menu-desc {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 1.1rem;
+}
+.menu-price {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--ink);
+  letter-spacing: 0.005em;
+}
+
+.menu-foot {
+  margin-top: clamp(2.4rem, 4vw, 3.6rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--ink-line);
+  text-align: center;
+}
+.menu-foot-line {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+}
+.menu-foot-line strong {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.92em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-right: 0.6em;
+}
+
+/* ============================================================
+   STOREFRONT (image plein cadre + bloc texte)
+   ============================================================ */
+.storefront {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.storefront-figure {
+  position: relative;
+  width: 100%;
+  height: clamp(60vh, 80vh, 880px);
+  margin: 0;
+  overflow: hidden;
+}
+.storefront-figure img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  will-change: transform;
+  transform: scale(1.08);
+  transition: transform 100ms linear;
+}
+.storefront::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12, 12, 8, 0.0) 0%, rgba(12, 12, 8, 0.15) 50%, rgba(12, 12, 8, 0.55) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.storefront-text {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: clamp(2rem, 5vh, 4rem);
+  z-index: 2;
+  color: #faf7f0;
+}
+.storefront-text .kicker { color: rgba(250, 247, 240, 0.78); }
+.storefront-text .kicker::before { background: rgba(250, 247, 240, 0.6); }
+.storefront-text .display { color: #faf7f0; text-shadow: 0 2px 24px rgba(12, 12, 8, 0.4); }
+.storefront-text .lead { color: rgba(250, 247, 240, 0.94); }
+.storefront-text-inner { max-width: 36rem; }
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+/* CTA principal — rectangle léger arrondi, Brandon Medium ALL CAPS, hover jaune */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.55rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    transform 240ms var(--ease),
+    background 240ms var(--ease),
+    border-color 240ms var(--ease),
+    color 240ms var(--ease),
+    gap 240ms var(--ease);
+}
+.btn:hover {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+  gap: 1rem;
+}
+.btn-arrow {
+  display: inline-block;
+  transition: transform 240ms var(--ease);
+}
+.btn:hover .btn-arrow { transform: translateX(0.25em); }
+.btn--accent {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+}
+.btn--accent:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+.cta-line { margin-top: 2rem; }
+.cta-line--center { text-align: center; }
+
+/* ============================================================
+   INSTAGRAM section
+   ============================================================ */
+.ig {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(250, 247, 240, 0.9) 20%, rgba(250, 247, 240, 0.9) 80%, transparent 100%);
+  text-align: center;
+}
+.ig .kicker { padding-left: 0; }
+.ig .kicker::before { display: none; }
+.ig-title { margin-inline: auto; }
+/* signature jaune sur le mot-clé de la section IG (deuxième usage parcimonieux) */
+.ig-title em { color: var(--yellow-deep); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background: var(--ink);
+  color: var(--cream);
+  padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid rgba(250, 247, 240, 0.12);
+}
+@media (min-width: 720px) {
+  .footer-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.footer-mark {
+  display: block;
+  width: 92px;
+  height: 30px;
+  background-color: var(--cream);
+  -webkit-mask-image: url('/media/nelly_s.svg');
+          mask-image: url('/media/nelly_s.svg');
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+          mask-position: left center;
+  margin-bottom: 1rem;
+}
+.footer-tagline {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 240, 0.6);
+}
+.footer-label {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 0.8rem;
+}
+.footer-col address,
+.footer-col p {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13.5px;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  color: rgba(250, 247, 240, 0.92);
+}
+.footer-col a {
+  border-bottom: 1px solid rgba(250, 247, 240, 0.3);
+  padding-bottom: 0.1em;
+  transition: border-color 240ms var(--ease);
+}
+.footer-col a:hover { border-bottom-color: var(--yellow); }
+
+.footer-bottom {
+  padding-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 240, 0.55);
+}
+.footer-bottom em {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  color: var(--yellow);
+  margin-left: 0.4rem;
+}
+.footer-bottom a:hover { color: var(--cream); }
+
+/* ============================================================
+   ANIMATIONS DE RÉVÉLATION (Intersection Observer)
+   ============================================================ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-video { display: none; }
+  .hero { background-image: linear-gradient(180deg, #0c0c08 0%, #2a2820 100%); }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .scroll-cue-line::after { display: none; }
+  .status-dot { animation: none !important; }
+  .storefront-figure img { transform: none !important; }
+}
+
+/* ============================================================
+   SMALL SCREENS
+   ============================================================ */
+@media (max-width: 640px) {
+  .hero-content { bottom: 9rem; }
+  .info-card { padding: 1.6rem 1.4rem; }
+  .display em::after { width: 0.14em; height: 0.14em; }
+}
